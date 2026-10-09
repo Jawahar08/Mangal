@@ -1,4 +1,4 @@
-// MangalSutra 2.0 Core Data Types
+// MangalSutra 2.0 Core Data Types (Phase 1 & Phase 2 Enhanced)
 
 export type IntentType = 
   | 'marriage' 
@@ -23,16 +23,76 @@ export type VerificationState =
   | 'unavailable' 
   | 'further_review_required';
 
+export type BadgeVisibility = 
+  | 'mutual_connections_only' 
+  | 'verified_members_only' 
+  | 'public' 
+  | 'hidden';
+
+export interface ConsentRecord {
+  id: string;
+  checkId: string;
+  purpose: string;
+  grantedAt: string;
+  revokedAt?: string;
+  scope: string;
+  version: string;
+  isRevoked: boolean;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  timestamp: string;
+  action: 'consent_granted' | 'consent_revoked' | 'document_uploaded' | 'status_changed' | 'visibility_changed' | 'dispute_raised';
+  checkTitle: string;
+  actor: string;
+  details: string;
+  previousStatus?: VerificationState;
+  newStatus?: VerificationState;
+}
+
+export interface CourtScreeningResult {
+  cnrNumber?: string;
+  state: string;
+  district: string;
+  year: string;
+  queryName: string;
+  searchDate: string;
+  resultSummary: string;
+  caveatNote: string;
+  matchingRecordsCount: number;
+}
+
+export interface MaritalVerificationRecord {
+  declaredStatus: MaritalStatus;
+  declarationAffirmed: boolean;
+  declarationDate: string;
+  decreeDate?: string;
+  courtName?: string;
+  sectionType?: '13B_Mutual_Consent' | 'Contested_Granted' | 'Annulled' | 'Not_Applicable';
+  cnrReference?: string;
+  custodyDisclosedPrivately?: string;
+  verifiedAt?: string;
+  verificationBadge: string;
+}
+
 export interface VerificationCheck {
   id: string;
-  category: 'identity' | 'dob' | 'address' | 'education' | 'employment' | 'marital_status' | 'court' | 'police';
+  category: 'identity' | 'dob' | 'address' | 'education' | 'employment' | 'marital_status' | 'court' | 'police' | 'caste_community' | 'income' | 'references';
   title: string;
   description: string;
   status: VerificationState;
+  visibility: BadgeVisibility;
   verifiedAt?: string;
   sourceNote?: string;
   documentType?: string;
   isOptional?: boolean;
+  providerName?: string;
+  providerType?: 'digilocker' | 'nad' | 'ecourts' | 'corporate_hr' | 'manual_noc' | 'self_affirmed';
+  evidenceFileName?: string;
+  evidenceHash?: string;
+  correctionRequested?: boolean;
+  disputeNote?: string;
 }
 
 export interface ChaanBeanTrustProfile {
@@ -40,7 +100,11 @@ export interface ChaanBeanTrustProfile {
   checks: VerificationCheck[];
   lastAuditDate: string;
   consentGranted: boolean;
-  visibility: 'mutual_connections_only' | 'verified_members_only' | 'public';
+  visibility: BadgeVisibility;
+  consentLedger: ConsentRecord[];
+  auditLogs: AuditLogEntry[];
+  maritalVerification?: MaritalVerificationRecord;
+  courtScreening?: CourtScreeningResult;
 }
 
 export interface AstrologyDetails {
