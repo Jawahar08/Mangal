@@ -13,7 +13,8 @@ import {
   Filter, 
   Search, 
   RotateCcw, 
-  ShieldCheck 
+  ShieldCheck,
+  ArrowRight 
 } from 'lucide-react';
 
 export const DiscoverView: React.FC = () => {
@@ -21,7 +22,8 @@ export const DiscoverView: React.FC = () => {
     discoveryProfiles, 
     savedProfileIds, 
     activePartnerForDetail, 
-    closePartnerDetail 
+    closePartnerDetail,
+    setActiveTab: setActiveAppTab
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'recommended' | 'new' | 'second_chapter' | 'saved'>('recommended');
@@ -203,6 +205,24 @@ export const DiscoverView: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Second Chapter Dedicated Banner */}
+      {activeTab === 'second_chapter' && (
+        <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '1.25rem 1.5rem', borderRadius: 'var(--radius-md)', marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', boxShadow: 'var(--shadow-sm)' }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: '0.98rem', color: '#166534', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span>🌿 Second Chapter Remarriage Ecosystem</span>
+            </div>
+            <div style={{ fontSize: '0.84rem', color: '#15803D', marginTop: '0.2rem' }}>
+              Access your dedicated Rebuild Profile, Children & Custody safeguards, and the 7-Pillar recovery resources.
+            </div>
+          </div>
+          <button className="btn-primary" style={{ background: '#15803D', borderColor: '#15803D', fontSize: '0.85rem', padding: '0.5rem 1.25rem' }} onClick={() => setActiveAppTab('second_chapter')}>
+            <span>Open Second Chapter Hub</span>
+            <ArrowRight size={15} />
+          </button>
+        </div>
+      )}
 
       {/* Match Results Grid */}
       <div style={{ marginBottom: '1rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>

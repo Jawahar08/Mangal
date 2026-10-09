@@ -223,14 +223,16 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'SECOND_CHAPTER',
     title: 'Second Chapter Remarriage Ecosystem',
     phase: 'Phase 4: Second Chapter',
-    status: 'partial',
-    summary: 'Dignified remarriage journey for divorced, widowed, and single parents. Phase 1 includes dedicated intent, tab, and profile fields.',
+    status: 'implemented_and_tested',
+    summary: 'Dignified remarriage journey for divorced, widowed, and single parents. Features Rebuild profile dimensions, children & custody safeguards, non-diagnostic emotional readiness, and a 7-pillar recovery ecosystem.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/02_PHASE_4_SECOND_CHAPTER_PROMPT.md',
     acceptanceCriteria: 'No stigma, children details protected, optional dedicated discovery pool without permanent segregation.',
     features: [
-      { name: 'Second Chapter Intent & Discovery Tab', status: 'implemented_and_tested', note: 'Dedicated discovery pool in Phase 1' },
-      { name: 'Learnings & Priorities Profile Fields', status: 'implemented_and_tested', note: 'What I learned & priorities' },
-      { name: 'Recovery Ecosystem (Reset, Understand, Rebuild, Restart, Heal)', status: 'planned', note: 'Phase 4 backlog item' }
+      { name: 'Second Chapter Dedicated Discovery Pool & Non-Segregation Switcher', status: 'implemented_and_tested', note: 'Switch between Second Chapter sanctuary and all eligible members' },
+      { name: 'Five-Dimension Rebuild Profile Studio', status: 'implemented_and_tested', note: 'What I Learned, What I Want Now, What Has Changed, What I Do Not Want Again, My Priorities' },
+      { name: 'Children & Family Custody Sanctuary', status: 'implemented_and_tested', note: 'Sensitive child details, custody models, and strict mutual-connections-only visibility controls' },
+      { name: 'Private Emotional Readiness Self-Assessment', status: 'implemented_and_tested', note: 'Non-diagnostic reflection on grief closure, emotional sovereignty, and readiness to love again' },
+      { name: 'Rebuilding & Recovery 7-Pillar Ecosystem', status: 'implemented_and_tested', note: 'RESET, UNDERSTAND, REBUILD (Section 13B legal decrees), RESTART (Finances), FAMILY (Co-parenting), RECONNECT, HEAL' }
     ]
   },
   {

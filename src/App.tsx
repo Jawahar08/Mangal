@@ -17,6 +17,7 @@ import { ProfileView } from './components/profile/ProfileView';
 import { RoadmapView } from './components/roadmap/RoadmapView';
 import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
 import { MarriageIntelligenceHub } from './components/intelligence/MarriageIntelligenceHub';
+import { SecondChapterHub } from './components/secondChapter/SecondChapterHub';
 
 const MainRouter: React.FC = () => {
   const { activeTab } = useApp();
@@ -25,6 +26,7 @@ const MainRouter: React.FC = () => {
     <main className="main-content">
       {activeTab === 'home' && <HomeView />}
       {activeTab === 'discover' && <DiscoverView />}
+      {activeTab === 'second_chapter' && <SecondChapterHub />}
       {activeTab === 'matches' && <MatchesView />}
       {activeTab === 'messages' && <ChatView />}
       {activeTab === 'trust' && <TrustDashboard />}

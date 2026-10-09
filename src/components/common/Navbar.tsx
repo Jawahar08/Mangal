@@ -11,6 +11,7 @@ import {
   Map, 
   Sparkles, 
   HeartHandshake,
+  Flower2,
   LogOut, 
   LogIn 
 } from 'lucide-react';
@@ -28,6 +29,7 @@ export const Navbar: React.FC = () => {
 
   const navItems: { tab: ActiveTab; label: string; icon: any; badge?: number }[] = [
     { tab: 'discover', label: 'Discover', icon: Compass },
+    { tab: 'second_chapter', label: 'Second Chapter', icon: Flower2 },
     { tab: 'matches', label: 'Matches', icon: Heart, badge: mutualConnections.length },
     { tab: 'messages', label: 'Messages', icon: MessageCircle, badge: 1 },
     { tab: 'trust', label: 'Trust Hub', icon: ShieldCheck },
