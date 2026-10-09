@@ -240,13 +240,17 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'PRATHA',
     title: 'Pratha Spirituality & Wellbeing Layer',
     phase: 'Phase 5: Pratha Spirituality',
-    status: 'planned',
-    summary: 'Optional inner life layer: daily spiritual practices, temple experiences, poojas, meditation, couple rituals, festival calendar.',
+    status: 'implemented_and_tested',
+    summary: 'Optional inner life layer: five spiritual paths, daily Rigvedic Sankalpa, heritage temple darshan guides, pooja & sanskara explanations, 21-day couple wellbeing journey, and Panchang festival calendar.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/03_PHASE_5_PRATHA_PROMPT.md',
     acceptanceCriteria: 'Optional spiritual paths (Traditional, Wellness, Modern, Family, Couple), 21-day couple journey, mutual agreement for shared rites.',
     features: [
-      { name: 'Pratha Value Pillar & Vision', status: 'implemented_and_tested', note: 'Presented on homepage and ecosystem hub' },
-      { name: 'Daily Rituals, Temple Booking & Meditation Engine', status: 'planned', note: 'Phase 5 backlog item' }
+      { name: 'Five Personalized Spiritual Paths', status: 'implemented_and_tested', note: 'Traditional, Wellness, Modern Spiritual, Family, Couple paths' },
+      { name: 'Daily Sankalpa & 60-Second Mindfulness Breath Pause', status: 'implemented_and_tested', note: 'Vedic sloka with English meaning and interactive timer' },
+      { name: 'Sacred Heritage Temple Darshan Directory', status: 'implemented_and_tested', note: 'Meenakshi Sundareswarar, Tirumala Tirupati, Kashi Vishwanath, Somnath, Kamakhya with marital blessings and seva guides' },
+      { name: 'Vedic Sanskara & Home Pooja Step-by-Step Guides', status: 'implemented_and_tested', note: 'Saptapadi 7 vows meaning, Gauri Pooja, Griha Pravesh, Sri Satyanarayan Katha with samagri checklists' },
+      { name: '21-Day Couple Wellbeing Journey', status: 'implemented_and_tested', note: 'Daily micro-exercises and shared couple prompts with mutual affirmation' },
+      { name: 'Panchang & Auspicious Festival Calendar', status: 'implemented_and_tested', note: 'Karwa Chauth, Diwali, Vivaha Panchami, Makar Sankranti with couple observances' }
     ]
   },
   {

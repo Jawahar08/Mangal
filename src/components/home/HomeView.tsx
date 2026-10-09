@@ -285,7 +285,11 @@ export const HomeView: React.FC = () => {
             </div>
 
             {/* Pratha */}
-            <div className="card-heritage" style={{ padding: '2rem' }}>
+            <div 
+              className="card-heritage" 
+              style={{ padding: '2rem', cursor: 'pointer', borderTop: '3px solid #D97706' }}
+              onClick={() => setActiveTab('pratha')}
+            >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
                 <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#D97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Flower2 size={20} color="#FFFFFF" />
@@ -298,8 +302,9 @@ export const HomeView: React.FC = () => {
               <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
                 Optional spiritual layer. Temple rituals, daily meditation, pooja bookings, festival calendar, and 21-day couple spiritual journeys.
               </p>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>
-                • Phase 5 Backlog Item
+              <div style={{ fontSize: '0.75rem', color: '#15803D', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <CheckCircle2 size={14} />
+                <span>Phase 5 Live & Active</span>
               </div>
             </div>
 

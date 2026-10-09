@@ -12,6 +12,7 @@ import {
   Sparkles, 
   HeartHandshake,
   Flower2,
+  Flame,
   LogOut, 
   LogIn 
 } from 'lucide-react';
@@ -34,6 +35,7 @@ export const Navbar: React.FC = () => {
     { tab: 'messages', label: 'Messages', icon: MessageCircle, badge: 1 },
     { tab: 'trust', label: 'Trust Hub', icon: ShieldCheck },
     { tab: 'intelligence', label: 'Intelligence', icon: HeartHandshake },
+    { tab: 'pratha', label: 'Pratha', icon: Flame },
     { tab: 'profile', label: 'My Profile', icon: User },
     { tab: 'roadmap', label: 'Ecosystem', icon: Map },
   ];

@@ -5,7 +5,7 @@ import { UserProfile, ChatMessage } from '../types';
 import { StorageService } from '../services/storageService';
 import { MOCK_DISCOVERY_PROFILES } from '../data/mockProfiles';
 
-export type ActiveTab = 'home' | 'discover' | 'second_chapter' | 'matches' | 'messages' | 'trust' | 'intelligence' | 'profile' | 'roadmap' | 'onboarding';
+export type ActiveTab = 'home' | 'discover' | 'second_chapter' | 'matches' | 'messages' | 'trust' | 'intelligence' | 'pratha' | 'profile' | 'roadmap' | 'onboarding';
 
 interface ToastInfo {
   id: string;

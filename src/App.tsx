@@ -18,6 +18,7 @@ import { RoadmapView } from './components/roadmap/RoadmapView';
 import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
 import { MarriageIntelligenceHub } from './components/intelligence/MarriageIntelligenceHub';
 import { SecondChapterHub } from './components/secondChapter/SecondChapterHub';
+import { PrathaHub } from './components/pratha/PrathaHub';
 
 const MainRouter: React.FC = () => {
   const { activeTab } = useApp();
@@ -31,6 +32,7 @@ const MainRouter: React.FC = () => {
       {activeTab === 'messages' && <ChatView />}
       {activeTab === 'trust' && <TrustDashboard />}
       {activeTab === 'intelligence' && <MarriageIntelligenceHub />}
+      {activeTab === 'pratha' && <PrathaHub />}
       {activeTab === 'profile' && <ProfileView />}
       {activeTab === 'roadmap' && <RoadmapView />}
       {activeTab === 'onboarding' && <OnboardingFlow />}
