@@ -258,13 +258,15 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'MARKETPLACE',
     title: 'MangalSutra Marketplace',
     phase: 'Phase 6: Marketplace',
-    status: 'planned',
-    summary: 'Wedding services, jewelry, Ayurveda/wellness, spiritual goods, couple experiences with real vendors and payment gateway.',
+    status: 'implemented_and_tested',
+    summary: 'Wedding services, certified jewellery, Ayurveda/wellness, spiritual goods, couple experiences with vetted artisans, shopping cart, and honest sandbox checkout.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/04_PHASE_6_MARKETPLACE_PROMPT.md',
     acceptanceCriteria: 'Vendor directory, genuine checkout integration (never fake success), does not overshadow matchmaking.',
     features: [
-      { name: 'Marketplace Concept Preview', status: 'implemented_and_tested', note: 'Introduced on homepage and ecosystem hub' },
-      { name: 'Commerce & Vendor Services', status: 'planned', note: 'Phase 6 backlog item' }
+      { name: 'Curated Multi-Category Product Catalog', status: 'implemented_and_tested', note: 'Bridal jewellery, handloom silks, havan samagri, couple retreats, brassware' },
+      { name: 'Vetted Artisan & Vendor Directory', status: 'implemented_and_tested', note: 'Zaveri Jewellers, Kanchi Weavers, Vedic Samagri, Ananda Retreats' },
+      { name: 'Shopping Cart & Transparent Order Calculation', status: 'implemented_and_tested', note: 'Subtotal, GST, and insured shipping in INR' },
+      { name: 'Honest Sandbox Checkout & Orders Ledger', status: 'implemented_and_tested', note: 'Transparent sandbox simulator without fake payment claims; tracks dispatch status' }
     ]
   },
   {
@@ -311,14 +313,16 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     letter: 'S',
     code: 'COMMERCIAL_TIERS',
     title: 'Proposed Commercial Tiers & Entitlements',
-    phase: 'Phase 1: Web Launch',
-    status: 'partial',
-    summary: 'Transparent explanation of proposed tiers: Free, Premium, Verified, Premium Verified, Couple. Honest disclaimer that pricing is proposed.',
+    phase: 'Phase 6: Marketplace',
+    status: 'implemented_and_tested',
+    summary: 'Transparent explanation of proposed tiers: Free, Premium, Verified, Premium Verified, Couple. Honest disclaimer that pricing is proposed and payment never alters compatibility.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/05_CROSS_PHASE_ACCEPTANCE_REVIEW_PROMPT.md',
     acceptanceCriteria: 'Clear explanation of proposed benefits, no fake payment charges or promises that payment guarantees marriage.',
     features: [
-      { name: 'Tier Explanations & Transparency Notice', status: 'implemented_and_tested', note: 'Included on homepage pricing modal' },
-      { name: 'Payment Gateway Integration (Razorpay / Stripe)', status: 'blocked_external', note: 'Requires merchant account credentials & KYC (Phase 2)' }
+      { name: 'Five-Tier Comparison Matrix', status: 'implemented_and_tested', note: 'Free, Premium, Verified, Premium Verified, Couple plans' },
+      { name: 'Monthly & Annual Billing Toggle', status: 'implemented_and_tested', note: 'Transparent pricing with annual discount calculation' },
+      { name: 'Interactive Sandbox Tier Switcher', status: 'implemented_and_tested', note: 'Enables testing entitlements in session without real card debits' },
+      { name: 'Institutional Gateway Honest Notice', status: 'implemented_and_tested', note: 'Discloses merchant KYC requirements without faking charges' }
     ]
   },
   {

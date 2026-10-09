@@ -19,6 +19,7 @@ import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
 import { MarriageIntelligenceHub } from './components/intelligence/MarriageIntelligenceHub';
 import { SecondChapterHub } from './components/secondChapter/SecondChapterHub';
 import { PrathaHub } from './components/pratha/PrathaHub';
+import { MarketplaceHub } from './components/marketplace/MarketplaceHub';
 
 const MainRouter: React.FC = () => {
   const { activeTab } = useApp();
@@ -33,6 +34,7 @@ const MainRouter: React.FC = () => {
       {activeTab === 'trust' && <TrustDashboard />}
       {activeTab === 'intelligence' && <MarriageIntelligenceHub />}
       {activeTab === 'pratha' && <PrathaHub />}
+      {activeTab === 'marketplace' && <MarketplaceHub />}
       {activeTab === 'profile' && <ProfileView />}
       {activeTab === 'roadmap' && <RoadmapView />}
       {activeTab === 'onboarding' && <OnboardingFlow />}

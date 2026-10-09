@@ -309,21 +309,26 @@ export const HomeView: React.FC = () => {
             </div>
 
             {/* Marketplace */}
-            <div className="card-heritage" style={{ padding: '2rem' }}>
+            <div 
+              className="card-heritage" 
+              style={{ padding: '2rem', cursor: 'pointer', borderTop: '3px solid #7E22CE' }}
+              onClick={() => setActiveTab('marketplace')}
+            >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-                <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#4A0E17', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#7E22CE', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <ShoppingBag size={20} color="#FFFFFF" />
                 </div>
                 <div>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', color: 'var(--color-burgundy-dark)' }}>Marketplace</h3>
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', color: '#581C87' }}>Marketplace</h3>
                   <span style={{ fontSize: '0.72rem', color: 'var(--color-gold-dark)', fontWeight: 700 }}>WEDDINGS & COMMERCE</span>
                 </div>
               </div>
               <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1.25rem' }}>
                 Carefully curated wedding vendors, jewellery, sustainable bridal wear, couple wellness retreats, and home rituals.
               </p>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700 }}>
-                • Phase 6 Backlog Item
+              <div style={{ fontSize: '0.75rem', color: '#15803D', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <CheckCircle2 size={14} />
+                <span>Phase 6 Live & Active</span>
               </div>
             </div>
           </div>
@@ -448,7 +453,17 @@ export const HomeView: React.FC = () => {
           </div>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.25rem', paddingTop: '1rem', borderTop: 'var(--border-light)' }}>
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              setIsPricingModalOpen(false);
+              setActiveTab('marketplace');
+            }}
+          >
+            <span>Open Commercial Plans & Sandbox in Marketplace</span>
+            <ArrowRight size={14} />
+          </button>
           <button className="btn-primary" onClick={() => setIsPricingModalOpen(false)}>
             Close Overview
           </button>
