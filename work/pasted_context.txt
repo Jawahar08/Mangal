@@ -1,0 +1,1314 @@
+# MANGALSUTRA 2.0 — MASTER PROJECT CONTEXT, UX-FIRST PRODUCT SPECIFICATION, AND DEVELOPMENT INSTRUCTIONS
+
+## 1. YOUR ROLE
+
+Act as a senior product architect, UX researcher, principal UI/UX designer, senior frontend engineer, full-stack engineer, database architect, AI integration engineer, security engineer, accessibility specialist, and technical project manager.
+
+You are working on **MangalSutra 2.0**, a comprehensive, UX-first matrimonial and relationship platform.
+
+Your primary responsibility is to understand the complete product vision, audit the existing repository, identify what already exists, explain the architecture and implementation status, and help develop the application without losing any requirements.
+
+**USER EXPERIENCE IS THE HIGHEST PRODUCT PRIORITY.**
+
+Do not treat UX as a visual polishing step after implementation. UX must drive product structure, user journeys, information architecture, component design, interaction behavior, privacy controls, error handling, accessibility, and implementation decisions.
+
+Do not immediately start rewriting files or generating a large amount of code. First understand the existing project and report your findings. Preserve working functionality and make changes incrementally.
+
+---
+
+## 2. THE PRODUCT VISION
+
+MangalSutra is not a conventional matrimonial website.
+
+A conventional matrimonial product often follows:
+
+Profile → Like → Match → Chat → Marriage.
+
+MangalSutra should support a broader journey:
+
+Discover → Understand → Verify → Assess → Connect → Prepare → Marry → Nurture.
+
+The long-term journey is:
+
+Find a person → Understand each other → Verify important information → Prepare for marriage → Marry → Build a healthy family → Live well together → Grow together.
+
+The core positioning is:
+
+**MANGALSUTRA — More Than a Match. A Life Journey.**
+
+Supporting concepts include:
+
+- Marriage, With Trust.
+- Find. Verify. Understand. Belong.
+- AI-powered matchmaking.
+- Vedic compatibility.
+- Digital verification.
+- Relationship intelligence.
+- Spiritual wellbeing.
+
+The product has four connected parts:
+
+1. **MangalSutra:** Core matchmaking, profile management, discovery, compatibility, messaging, and relationship journeys.
+2. **ChaanBean:** Trust and verification infrastructure, including evidence-backed verification workflows, consent management, protected documents, and verification statuses.
+3. **Pratha:** Spirituality, rituals, meditation, wellness, and relationship guidance.
+4. **MangalSutra Marketplace:** Future commerce for wedding services, wellbeing products, spiritual products, and couple experiences.
+
+The platform should help people make informed relationship decisions and continue providing value after marriage.
+
+Do not reduce the project to a generic dating application, a profile-card gallery, or a collection of unrelated dashboards.
+
+---
+
+## 3. NON-NEGOTIABLE DEVELOPMENT PRINCIPLES
+
+### 3.1 UX-first development
+
+Every feature must be designed around an actual user goal.
+
+Before implementing a significant feature, understand:
+
+- Who uses it.
+- What problem it solves.
+- When it becomes relevant.
+- What information it needs.
+- What the user sees before, during, and after the action.
+- What happens when the action fails.
+- What happens when information is missing.
+- What the user can cancel, edit, skip, or undo.
+- What personal information is exposed.
+- How the experience works on mobile, tablet, and desktop.
+- How usability and accessibility will be tested.
+
+Do not create interfaces merely because a database table or API endpoint exists.
+
+### 3.2 Inspect before changing
+
+Before editing the repository:
+
+- Inspect the complete project structure.
+- Read the package manifest and dependency versions.
+- Inspect routing and application entry points.
+- Inspect existing components and design patterns.
+- Inspect authentication and authorization.
+- Inspect database schemas and migrations.
+- Inspect API endpoints, Edge Functions, and server-side logic.
+- Inspect existing matching and compatibility implementations.
+- Inspect AI integrations.
+- Inspect verification integrations.
+- Inspect tests, lint configuration, and build scripts.
+- Inspect existing responsive layouts and accessibility.
+- Identify unfinished features, duplicated logic, security issues, and broken flows.
+
+Do not assume the written specification accurately describes the current implementation. Verify everything against the code.
+
+If the MangalSutra Web/App PDF is available, read it completely, including diagrams, tables, page-specific requirements, and the later sections. Preserve the original requirements and distinguish them from your recommendations.
+
+### 3.3 Preserve the existing technology stack
+
+The project documentation describes an existing foundation using:
+
+- React.
+- TypeScript.
+- Vite.
+- Supabase and PostgreSQL.
+- Edge Functions.
+- Gemini AI.
+- Firebase Cloud Messaging.
+- Capacitor for Android.
+
+Confirm which technologies and versions are actually present.
+
+Reuse existing working architecture wherever practical. Do not migrate frameworks, replace the database, introduce another backend, or rewrite functioning modules without a clear technical justification.
+
+If the existing repository uses a different or newer configuration, report the difference and recommend the least disruptive approach.
+
+### 3.4 No fabricated capabilities
+
+Never pretend that a third-party API, government integration, verification provider, database record, or feature exists when it does not.
+
+Use clear distinctions between:
+
+- Implemented and tested.
+- Implemented but not verified.
+- Partially implemented.
+- Mocked or simulated.
+- Planned.
+- Blocked by provider access, credentials, authorization, or external dependencies.
+
+Never present mock verification results as real verification.
+
+Never fabricate astrology results, compatibility calculations, identity verification results, court-record findings, police checks, or AI evidence.
+
+### 3.5 Maintainability
+
+Use modular architecture, reusable components, clear types, validated data contracts, documented business rules, automated tests, and incremental migrations.
+
+Avoid monolithic components, duplicated business logic, unnecessary dependencies, hardcoded production data, insecure client-side authorization, and placeholder buttons that appear functional but do nothing.
+
+### 3.6 Work in controlled phases
+
+Do not attempt to implement the entire ecosystem in one enormous change.
+
+Maintain a complete long-term feature inventory while delivering a small, testable, coherent first release.
+
+Do not remove a future feature from the product vision simply because it is not part of Phase 1.
+
+---
+
+## 4. COMPLETE PRODUCT REQUIREMENTS
+
+### MODULE A — PUBLIC WEBSITE AND HOMEPAGE
+
+Create a premium, welcoming, trustworthy homepage.
+
+Hero headline:
+
+"Find Your Life Partner With More Confidence."
+
+Supporting message:
+
+"Compatibility. Verification. Wisdom. Wellbeing."
+
+The four primary actions are:
+
+1. Find a Match.
+2. Verify a Profile.
+3. Prepare for Marriage.
+4. Live a Better Marriage.
+
+The public website should explain:
+
+- What MangalSutra does.
+- How it differs from a conventional matrimonial service.
+- How matchmaking works.
+- What verification means and does not mean.
+- How compatibility works.
+- How ChaanBean supports trust.
+- How Pratha supports spirituality and wellbeing.
+- How the wider relationship journey works.
+
+Include suitable navigation for sign-up, login, product explanations, pricing when implemented, safety, privacy, support, and legal information.
+
+Do not overload the homepage with every feature. Establish a clear primary action and progressively reveal more information.
+
+### MODULE B — CONVERSATIONAL ONBOARDING
+
+Support these user intentions:
+
+- Marriage.
+- Remarriage.
+- Dating leading to marriage.
+- Finding a life partner.
+- Parent or guardian seeking a match.
+
+Create an adaptive, conversational onboarding flow inspired by excellent form UX.
+
+Users should be able to:
+
+- Enter information manually.
+- Describe themselves in their own words.
+- Upload biodata.
+- Upload an existing matrimonial profile.
+- Review extracted information.
+- Correct incorrect data.
+- Skip optional questions.
+- Save progress.
+- Resume later.
+- Understand why sensitive questions are being asked.
+
+AI-assisted extraction may identify:
+
+- Age and date of birth.
+- Education.
+- Profession.
+- Location.
+- Family background.
+- Lifestyle.
+- Interests.
+- Partner expectations.
+- Religion and community preferences.
+- Marriage expectations.
+
+Only ask for missing information after extracting and validating existing information.
+
+Never automatically publish AI-extracted information without user review.
+
+Handle invalid files, unsupported formats, extraction failures, duplicate information, incomplete forms, and interrupted uploads gracefully.
+
+### MODULE C — PROFILE MANAGEMENT
+
+Retain the relevant existing profile capabilities, including:
+
+- Basic biodata.
+- Family background.
+- Education.
+- Occupation.
+- Lifestyle.
+- Hometown.
+- Horoscope inputs.
+- Partner preferences.
+
+Organize the profile into five layers:
+
+1. Who I Am.
+2. My Life.
+3. My Family.
+4. My Expectations.
+5. My Trust Profile.
+
+Support profile readiness, editable fields, field validation, profile preview, profile visibility, private information, photo permissions, and clear completion guidance.
+
+The documentation mentions more than twenty required fields. Verify the actual existing schema and business rules before defining the required fields.
+
+Do not force users to reveal unnecessary information. Where appropriate, allow "Prefer not to say."
+
+### MODULE D — DISCOVERY AND MATCHMAKING
+
+Support:
+
+- Recommended matches.
+- New matches.
+- Preference-based discovery.
+- Saved profiles.
+- Second Chapter discovery.
+- Search and filtering.
+- Match ranking.
+- Detailed profiles.
+- Expressing interest.
+- Mutual connections.
+- Connection management.
+- Photo access requests.
+- Private messaging.
+- Notifications.
+- Profile blocking and reporting.
+
+Matching should consider relevant user preferences and available information.
+
+Design profile cards for easy scanning, but do not reduce users to superficial attributes.
+
+The profile detail page should help a person understand identity, life, family, expectations, compatibility, and verification status without exposing private information.
+
+Explain match recommendations when possible. Do not imply that a match recommendation guarantees relationship success.
+
+### MODULE E — ASTROLOGY AND COMPATIBILITY
+
+Preserve the proposed astrology features:
+
+- 36 Guna.
+- Manglik.
+- Nakshatra.
+- Dosha.
+- Numerology.
+- Lifestyle chemistry.
+
+Support the four Gotra feature specified for Phase 1 after verifying its exact requirements in the existing application.
+
+Add modern compatibility across twelve dimensions:
+
+1. Communication.
+2. Emotional maturity.
+3. Financial philosophy.
+4. Career expectations.
+5. Children.
+6. Parenting.
+7. Living arrangements.
+8. Family boundaries.
+9. Religion and spirituality.
+10. Lifestyle.
+11. Intimacy expectations.
+12. Conflict resolution.
+
+Keep the calculation engine separate from the presentation layer.
+
+Use validated rules and accurate inputs. Do not invent calculation rules or replace an existing authoritative calculation with an LLM-generated answer.
+
+Present compatibility in understandable categories such as:
+
+- Strong.
+- Needs discussion.
+- Important conversation required.
+
+Avoid arbitrary marriage-success scores.
+
+Explain limitations, missing answers, differences in expectations, and the source of each result.
+
+### MODULE F — CHAANBEAN TRUST PROFILE
+
+Build a dedicated trust profile with appropriate verification categories:
+
+- Mobile.
+- Email.
+- Identity.
+- Age and date of birth.
+- Education.
+- Employment.
+- Address.
+- Marriage status.
+- Divorce status.
+- Court-record screening.
+- Police or antecedent verification where legitimately authorized and available.
+- Certificates.
+- Other permitted checks where justified.
+
+Support these states:
+
+- Verified.
+- Pending.
+- Verification unavailable.
+- User supplied.
+- Further review required.
+
+The interface must explain the meaning of each state.
+
+Do not equate a pending check with failure. Do not equate the absence of a public record with proof that a person has never been involved in a case.
+
+Use cautious language such as:
+
+"No matching public court record identified."
+
+Verification must be evidence-based, consent-based, auditable, and limited to legally authorized purposes.
+
+Do not label users as inherently good, bad, safe, dangerous, or trustworthy based on an unexplained score.
+
+### MODULE G — MARITAL STATUS AND DIVORCE VERIFICATION
+
+Support marital statuses:
+
+- Never married.
+- Married.
+- Divorced.
+- Widowed.
+- Separated.
+- Annulled.
+
+Build conditional workflows for appropriate verification.
+
+For divorce-related checks, potential evidence includes:
+
+- Divorce decree.
+- Court order.
+- Case or CNR details where available.
+- Marriage certificate.
+- Date of divorce.
+- Voluntarily disclosed children or custody information where appropriate.
+
+Provide:
+
+- Clear explanations.
+- Secure document submission.
+- Review status.
+- Missing-document feedback.
+- Appropriate correction and appeal processes.
+- User-controlled result visibility.
+- Limited verification summaries.
+
+Do not expose complete legal documents or sensitive custody information to other users.
+
+Treat divorced, widowed, separated, and remarriage-seeking users with dignity.
+
+### MODULE H — MARRIAGE READINESS
+
+Build a relationship-readiness experience that helps users identify important topics to discuss.
+
+Use clear, non-judgmental summaries:
+
+- Strong.
+- Needs discussion.
+- Important conversation required.
+
+Example:
+
+"Your compatibility looks strong in several areas, but three topics deserve discussion before engagement."
+
+The application must not claim to predict whether a marriage will succeed.
+
+Any consequential relationship assessment should use a defensible methodology and appropriate expert input. Do not present unvalidated assessments as clinical or scientific diagnoses.
+
+### MODULE I — TALK BEFORE YOU MARRY
+
+Create a signature guided-conversation feature.
+
+Generate discussion prompts around:
+
+- Money and financial independence.
+- Parents and family responsibilities.
+- Children and parenting.
+- Career and relocation.
+- Lifestyle and social expectations.
+- Religion and festivals.
+- Living arrangements.
+- Communication.
+- Conflict resolution.
+- Future goals.
+
+Allow each person to reflect privately before choosing what to share.
+
+Provide helpful explanations and suggestions rather than judging either partner.
+
+Support saving, skipping, revisiting, and completing conversations at the user's own pace.
+
+### MODULE J — COUPLE CONVERSATION MODE
+
+Create a private shared space activated only after both people agree.
+
+Sections:
+
+- Know Each Other.
+- Money.
+- Family.
+- Home.
+- Children.
+- Spirituality.
+- Intimacy.
+- Mental Wellbeing.
+- Career.
+- Future.
+
+Support:
+
+- Private individual reflections.
+- Explicit sharing controls.
+- Shared notes where appropriate.
+- Guided discussion prompts.
+- Joint milestones.
+- Consent-based summaries.
+
+Never silently share private answers with the other partner.
+
+Do not use private reflections for unrelated purposes without an appropriate legal basis and transparent permission.
+
+### MODULE K — RELATIONSHIP RISK SIGNALS
+
+Potential topics for discussion include:
+
+- Extreme financial expectations.
+- Major disagreement about children.
+- Contradictory marital history.
+- Inconsistent profile information.
+- Significant lifestyle mismatch.
+- Pressure around money.
+- Unwillingness to discuss important topics.
+- Reported controlling behaviour.
+- Repeated inconsistencies.
+
+Use the name "Relationship Risk Signals."
+
+Do not declare a person dangerous or guilty based solely on a mismatch, an allegation, or AI inference.
+
+Explain the evidence source, uncertainty, and possible next steps. Where appropriate, direct users to qualified support.
+
+### MODULE L — ASK MS TRUST
+
+Build a confidential assistant that can help users determine what to clarify when they have concerns.
+
+It should explain:
+
+- What information is missing.
+- Which documents may clarify the situation.
+- Which questions the user could ask.
+- Which details should be verified.
+- Whether professional or legal assistance may be appropriate.
+
+Use trusted reference material and controlled AI outputs.
+
+The assistant must distinguish verified facts, user-provided statements, public-record limitations, and suggestions.
+
+Do not invent evidence, legal conclusions, or background-check results.
+
+### MODULE M — SECOND CHAPTER
+
+Create a dedicated, dignified experience for:
+
+- Divorced users.
+- Widowed users.
+- Separated users where appropriate.
+- Single parents.
+- People seeking remarriage.
+
+Features:
+
+1. Rebuild Profile.
+2. What I Learned.
+3. What I Want Now.
+4. What Has Changed.
+5. What I Do Not Want Again.
+6. Children and Family.
+7. Children’s ages and appropriate custody/co-parenting information.
+8. Optional emotional-readiness reflection.
+9. Second-marriage matching.
+10. Healing and relationship education.
+11. Legal assistance resources.
+12. Financial rebuilding resources.
+13. Family and co-parenting resources.
+14. Spiritual and wellbeing experiences.
+
+Users must be able to choose between a relevant Second Chapter discovery experience and seeing other eligible users.
+
+Do not permanently segregate remarriage-seeking users.
+
+Handle children’s information and previous relationship details as sensitive data.
+
+### MODULE N — PRATHA
+
+Plan the spiritual and wellbeing layer around user preference.
+
+Provide journeys such as:
+
+- Traditional: temple visits, pooja, rituals.
+- Wellness: meditation, yoga and appropriate wellness practices.
+- Modern Spiritual: mindfulness and relationship practices.
+- Family: festivals and family rituals.
+- Couple: joint meditation, gratitude and prayer.
+
+Potential services:
+
+- Daily spiritual practices.
+- Relationship rituals.
+- Temple experiences.
+- Pooja.
+- Meditation.
+- Yoga.
+- Spiritual learning.
+- Festival calendar.
+- Couple prayers.
+- Home rituals.
+- Personalized spiritual recommendations.
+
+Make participation optional and respect differing preferences.
+
+Plan single sign-on and service boundaries if Pratha becomes a separate platform.
+
+### MODULE O — MANGALSUTRA MARKETPLACE
+
+Design the long-term marketplace for:
+
+Before marriage:
+- Gifts.
+- Wellness.
+- Ayurveda.
+- Skincare.
+- Grooming.
+- Meditation.
+- Books.
+- Couple experiences.
+
+Wedding:
+- Jewellery.
+- Clothing.
+- Pooja products.
+- Invitations.
+- Photography.
+- Travel.
+- Wedding services.
+
+After marriage:
+- Couple wellness.
+- Home products.
+- Relationship books.
+- Fitness.
+- Meditation.
+- Other suitable wellness and spiritual products.
+
+Plan for product discovery, search, category browsing, product details, vendors, payments, orders, cancellations, refunds, customer support, and fulfillment.
+
+Do not implement a fake checkout or claim a payment succeeded without a real provider response.
+
+The marketplace must not overwhelm the primary matchmaking experience.
+
+### MODULE P — MARRIAGE JOURNEY DASHBOARD
+
+Create a configurable, shared relationship journey with possible milestones:
+
+1. Matched.
+2. Trust Check.
+3. Know Each Other.
+4. Important Conversations.
+5. Family Introduction.
+6. Marriage Readiness.
+7. Engagement.
+8. Wedding.
+9. First 100 Days.
+10. First Year.
+11. Long-term Wellbeing.
+
+Milestones must be optional and adaptable. Not every couple follows the same sequence.
+
+Use mutual consent for shared milestones and avoid treating relationship progress as a competition.
+
+### MODULE Q — FIRST 100 DAYS
+
+Create a post-marriage programme:
+
+- Days 1–7: Understanding expectations.
+- Days 8–30: Communication.
+- Days 31–60: Money and family.
+- Days 61–90: Lifestyle.
+- Days 91–100: Relationship health check.
+
+Both partners may answer independently.
+
+The application can identify areas where expectations differ and suggest discussion prompts.
+
+Do not diagnose relationship problems or treat different answers as proof that a marriage is failing.
+
+### MODULE R — ANNUAL MARRIAGE HEALTH CHECK
+
+Provide an optional anniversary reflection around:
+
+- Communication.
+- Emotional connection.
+- Financial stress.
+- Family.
+- Physical wellbeing.
+- Spiritual connection.
+- Time together.
+- Future goals.
+
+Offer appropriate optional next steps, such as counselling, couple experiences, Pratha programmes, wellness programmes, or qualified expert sessions.
+
+Use privacy-preserving results and careful non-diagnostic language.
+
+### MODULE S — PREMIUM AND COMMERCIAL TIERS
+
+The proposed commercial model includes:
+
+FREE:
+- Basic profile.
+- Basic discovery.
+- Basic compatibility.
+
+PREMIUM:
+- Advanced matching.
+- Full compatibility.
+- AI relationship assistant.
+- Additional conversation capabilities.
+
+VERIFIED:
+- ChaanBean Trust Profile.
+- Document verification.
+- Marriage verification.
+
+PREMIUM VERIFIED:
+- Advanced verification bundle.
+- Priority matching.
+- Relationship assessment.
+- Marriage preparation.
+
+COUPLE:
+- Couple journey.
+- Marriage readiness.
+- Pratha.
+- Wellness.
+- Counselling.
+
+Treat these as proposed plans, not finalized entitlements.
+
+Do not equate paid membership with actual verification, personal safety, or relationship compatibility.
+
+### MODULE T — COMPLETE NAVIGATION ARCHITECTURE
+
+The eventual navigation should support:
+
+HOME
+
+DISCOVER
+- Recommended Matches.
+- New Matches.
+- Second Chapter.
+- Saved.
+
+COMPATIBILITY
+- Astrology.
+- Guna Milan.
+- Lifestyle.
+- Personality.
+- Relationship Compatibility.
+
+TRUST
+- ChaanBean.
+- Identity.
+- Documents.
+- Marriage.
+- Divorce.
+- Education.
+- Employment.
+- Court.
+- Police/Antecedent, where authorized.
+
+RELATIONSHIP
+- Talk Before Marriage.
+- Couple Journey.
+- Marriage Readiness.
+- Counselling.
+
+SECOND CHAPTER
+- Divorce.
+- Widowed.
+- Single Parents.
+- Healing.
+- Remarriage.
+
+PRATHA
+- Temples.
+- Pooja.
+- Spirituality.
+- Meditation.
+- Couple Practices.
+
+MARKETPLACE
+- Wedding.
+- Wellness.
+- Couple.
+- Spiritual.
+
+OUR MARRIAGE
+- Journey.
+- First 100 Days.
+- Wellbeing.
+- Anniversary.
+
+ACCOUNT AND SAFETY
+- Profile Settings.
+- Security.
+- Privacy.
+- Notifications.
+- Blocking and Reporting.
+- Support.
+- Data Access and Deletion.
+
+For the first release, simplify the primary navigation. A reasonable starting point is Discover, Matches, Messages, Trust, and My Profile, subject to the existing application audit.
+
+Do not place every future feature in the primary navigation.
+
+---
+
+## 5. TECHNICAL ARCHITECTURE
+
+First inspect and document the actual repository architecture.
+
+The documented architecture includes:
+
+- React.
+- TypeScript.
+- Vite.
+- Supabase/PostgreSQL.
+- Edge Functions.
+- Gemini AI.
+- Firebase Cloud Messaging.
+- Capacitor for Android.
+
+The proposed logical services are:
+
+1. Frontend and design system.
+2. Authentication and authorization.
+3. API/Edge layer.
+4. Match engine.
+5. Astrology and compatibility engine.
+6. Astra AI.
+7. ChaanBean verification engine.
+8. ChaanBean Trust Vault.
+9. PostgreSQL/Supabase.
+10. Authorized external verification providers.
+11. Pratha.
+12. Marketplace.
+
+Maintain clear service boundaries and avoid duplicating business logic between frontend and backend.
+
+### Existing database objects to inspect
+
+The documentation names:
+
+- `profiles`
+- `private_profiles`
+- `preferences`
+- `connections`
+- `conversations`
+- `messages`
+- `photo_requests`
+- `chaanbean_requests`
+- `get_discovery_candidates()`
+
+Verify their actual existence, schema, permissions, migrations, relationships, and implementation.
+
+### Proposed additional data structures
+
+The specification proposes:
+
+- `verification_profiles`
+- `verification_requests`
+- `verification_documents`
+- `verification_results`
+- `document_issuer_records`
+- `marital_status_checks`
+- `divorce_checks`
+- `court_checks`
+- `police_verification_requests`
+- `education_verifications`
+- `employment_verifications`
+- `consent_records`
+- `audit_logs`
+- `relationship_assessments`
+- `couple_profiles`
+- `couple_journeys`
+- `relationship_conversations`
+- `second_chapter_profiles`
+- `wellbeing_programs`
+- `pratha_services`
+- `marketplace_products`
+
+These are proposed structures, not assumptions about the current schema.
+
+Do not create every table immediately. First establish ownership, access patterns, relationships, retention, deletion requirements, and security boundaries.
+
+Use appropriate migrations, constraints, indexes, authorization policies, data validation, and tests.
+
+### ChaanBean Trust Vault
+
+Sensitive verification evidence must be isolated from general matchmaking profile data.
+
+MangalSutra should receive only the verification status and limited metadata necessary for an authorized purpose.
+
+Use appropriate encryption, restricted access, secure document handling, audit trails, retention/deletion policies, and carefully scoped service credentials.
+
+Never expose privileged credentials in frontend code.
+
+Never assume the browser can safely enforce authorization by itself.
+
+### External integrations
+
+Potential verification sources include DigiLocker, eCourts, authorized government services, document issuers, educational institutions, employers, and qualified service providers.
+
+Every integration must be verified for actual availability, authorization, access requirements, data coverage, and permitted use.
+
+If an integration is unavailable, clearly identify the blocker and design an honest alternative workflow. Do not silently replace it with mock data.
+
+---
+
+## 6. PRIVACY, SECURITY, AND USER SAFETY
+
+Privacy is a core product requirement, not an optional settings page.
+
+Design for:
+
+- Data minimization.
+- Purpose limitation.
+- Transparent privacy notices.
+- Appropriate consent.
+- Authorization at every sensitive operation.
+- Protected document storage.
+- Limited verification result visibility.
+- Access logging.
+- Data retention and deletion.
+- Secure authentication and session management.
+- Account recovery.
+- Blocking and reporting.
+- Abuse and harassment handling.
+- Correction of inaccurate profile and verification information.
+- Appropriate review and escalation workflows.
+- Protection of private messages and couple reflections.
+
+Clearly distinguish user-supplied information from independently verified information.
+
+Do not make unsupported legal or factual claims.
+
+The platform must comply with applicable privacy, consumer, payment, and other relevant requirements. Provider-specific and legal questions require appropriate verification rather than assumptions.
+
+---
+
+## 7. UX AND DESIGN SYSTEM REQUIREMENTS
+
+The interface should feel premium, calm, trustworthy, human, culturally thoughtful, and modern.
+
+Explore an appropriate visual direction using:
+
+- Warm ivory and neutral backgrounds.
+- Deep wine or burgundy as a possible primary color.
+- Muted antique gold as a restrained accent.
+- Accessible status colors.
+- Clear typography.
+- Generous whitespace.
+- Consistent spacing.
+- Subtle cultural visual references.
+- Respectful and diverse imagery.
+- Purposeful motion.
+
+These are design directions, not rigid requirements. Validate them through the existing brand identity and usability research.
+
+### Design system
+
+Establish reusable tokens and components for:
+
+- Typography.
+- Colors.
+- Spacing.
+- Borders and radii.
+- Elevation.
+- Layout.
+- Breakpoints.
+- Buttons.
+- Inputs.
+- Form validation.
+- Profile cards.
+- Verification badges.
+- Progress indicators.
+- Consent dialogs.
+- Tabs.
+- Navigation.
+- Drawers and modals.
+- Toasts.
+- Loading skeletons.
+- Empty states.
+- Error states.
+- Confirmation flows.
+
+Avoid inconsistent styling and repeated one-off components.
+
+### Responsive UX
+
+The application must work well on:
+
+- Mobile phones.
+- Tablets.
+- Laptops.
+- Desktop screens.
+
+Do not simply shrink a desktop interface to fit a phone.
+
+Choose suitable layouts, navigation, spacing, form behavior, card presentation, and touch targets for each viewport.
+
+### Accessibility
+
+Implement and test:
+
+- Semantic structure.
+- Keyboard navigation.
+- Visible focus states.
+- Screen-reader labels.
+- Sufficient contrast.
+- Clear validation messages.
+- Reduced-motion support.
+- Accessible dialogs.
+- Meaningful icon labels.
+- Text labels alongside verification colors.
+- Usable form controls and touch targets.
+
+### Every important page must include real interaction states
+
+Account for:
+
+- Loading.
+- Success.
+- Failure.
+- Empty results.
+- Missing data.
+- Invalid input.
+- Unauthorized access.
+- Pending verification.
+- Unavailable providers.
+- Slow connections.
+- Retry behavior.
+- Unsaved changes.
+- Interrupted uploads.
+- Expired sessions.
+
+Do not build a visually polished happy path while ignoring everything that happens when the application fails.
+
+---
+
+## 8. USER JOURNEYS TO DESIGN AND TEST
+
+At minimum, map these journeys before completing the corresponding implementations.
+
+### Journey 1: New user
+
+Homepage → Registration → Intent selection → Profile creation → Preferences → Profile readiness → Discovery.
+
+### Journey 2: Find and understand a match
+
+Discovery → Profile details → Expectations → Compatibility → Trust status → Express interest → Mutual connection.
+
+### Journey 3: Verification
+
+Trust dashboard → Select check → Understand purpose → Consent → Submit evidence → Track progress → Review status → Manage visibility.
+
+### Journey 4: Communication
+
+Mutual connection → Conversation → Privacy controls → Guided discussion → Optional couple mode.
+
+### Journey 5: Marriage preparation
+
+Compatibility overview → Talk Before You Marry → Private reflections → Mutually shared answers → Marriage Journey milestones.
+
+### Journey 6: Second Chapter
+
+Remarriage onboarding → Profile creation → Family and partner preferences → Privacy controls → Relevant discovery.
+
+### Journey 7: After marriage
+
+Marriage Journey → First 100 Days → Independent wellbeing reflections → Optional shared summaries → Annual Health Check.
+
+### Journey 8: Pratha and marketplace
+
+Explore services → Understand the offering → View details → Booking or purchase when actually implemented → Confirmation and support.
+
+For each journey, document the user's goal, screens, actions, information required, privacy boundaries, failure states, and completion criteria.
+
+---
+
+## 9. DEVELOPMENT ROADMAP
+
+Preserve the following six strategic phases.
+
+### PHASE 1 — WEB LAUNCH
+
+- Login and account recovery.
+- Profile creation.
+- Marriage mode.
+- Discovery.
+- Matching.
+- Astrology.
+- 36 Guna.
+- Four Gotra, subject to confirming existing requirements.
+- Lifestyle compatibility.
+- Chat.
+- Astro AI.
+- Basic verification.
+- Responsive web UX.
+- Privacy and security foundations.
+
+### PHASE 2 — TRUST
+
+- Identity.
+- Date of birth.
+- Address.
+- Education.
+- Employment.
+- Marriage certificate.
+- Divorce verification.
+- Court screening.
+- Authorized police/antecedent workflow.
+- Certificate verification.
+- Verification statuses.
+- Consent management.
+- Audit trail.
+
+### PHASE 3 — MARRIAGE INTELLIGENCE
+
+- Talk Before You Marry.
+- Relationship compatibility.
+- Marriage readiness.
+- Relationship Risk Signals.
+- Couple Journey.
+- Counselling integrations.
+- First 100 Days.
+
+### PHASE 4 — SECOND CHAPTER
+
+- Divorce, widowhood, and single-parent journeys.
+- Second marriage.
+- Healing.
+- Co-parenting.
+- Legal assistance resources.
+- Financial restart resources.
+- Relationship readiness.
+- Dedicated but optional discovery.
+
+### PHASE 5 — PRATHA
+
+- Temples.
+- Pooja.
+- Rituals.
+- Spiritual journeys.
+- Meditation.
+- Couple spirituality.
+- Personalized spiritual recommendations.
+
+### PHASE 6 — MARKETPLACE
+
+- Wedding.
+- Beauty and grooming.
+- Ayurveda and wellness.
+- Couple products.
+- Spiritual products.
+- Experiences.
+- Retreats.
+- Vendor and order operations.
+
+Do not build all six phases in the first implementation.
+
+---
+
+## 10. REQUIRED FIRST ACTION: COMPLETE REPOSITORY AUDIT
+
+Before implementing features, inspect the project and produce a structured report.
+
+Include:
+
+1. Project overview.
+2. Actual frontend and backend architecture.
+3. Frameworks and dependency versions.
+4. Application entry points and routing.
+5. Existing design system and components.
+6. Current pages and user journeys.
+7. Authentication and authorization.
+8. Database schema and migrations.
+9. Existing APIs and Edge Functions.
+10. Existing matchmaking logic.
+11. Astrology and compatibility implementation.
+12. AI integrations.
+13. Messaging and notifications.
+14. Verification functionality.
+15. Existing tests and build configuration.
+16. Security and privacy findings.
+17. Accessibility and responsive UX findings.
+18. Missing features compared with the complete specification.
+19. Duplicated or unfinished implementations.
+20. Reusable components and services.
+21. Technical blockers and external dependencies.
+22. Recommended implementation sequence.
+
+For each major feature, classify its state as:
+
+- Implemented and tested.
+- Implemented but not fully verified.
+- Partially implemented.
+- Mocked or simulated.
+- Missing.
+- Blocked by an external dependency.
+
+Reference actual file paths, components, database objects, functions, and tests when available.
+
+Do not claim that something is implemented merely because a filename exists.
+
+### Deliverable A
+
+Create or present a comprehensive feature matrix mapping every module in this specification to its actual implementation status.
+
+### Deliverable B
+
+Create a gap analysis explaining what must be reused, fixed, redesigned, implemented, or validated.
+
+### Deliverable C
+
+Create a UX audit identifying confusing flows, unnecessary steps, weak hierarchy, missing feedback, accessibility issues, privacy risks, and responsive layout problems.
+
+### Deliverable D
+
+Recommend a phased development backlog with dependencies, acceptance criteria, and test requirements.
+
+### Deliverable E
+
+Explain the entire application architecture in understandable language, including how the frontend, backend, database, AI, verification, messaging, and future services work together.
+
+**After completing the audit, explain your findings before making major code changes.**
+
+If information is missing, identify the uncertainty explicitly. Do not invent implementation details.
+
+---
+
+## 11. IMPLEMENTATION RULES AFTER THE AUDIT
+
+Once the audit and first implementation plan are complete, proceed incrementally.
+
+For each feature:
+
+1. Confirm its purpose and scope.
+2. Identify the user journey.
+3. Identify existing code to reuse.
+4. Define UI states and acceptance criteria.
+5. Implement the smallest complete vertical slice.
+6. Connect real backend functionality where available.
+7. Validate permissions and sensitive-data handling.
+8. Test responsive behavior and accessibility.
+9. Run appropriate automated tests.
+10. Verify the production build.
+11. Report files changed and any unresolved limitations.
+
+Do not stop at static mockups unless the current task explicitly requests a prototype.
+
+Do not connect fake data to a UI that claims to display real verification results.
+
+Do not use placeholder links, inert buttons, unimplemented form submissions, or fake success messages.
+
+Do not silently replace working implementations.
+
+Use small, reviewable changes and explain consequential architecture decisions.
+
+---
+
+## 12. TESTING AND ACCEPTANCE CRITERIA
+
+The application should be tested for:
+
+- Registration and login.
+- Profile creation and editing.
+- Input validation.
+- Profile visibility and privacy.
+- Discovery and matching.
+- Compatibility calculations.
+- Messaging authorization.
+- Verification consent.
+- Unauthorized access attempts.
+- Sensitive-document access controls.
+- Verification failure and pending states.
+- Private versus shared couple answers.
+- Second Chapter preferences.
+- AI failure and fallback behavior.
+- Account recovery and deletion.
+- Responsive behavior.
+- Keyboard navigation and accessibility.
+- Loading, empty, error, and success states.
+- Database migrations.
+- API authorization.
+- Production build integrity.
+
+Use automated tests wherever practical, including unit, integration, and end-to-end tests for critical journeys.
+
+Never report tests as passing unless they were actually run successfully.
+
+---
+
+## 13. DEFINITION OF SUCCESS
+
+MangalSutra is successful when:
+
+- Users understand the product without needing extensive explanations.
+- New users can complete onboarding without unnecessary cognitive load.
+- Users can discover relevant profiles and understand why they are recommended.
+- Compatibility results are understandable and appropriately qualified.
+- Verification states are honest, evidence-based, and clearly explained.
+- Private information remains protected.
+- Users control what they share.
+- People seeking remarriage receive a dignified experience.
+- Couples can discuss differences without the AI judging them.
+- The interface works across supported devices.
+- Accessibility is built into the design.
+- The codebase remains modular and maintainable.
+- Every implemented feature performs its advertised action.
+- The product can expand into ChaanBean, Pratha, and the Marketplace without requiring an unnecessary architectural rewrite.
+
+---
+
+## 14. YOUR IMMEDIATE INSTRUCTION
+
+Start by reading this entire specification and inspecting the available repository and project documentation.
+
+Do not immediately generate the whole application.
+
+First:
+
+1. Explain your understanding of MangalSutra and its complete ecosystem.
+2. Summarize the UX principles that must govern implementation.
+3. Audit the actual repository.
+4. Map existing features against every module in this specification.
+5. Identify what can be reused and what is missing.
+6. Report the main UX, architecture, privacy, and integration risks.
+7. Propose a prioritized Phase 1 implementation plan.
+8. Identify the first user journey to design and implement.
+9. State any uncertainties that require clarification.
+
+Then proceed in small, validated increments, preserving the full long-term vision.
+
+**Final rule: never sacrifice user experience, privacy, correctness, accessibility, or maintainability simply to implement more features faster.**
+
+Build MangalSutra as a coherent, trustworthy relationship product, not as a collection of screens.

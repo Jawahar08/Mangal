@@ -1,0 +1,1743 @@
+--- PAGE 1 ---
+ 
+I  would  build  the  Web  Version  as  Mangalsutra  2.0 ,  with  ChaanBean  becoming  the  Trust  &  
+Verification
+ 
+Engine
+,
+ 
+and
+ 
+Pratha
+ 
+becoming
+ 
+the
+ 
+Spiritual/Wellbeing
+ 
+Layer
+.
+ 
+ 
+1.  The   vision  
+Instead  of:  
+Profile  →  Like  →  Match  →  Chat  →  Marriage  
+make  it:  
+Discover  →  Understand  →  Verify  →  Assess  →  Connect  →  Prepare  →  Marry  →  Nurture  
+And  eventually:  
+Marriage  →  Family  →  Wellbeing  →  Spirituality  →  Long-term  Relationship  
+This  creates  a  much  larger  ecosystem.  
+Three  connected  platforms  
+Platform  Role  
+MANGALSUTRA  Marriage  discovery  &  relationship  platform  
+CHAANBEAN  Digital  Trust  /  Verification  Engine  
+PRATHA  Spirituality,  rituals,  wellbeing  &  relationship  guidance  
+And  later:  
+MANGALSUTRA  MARKETPLACE  
+Marriage  +  couple  wellbeing  +  spiritual  products  +  wellness  services.  
+ 
+2.  MANGALSUTRA  WEB  —  NEW  HOME  
+PAGE
+ 
+
+--- PAGE 2 ---
+The  website  should  immediately  communicate  that  this  is  not  another  matrimonial  
+website
+.
+ 
+Hero  
+Find  Your  Life  Partner  With  More  Confidence.  
+Compatibility.  Verification.  Wisdom.  Wellbeing.  
+Then  four  large  options:  
+❤  FIND  A  MATCH  
+Find  compatible  people.  
+🔐  VERIFY  A  PROFILE  
+Verify  identity,  education,  documents  and  other  permitted  checks.  
+🧘  PREPARE  FOR  MARRIAGE  
+Understand  yourself,  your  partner  and  your  relationship.  
+🌿  LIVE  A  BETTER  MARRIAGE  
+Wellbeing,  spirituality,  counselling,  rituals  and  couple  experiences.  
+ 
+3.  THE  NEW  MANGALSUTRA  USER  
+JOURNEY
+ 
+I  would  design  the  entire  platform  around  8  stages .  
+                   MANGALSUTRA                           |          -----------------------------------          |                 |                 |       DISCOVER           VERIFY           PREPARE          |                 |                 |     Match  Engine       ChaanBean        Relationship  AI          |                 |                 |          -----------  CONNECT  ------------                         |                      ENGAGE  
+
+--- PAGE 3 ---
+                       |                    MARRIAGE  READY                         |            -------------------------            |                        |        PRATHA                  MARKETPLACE     Spiritual  Life            Wellness/Ecommerce            |                        |            --------  NURTURE  --------                         |                   MARRIAGE  LIFE   
+4.  STAGE  1  —  ONBOARDING  
+Don't  ask  users  50  questions  on  the  first  screen.    VISAL  TO  TAKE  A  NOTE   
+Use  a  conversational  onboarding.   (  CHECK  OUT  TYPEFORM  DESIGN  )  
+Step  1  
+What  are  you  looking  for?  
+●  Marriage  ●  Remarriage  ●  Dating  leading  to  marriage  ●  Life  partner  ●  I  am  a  parent/guardian  looking  for  a  match  
+Your  existing  architecture  already  supports  marriage/dating  intent  modes  and  
+context-specific
+ 
+filters/questions/biodata.
+ 
+Mangalsutra_Astra_How_I_Created…
+ 
+ 
+Step  2  —  About  Me  
+AI-assisted  profile  creation:  
+"Tell  us  about  yourself  in  your  own  words."  
+User  can:  
+ 
+⌨
+ 
+Type
+ 
+📷
+ 
+Upload
+ 
+biodata
+ 
+📄
+ 
+Upload
+ 
+existing
+ 
+matrimonial
+ 
+profile
+ 
+AI  extracts:  
+
+--- PAGE 4 ---
+●  Age  ●  Education  ●  Profession  ●  Location  ●  Family  ●  Lifestyle  ●  Interests  ●  Expectations  ●  Religion/community  preferences  ●  Marriage  expectations  
+Then  asks  only  for  missing  information.  
+ 
+5.  STAGE  2  —  THE  MANGALSUTRA  
+PROFILE
+ 
+The  existing  profile  structure  is  good  and  should  be  retained.  
+Your  current  system  already  has:  
+●  Basic  biodata  ●  Family  background  ●  Education  ●  Occupation  ●  Lifestyle  ●  Hometown  ●  Horoscope  inputs  ●  Partner  preferences  
+and  uses  20+  required  fields  for  profile  readiness.  
+But  I  would  now  divide  the  profile  into  five  layers .  
+A.  WHO  I  AM  
+Basic  identity.  
+B.  MY  LIFE  
+Education,  profession,  lifestyle,  interests.  
+C.  MY  FAMILY  
+Family  structure,  parents,  siblings,  cultural  background.  
+
+--- PAGE 5 ---
+D.  MY  EXPECTATIONS  
+Marriage  expectations,  children,  location,  career,  lifestyle,  finances  etc.  
+E.  MY  TRUST  PROFILE  
+This  is  where  ChaanBean  enters.  
+ 
+6.  THE  MOST  IMPORTANT  NEW  
+FEATURE
+ 
+—
+ 
+"TRUST
+ 
+PROFILE"
+ 
+Give  every  user  a  separate:  
+🛡  MANGALSUTRA  TRUST  PROFILE  
+Example:  
+Identity  
+✅  Mobile  verified  
+✅
+ 
+Email
+ 
+verified
+ 
+✅
+ 
+Identity
+ 
+verified
+ 
+Age  /  DOB  
+🟢  Verified  
+Education  
+🟢  Verified  
+Employment  
+🟢  Verified  
+Address  
+🟢  Verified  
+Marriage  status  
+🟢  Verified  /  Pending  
+
+--- PAGE 6 ---
+Divorce  status  
+🟢  Verified  /  Pending  
+Court  verification  
+🟢  Checked  /  No  matching  record  identified  /  Review  required  
+Police/antecedent  verification  
+🟢  Verified  /  Pending  /  Not  available  
+Certificates  
+🟢  Verified  
+ 
+ 
+Yes.  I  would  take  Mangalsutra   in  a  very  different  direction  from  a  conventional  
+matrimonial
+ 
+app.
+ 
+The  core  proposition  should  become:  
+“Don’t  just  find  a  match.  Know  the  person.  Understand  the  relationship.  
+Verify
+ 
+what
+ 
+matters.
+ 
+Prepare
+ 
+for
+ 
+marriage.
+ 
+And
+ 
+continue
+ 
+supporting
+ 
+the
+ 
+couple
+ 
+after
+ 
+marriage.”
+ 
+I  would  build  the  Web  Version  as  Mangalsutra  2.0,  with  ChaanBean  becoming  the  
+Trust
+ 
+&
+ 
+Verification
+ 
+Engine,
+ 
+and
+ 
+Pratha
+ 
+becoming
+ 
+the
+ 
+Spiritual/Wellbeing
+ 
+Layer.
+ 
+ 
+LETS  BEGIN   
+ 
+make  it:  
+Discover  →  Understand  →  Verify  →  Assess  →  Connect  →  Prepare  →  Marry  →  Nurture  
+And  eventually:  
+Marriage  →  Family  →  Wellbeing  →  Spirituality  →  Long-term  Relationship  
+This  creates  a  much  larger  ecosystem.  
+
+--- PAGE 7 ---
+Three  connected  platforms  
+Platform  
+Role  
+MANGALSUTRA  
+Marriage  discovery  &  relationship  platform  
+CHAANBEAN  
+Digital  Trust  /  Verification  Engine  
+PRATHA  
+Spirituality,  rituals,  wellbeing  &  relationship  guidance  
+And  later:  
+MANGALSUTRA  MARKETPLACE  
+Marriage  +  couple  wellbeing  +  spiritual  products  +  wellness  services.  
+ 
+2.  MANGALSUTRA  WEB  —  NEW  
+HOME
+ 
+PAGE
+ 
+The  website  should  immediately  communicate  that  this  is  not  another  matrimonial  
+website.
+ 
+Hero  
+Find  Your  Life  Partner  With  More  Confidence.  
+Compatibility.  Verification.  Wisdom.  Wellbeing.  
+Then  four  large  options:  
+❤  FIND  A  MATCH  
+
+--- PAGE 8 ---
+Find  compatible  people.  
+🔐  VERIFY  A  PROFILE  
+Verify  identity,  education,  documents  and  other  permitted  checks.  
+🧘  PREPARE  FOR  MARRIAGE  
+Understand  yourself,  your  partner  and  your  relationship.  
+🌿  LIVE  A  BETTER  MARRIAGE  
+Wellbeing,  spirituality,  counselling,  rituals  and  couple  experiences.  
+ 
+3.  THE  NEW  MANGALSUTRA  USER  
+JOURNEY
+ 
+I  would  design  the  entire  platform  around  8  stages.  
+                   MANGALSUTRA  
+                         |  
+        -----------------------------------  
+        |                 |                 |  
+     DISCOVER           VERIFY           PREPARE  
+        |                 |                 |  
+   Match  Engine       ChaanBean        Relationship  AI  
+        |                 |                 |  
+        -----------  CONNECT  ------------  
+                       |  
+                    ENGAGE  
+                       |  
+                  MARRIAGE  READY  
+                       |  
+
+--- PAGE 9 ---
+          -------------------------  
+          |                        |  
+      PRATHA                  MARKETPLACE  
+   Spiritual  Life            Wellness/Ecommerce  
+          |                        |  
+          --------  NURTURE  --------  
+                       |  
+                 MARRIAGE  LIFE  
+ 
+4.  STAGE  1  —  ONBOARDING  
+Don't  ask  users  50  questions  on  the  first  screen.  
+Use  a  conversational  onboarding.  
+Step  1  
+What  are  you  looking  for?  
+●  Marriage  ●  Remarriage  ●  Dating  leading  to  marriage  ●  Life  partner  ●  I  am  a  parent/guardian  looking  for  a  match  
+Your  existing  architecture  already  supports  marriage/dating  intent  modes  and  
+context-specific
+ 
+filters/questions/biodata.
+ 
+ 
+ 
+Step  2  —  About  Me  
+AI-assisted  profile  creation:  
+"Tell  us  about  yourself  in  your  own  words."  
+User  can:  
+ 
+⌨
+ 
+Type
+ 
+
+--- PAGE 10 ---
+📷  Upload  biodata  
+📄
+ 
+Upload
+ 
+existing
+ 
+matrimonial
+ 
+profile
+ 
+AI  extracts:  
+●  Age  ●  Education  ●  Profession  ●  Location  ●  Family  ●  Lifestyle  ●  Interests  ●  Expectations  ●  Religion/community  preferences  ●  Marriage  expectations  
+Then  asks  only  for  missing  information.  
+ 
+5.  STAGE  2  —  THE  MANGALSUTRA  
+PROFILE
+ 
+The  existing  profile  structure  is  good  and  should  be  retained.  
+Your  current  system  already  has:  
+●  Basic  biodata  ●  Family  background  ●  Education  ●  Occupation  ●  Lifestyle  ●  Hometown  ●  Horoscope  inputs  ●  Partner  preferences  
+and  uses  20+  required  fields  for  profile  readiness.   
+But  I  would  now  divide  the  profile  into  five  layers.  
+A.  WHO  I  AM  
+Basic  identity.  
+B.  MY  LIFE  
+
+--- PAGE 11 ---
+Education,  profession,  lifestyle,  interests.  
+C.  MY  FAMILY  
+Family  structure,  parents,  siblings,  cultural  background.  
+D.  MY  EXPECTATIONS  
+Marriage  expectations,  children,  location,  career,  lifestyle,  finances  etc.  
+E.  MY  TRUST  PROFILE  
+This  is  where  ChaanBean  enters.  
+ 
+6.  THE  MOST  IMPORTANT  NEW  
+FEATURE
+ 
+—
+ 
+"TRUST
+ 
+PROFILE"
+ 
+ 
+🛡  MANGALSUTRA  TRUST  
+PROFILE
+ 
+Example:  
+Identity  
+✅  Mobile  verified  
+✅
+ 
+Email
+ 
+verified
+ 
+✅
+ 
+Identity
+ 
+verified
+ 
+Age  /  DOB  
+🟢  Verified  
+Education  
+🟢  Verified  
+Employment  
+🟢  Verified  
+
+--- PAGE 12 ---
+Address  
+🟢  Verified  
+Marriage  status  
+🟢  Verified  /  Pending  
+Divorce  status  
+🟢  Verified  /  Pending  
+Court  verification  
+🟢  Checked  /  No  matching  record  identified  /  Review  required  
+Police/antecedent  verification  
+🟢  Verified  /  Pending  /  Not  available  
+Certificates  
+🟢  Verified  
+ 
+But  do  not  display  sensitive  underlying  documents  to  other  users.  
+Instead  show:  
+Verified  by  MangalSutra   Trust  (SHow  the  Partnership  between  
+MangalSutra
+ 
+and
+ 
+Chaanbean
+ 
+somewhere
+ 
+on
+ 
+the
+ 
+web)
+  
+ 
+with  a  verification  date  and  a  limited  description.  
+ 
+ 
+7.  CHAANBEAN  VERIFICATION  —  
+PHASE
+ 
+2
+ 
+This  can  become  your  biggest  differentiator.  
+I  would  create:  
+
+--- PAGE 13 ---
+CHAANBEAN  MARITAL  TRUST  
+CHECK
+ 
+Verification  categories  
+Verification  Approach  
+Identity  Government  identity  verification  
+DOB  Government  document  
+Birth  Certificate  
+Government/DigiLocker/issuer  verification  where  available  
+Education  Institution/document  verification  
+Employment  Employer/API/document  verification  
+Address  Government/address  verification  
+Marriage  certificate  
+Government/state  registry  where  available  
+Divorce  Court/document/official-record  workflow  
+Court  cases  eCourts-based  screening  where  legally  appropriate  
+Police/antecedent  
+Authorized  police  verification  workflow  
+
+--- PAGE 14 ---
+Caste/community  certificate  
+Optional,  user-controlled  
+Income  Optional  financial  verification  
+Professional  licence  
+Relevant  authority  
+References  Consent-based  references  
+DigiLocker  is  particularly  useful  as  an  integration  layer  because  it  is  designed  around  authentic  digital  documents,  issuers,  requesters  and  consent-driven  access. DigiLocker 
+ 
+8.  IMPORTANT:   
+This  is  important  commercially  and  legally.  
+For  example,  eCourts  allows  searches  by  party  name,  case  number,  FIR  number  and  
+other
+ 
+criteria,
+ 
+but
+ 
+a
+ 
+name
+ 
+search
+ 
+can
+ 
+return
+ 
+people
+ 
+with
+ 
+similar
+ 
+names.
+ 
+Therefore:
+ 
+"No  matching  public  court  record  identified"  
+is  much  safer  than:  
+"This  person  has  never  had  a  court  case."  
+eCourts  officially  supports  party-name  and  FIR-based  case  searches. eCourt  India 
+Similarly,  police  data  should  not  be  presented  as  if  Mangalsutra  has  unrestricted  
+access
+ 
+to
+ 
+CCTNS.
+ 
+CCTNS  is  a  government  system  that  supports  citizen  services  including  requests  for  
+antecedent
+ 
+verification,
+ 
+while
+ 
+ICJS
+ 
+connects
+ 
+police,
+ 
+courts
+ 
+and
+ 
+other
+ 
+criminal-justice
+ systems. Ministry  of  Home  Affairs 
+So  your  product  should  have:  
+🟢  Verified  
+
+--- PAGE 15 ---
+🟡  Verification  unavailable  /  pending  
+🔵  User  supplied  
+🟠  Further  review  required  
+rather  than  a  simplistic  "Good/Bad  person"  score.  
+ 
+9.  DIVORCE  VERIFICATION  
+This  deserves  its  own  module.  
+"Marital  Status  Check"  
+Ask:  
+Current  marital  status  
+●  Never  married  ●  Married  ●  Divorced  ●  Widowed  ●  Separated  ●  Annulled  
+Then  verification.  
+If  NEVER  MARRIED  
+Possible  verification:  
+Marriage  certificate  /  government  records  where  accessible  +  declaration  +  supporting  
+documents.
+ 
+If  DIVORCED  
+Request:  
+●  Divorce  decree  ●  Court  order  ●  Case/CNR  details  where  available  ●  Marriage  certificate  ●  Date  of  divorce  ●  Custody  information  if  voluntarily  disclosed  
+
+--- PAGE 16 ---
+Then  ChaanBean  generates:  
+Divorce  Status  Verified  by  Mangalsutra  Trust   
+without  exposing  the  complete  judgment  to  another  user.  
+ 
+10.  THE  "MARITAL  HISTORY"  
+CARD
+ 
+Instead  of  hiding  divorce  completely,  create  a  dignified  system.  
+Example:  
+Previous  Marriage  
+Status:  Divorced  
+Verification:
+ 
+ChaanBean
+ 
+Verified
+ 
+Year:
+ 
+2023
+ 
+Children:
+ 
+1
+ 
+Custody:
+ 
+Disclosed
+ 
+privately
+ 
+Additional
+ 
+information:
+ 
+Available
+ 
+after
+ 
+mutual
+ 
+consent
+ 
+This  is  much  better  than  treating  divorced  users  as  "second-class  users."  
+ 
+11.  DIVORCE  —  YOUR  BIGGEST  
+OPPORTUNITY
+ 
+I  would  not  position  Mangalsutra  as  "preventing  divorce."  
+Nobody  can  guarantee  that.  
+Instead  position  it  as:  
+"Marriage  Readiness  &  
+Relationship
+ 
+Intelligence"
+ 
+The  objective:  
+
+--- PAGE 17 ---
+Identify  incompatibilities  before  marriage  and  help  couples  develop  the  
+skills
+ 
+required
+ 
+for
+ 
+a
+ 
+healthy
+ 
+marriage.
+ 
+This  could  become  a  completely  new  category.  
+ 
+12.  PRE-MARRIAGE  
+COMPATIBILITY
+ 
+ENGINE
+ 
+Your  current  Astra  already  has:  
+●  36  Guna  ●  Manglik  ●  Nakshatra  ●  Dosha  ●  Numerology  ●  Lifestyle  chemistry  
+and  the  Astro  AI  is  specifically  designed  to  consume  the  calculated  Guna  score  rather  
+than
+ 
+invent
+ 
+a
+ 
+new
+ 
+score.
+ 
+ 
+Keep  that.  
+But  add  a  Modern  Compatibility  Engine.  
+12  dimensions  
+1.  Communication  2.  Emotional  maturity  3.  Financial  philosophy  4.  Career  expectations  5.  Children  6.  Parenting  7.  Living  arrangements  8.  Family  boundaries  9.  Religion/spirituality  10.  Lifestyle  11.  Intimacy  expectations  12.  Conflict  resolution  
+ 
+
+--- PAGE 18 ---
+13.  THE  "MARRIAGE  READINESS  
+SCORE"
+ 
+Don't  make  this  another  arbitrary  score  like  a  credit  score.  
+Instead:  
+❤  Relationship  Readiness  
+Strong  
+or  
+Needs  discussion  
+or  
+Important  conversation  required  
+Example:  
+Your  compatibility  looks  strong,  but  there  are  3  topics  you  should  discuss  
+before
+ 
+engagement.
+ 
+Topics:  
+🔴  Children  —  different  expectations  
+🟠
+ 
+Financial
+ 
+independence
+ 
+—
+ 
+needs
+ 
+discussion
+ 
+🟠
+ 
+Parents
+ 
+living
+ 
+together
+ 
+—
+ 
+needs
+ 
+discussion
+ 
+That  is  incredibly  valuable.  
+ 
+14.  "TALK  BEFORE  YOU  MARRY"  
+This  can  become  one  of  Mangalsutra's  signature  features.  
+AI  generates  questions  based  on  the  couple.  
+Example:  
+Before  you  proceed,  discuss:  
+Money  
+
+--- PAGE 19 ---
+"Will  both  partners  maintain  separate  bank  accounts?"  
+Parents  
+"Would  either  partner  expect  parents  to  live  with  you?"  
+Children  
+"How  soon  would  you  want  children?"  
+Career  
+"If  one  partner  receives  an  overseas  opportunity,  what  happens?"  
+Lifestyle  
+"How  do  you  feel  about  alcohol/social  life/travel?"  
+Religion  
+"How  will  festivals  and  religious  practices  be  handled?"  
+Conflict  
+"What  happens  when  you  strongly  disagree?"  
+ 
+15.  COUPLE  CONVERSATION  
+MODE
+ 
+After  both  users  agree:  
+💑  OUR  MARRIAGE  JOURNEY  
+A  private  shared  space.  
+Sections:  
+❤  Know  Each  Other  
+💰  Money  
+󰔧  Family  
+
+--- PAGE 20 ---
+🏠  Home  
+👶  Children  
+🧘  Spirituality  
+❤  Intimacy  
+🧠  Mental  wellbeing  
+💼  Career  
+🌍  Future  
+The  AI  should  not  judge  the  couple.  
+It  should  say:  
+"You  have  different  expectations.  Here  are  three  ways  you  can  discuss  
+this."
+ 
+ 
+16.  PRE-MARRIAGE  RED-FLAG  
+SYSTEM
+ 
+This  needs  to  be  handled  carefully.  
+Don't  say:  
+❌  "This  person  is  dangerous."  
+Instead:  
+⚠  "You  may  want  to  discuss  this."  
+Examples:  
+●  Extreme  financial  expectations  ●  Major  disagreement  about  children  ●  Contradictory  marriage  history  ●  Inconsistent  profile  information  ●  Significant  lifestyle  mismatch  ●  Pressure  around  money  ●  Unwillingness  to  discuss  important  topics  ●  Controlling  behaviour  reported  by  the  other  person  
+
+--- PAGE 21 ---
+●  Repeated  inconsistencies  in  information  
+This  becomes:  
+Relationship  Risk  Signals  
+ 
+ 
+17.  CONFIDENTIAL  "ASK  MS  
+TRUST
+ 
+"
+ 
+This  could  be  extremely  powerful.  
+During  a  conversation,  a  user  can  privately  ask:  
+"I  am  uncomfortable  with  something  this  person  told  me.  What  should  I  
+check?"
+ 
+MS  Trust  AI  responds:  
+●  What  information  is  missing  ●  What  documents  could  clarify  it  ●  What  questions  to  ask  ●  Whether  professional/legal  assistance  might  be  appropriate  
+ 
+18.  DIVORCED  USERS  —  CREATE  
+A
+ 
+SEPARATE
+ 
+EXPERIENCE
+ 
+This  is  a  major  opportunity.  
+When  someone  selects:  
+I  am  divorced  /  separated  /  widowed  
+don't  simply  put  them  into  the  normal  matchmaking  funnel.  
+Give  them:  
+
+--- PAGE 22 ---
+🌱  NEW  BEGINNING  
+"A  second  chapter  deserves  a  different  journey."  
+Features:  
+1.  Rebuild  Profile  
+Focus  on:  
+●  What  I  learned  ●  What  I  want  now  ●  What  has  changed  ●  What  I  don't  want  again  ●  My  priorities  
+ 
+2.  Children  &  Family  
+Dedicated  fields:  
+●  Children  ●  Age  ●  Custody  ●  Co-parenting  ●  Future  expectations  
+ 
+3.  Emotional  Readiness  
+Optional  private  assessment.  
+"Are  you  ready  for  another  relationship?"  
+ 
+ 
+4.  Second  Marriage  Matching  
+Algorithm  considers:  
+●  Previous  marriage  ●  Children  ●  Geography  ●  Family  expectations  
+
+--- PAGE 23 ---
+●  Financial  expectations  ●  Emotional  readiness  ●  Lifestyle  ●  Partner  acceptance  of  previous  marriage  
+ 
+19.  "SECOND  CHANCE  MATCH"  
+Give  this  its  own  identity.  
+💚  Second  Chapter  
+A  dedicated  discovery  pool  for:  
+●  Divorced  ●  Widowed  ●  Separated  where  appropriate  ●  Single  parents  ●  Second  marriage  seekers  
+But  don't  segregate  them  permanently.  
+They  should  be  able  to  choose:  
+"Show  me  everyone"  
+or  
+"Show  me  people  open  to  second  marriage."  
+ 
+20.  DIVORCE  RECOVERY  
+ECOSYSTEM
+ 
+This  can  go  beyond  matchmaking.  
+🌱  RESET  
+Mental  wellbeing  resources.  
+🧠  UNDERSTAND  
+Relationship  education.  
+
+--- PAGE 24 ---
+⚖  REBUILD  
+Legal/document  assistance.  
+💰  RESTART  
+Financial  planning.  
+󰔧  FAMILY  
+Children  and  co-parenting  resources.  
+❤  RECONNECT  
+Future  relationship  preparation.  
+🧘  HEAL  
+Spiritual/wellbeing  experiences.  
+This  creates  an  entire  Second  Chapter  ecosystem.  
+ 
+21.  PRATHA  INTEGRATION  
+This  is  where  your  spiritual  vision  becomes  very  interesting.  
+Make  it:  
+THE  INNER  LIFE  OF  
+MANGALSUTRA
+ 
+After  matching:  
+"Your  relationship  has  begun.  Now  nurture  it."  
+Then:  
+PRATHA  
+🪔  Daily  spiritual  practice  
+🕉
+ 
+Relationship
+ 
+rituals
+ 
+🙏
+ 
+Temple
+ 
+experiences
+ 
+
+--- PAGE 25 ---
+📿  Pooja  
+🌿
+ 
+Meditation
+ 
+🧘
+ 
+Yoga
+ 
+📖
+ 
+Spiritual
+ 
+learning
+ 
+🌙
+ 
+Festival
+ 
+calendar
+ 
+❤
+ 
+Couple
+ 
+prayers
+ 
+🏡
+ 
+Home
+ 
+rituals
+ 
+ 
+22.  PERSONALIZED  SPIRITUAL  
+JOURNEY
+ 
+Based  on  user  preference:  
+Traditional  
+Temple  +  Puja  +  rituals  
+Wellness  
+Meditation  +  Yoga  +  Ayurveda  
+Modern  Spiritual  
+Mindfulness  +  relationship  practices  
+Family  
+Festival  +  family  rituals  
+Couple  
+Joint  meditation  +  gratitude  +  prayer  
+And  eventually:  
+Mangalsutra  →  Pratha  
+with  single  sign-on.  
+ 
+23.  EXAMPLE  
+
+--- PAGE 26 ---
+Suppose  a  couple  gets  matched.  
+Mangalsutra  says:  
+❤  You  have  matched  
+Then:  
+Compatibility  
+Astrology:  29/36  
+Lifestyle:
+ 
+Strong
+ 
+Communication:
+ 
+Strong
+ 
+Finance:
+ 
+Discuss
+ 
+Family
+ 
+expectations:
+ 
+Discuss
+ 
+Then:  
+Trust  
+Bride:  
+🟢  Identity  Verified  
+🟢
+ 
+Education
+ 
+Verified
+ 
+🟢
+ 
+Employment
+ 
+Verified
+ 
+🟢
+ 
+Marriage
+ 
+Status
+ 
+Verified
+ 
+Groom:  
+🟢  Identity  Verified  
+🟢
+ 
+Education
+ 
+Verified
+ 
+🟡
+ 
+Employment
+ 
+Pending
+ 
+🟢
+ 
+Marriage
+ 
+Status
+ 
+Verified
+ 
+Then:  
+Relationship  Preparation  
+"You  have  4  important  conversations  to  complete  before  engagement."  
+Then:  
+Pratha  
+"Would  you  like  to  begin  a  21-day  couple  wellbeing  journey?"  
+ 
+
+--- PAGE 27 ---
+24.  MANGALSUTRA  
+MARKETPLACE
+ 
+I  would  create  a  separate  tab:  
+🛍  MARRIAGE  &  WELLBEING  
+Not  just  jewellery  and  wedding  products.  
+Before  Marriage  
+●  Gifts  ●  Wellness  ●  Ayurveda  ●  Skincare  ●  Grooming  ●  Meditation  ●  Books  ●  Couple  experiences  
+Wedding  
+●  Jewellery  ●  Clothing  ●  Puja  products  ●  Invitations  ●  Photography  ●  Travel  ●  Wedding  services  
+After  Marriage  
+●  Couple  wellness  ●  Herbal  bedding  ●  Ayurvedic  products  ●  Home  products  ●  Relationship  books  ●  Fitness  ●  Meditation  
+Intimacy  &  wellbeing  
+Handled  sensitively  and  within  applicable  product/legal  policies.  
+
+--- PAGE 28 ---
+ 
+ 
+26.  "MARRIAGE  JOURNEY"  
+DASHBOARD
+ 
+Once  two  people  become  serious:  
+                OUR  JOURNEY  ❤  
+ 
+                   MATCHED  
+                      |  
+                TRUST  CHECK  
+                      |  
+             KNOW  EACH  OTHER  
+                      |  
+           IMPORTANT  CONVERSATIONS  
+                      |  
+              FAMILY  INTRODUCTION  
+                      |  
+             MARRIAGE  READINESS  
+                      |  
+                 ENGAGEMENT  
+                      |  
+                   WEDDING  
+                      |  
+                FIRST  100  DAYS  
+                      |  
+
+--- PAGE 29 ---
+                FIRST  YEAR  
+                      |  
+              LONG-TERM  WELLBEING  
+This  is  where  the  business  becomes  much  bigger.  
+ 
+27.  AFTER  MARRIAGE  —  "FIRST  
+100
+ 
+DAYS"
+ 
+A  very  powerful  feature.  
+Day  1–7  
+Understanding  expectations.  
+Day  8–30  
+Communication.  
+Day  31–60  
+Money  &  family.  
+Day  61–90  
+Lifestyle.  
+Day  91–100  
+Relationship  health  check.  
+AI  can  ask:  
+"How  are  things  going?"  
+Both  partners  independently  answer.  
+The  system  identifies:  
+"You  appear  aligned  on  finances  but  have  different  expectations  around  
+family
+ 
+time."
+ 
+Again  —  not  diagnosis,  but  conversation  prompts.  
+
+--- PAGE 30 ---
+ 
+28.  ANNUAL  "MARRIAGE  HEALTH  
+CHECK"
+ 
+Every  anniversary:  
+❤  How  are  we  doing?  
+Questions  around:  
+●  Communication  ●  Emotional  connection  ●  Financial  stress  ●  Family  ●  Physical  wellbeing  ●  Spiritual  connection  ●  Time  together  ●  Future  goals  
+Then:  
+Your  relationship  deserves  attention  in  2  areas.  
+Offer:  
+●  Counselling  ●  Couple  retreat  ●  Pratha  programme  ●  Wellness  programme  ●  Expert  session  
+ 
+29.  THE  COMPLETE  
+MANGALSUTRA
+ 
+ECOSYSTEM
+ 
+I  would  eventually  structure  the  navigation  like  this:  
+MANGALSUTRA  
+ 
+HOME  
+
+--- PAGE 31 ---
+│  
+├──  DISCOVER  
+│    ├──  Recommended  Matches  
+│    ├──  New  Matches  
+│    ├──  Second  Chapter  
+│    └──  Saved  
+│  
+├──  COMPATIBILITY  
+│    ├──  Astrology  
+│    ├──  Guna  Milan  
+│    ├──  Lifestyle  
+│    ├──  Personality  
+│    └──  Relationship  Compatibility  
+│  
+├──  TRUST  
+│    └──  CHAANBEAN  
+│        ├──  Identity  
+│        ├──  Documents  
+│        ├──  Marriage  
+│        ├──  Divorce  
+│        ├──  Education  
+│        ├──  Employment  
+│        ├──  Court  
+│        └──  Police/Antecedent  
+│  
+├──  RELATIONSHIP  
+
+--- PAGE 32 ---
+│    ├──  Talk  Before  Marriage  
+│    ├──  Couple  Journey  
+│    ├──  Marriage  Readiness  
+│    └──  Counselling  
+│  
+├──  SECOND  CHAPTER  
+│    ├──  Divorce  
+│    ├──  Widowed  
+│    ├──  Single  Parents  
+│    ├──  Healing  
+│    └──  Remarriage  
+│  
+├──  PRATHA  
+│    ├──  Temples  
+│    ├──  Pooja  
+│    ├──  Spirituality  
+│    ├──  Meditation  
+│    └──  Couple  Practices  
+│  
+├──  MARKETPLACE  
+│    ├──  Wedding  
+│    ├──  Wellness  
+│    ├──  Couple  
+│    └──  Spiritual  
+│  
+└──  OUR  MARRIAGE  
+
+--- PAGE 33 ---
+    ├──  Journey  
+    ├──  First  100  Days  
+    ├──  Wellbeing  
+    └──  Anniversary  
+ 
+30.  TECHNOLOGY  ARCHITECTURE  
+Your  existing  stack  is  actually  suitable  for  the  web  launch.  
+The  current  system  uses:  
+React  +  TypeScript  +  Vite  →  Supabase/PostgreSQL  →  Edge  Functions  →  Gemini  →  
+FCM,
+ 
+with
+ 
+Capacitor
+ 
+for
+ 
+Android.
+ 
+Mangalsutra_Astra_How_I_Created…
+ 
+For  the  web  version:  
+                MANGALSUTRA  WEB  
+                       |  
+              React  /  TypeScript  
+                       |  
+                 API  /  Edge  Layer  
+                       |  
+       --------------------------------  
+       |               |                |  
+   MATCH  ENGINE     ASTRA  AI        CHAANBEAN  
+       |               |                |  
+       --------  PostgreSQL  -----------  
+                       |  
+       --------------------------------  
+       |               |                |  
+    DigiLocker      eCourts         Govt/Partner  APIs  
+
+--- PAGE 34 ---
+                       |  
+                 TRUST  ENGINE  
+                       |  
+                VERIFICATION  
+And:  
+Mangalsutra  
+     |  
+     +------  ChaanBean  
+     |  
+     +------  Pratha  
+     |  
+     +------  Marketplace  
+ 
+31.  DATABASE  ARCHITECTURE  
+Your  current  database  already  contains  useful  building  blocks  such  as:  
+●  profiles  ●  private_profiles  ●  preferences  ●  connections  ●  conversations  ●  messages  ●  photo_requests  ●  chaanbean_requests  ●  get_discovery_candidates() Mangalsutra_Astra_How_I_Created…  
+Add:  
+verification_profiles  
+ 
+verification_requests  
+
+--- PAGE 35 ---
+ 
+verification_documents  
+ 
+verification_results  
+ 
+document_issuer_records  
+ 
+marital_status_checks  
+ 
+divorce_checks  
+ 
+court_checks  
+ 
+police_verification_requests  
+ 
+education_verifications  
+ 
+employment_verifications  
+ 
+consent_records  
+ 
+audit_logs  
+ 
+relationship_assessments  
+ 
+couple_profiles  
+
+--- PAGE 36 ---
+ 
+couple_journeys  
+ 
+relationship_conversations  
+ 
+second_chapter_profiles  
+ 
+wellbeing_programs  
+ 
+pratha_services  
+ 
+marketplace_products  
+ 
+32.  MOST  IMPORTANT  
+ARCHITECTURAL
+ 
+PRINCIPLE
+ 
+Don't  store  everything  in  Mangalsutra.  
+Create:  
+CHAANBEAN  TRUST  VAULT  
+Mangalsutra  asks:  
+"Is  this  person  verified?"  
+ChaanBean  responds:  
+VERIFICATION  STATUS  
+        |  
+        +--  Identity:  VERIFIED  
+        +--  DOB:  VERIFIED  
+
+--- PAGE 37 ---
+        +--  Education:  VERIFIED  
+        +--  Marriage:  VERIFIED  
+        +--  Divorce:  VERIFIED  
+        +--  Court:  REVIEWED  
+        +--  Police:  VERIFIED  
+Mangalsutra  doesn't  need  the  underlying  document.  
+This  dramatically  reduces  exposure  of  sensitive  information.  
+The  DPDP  framework  is  specifically  built  around  lawful  processing  and  
+consent/notice,
+ 
+and
+ 
+the
+ 
+2025
+ 
+rules
+ 
+also
+ 
+emphasize
+ 
+clear,
+ 
+specific
+ 
+notices
+ 
+describing
+ personal  data  and  purposes. India  Code 
+ 
+33.  CONSENT  FLOW  
+This  must  be  designed  beautifully.  
+Example:  
+🔐  Verify  My  Marriage  Status  
+Mangalsutra  will  request  access  to  information  necessary  to  verify  your  
+declared
+ 
+marital
+ 
+status.
+ 
+Purpose:  To  create  a  trusted  matrimonial  profile.  
+Information  requested:  
+●  Marriage  certificate  ●  Relevant  registration  details  
+Who  can  see  the  result?  
+Only
+ 
+users
+ 
+you
+ 
+explicitly
+ 
+approve
+ 
+/
+ 
+matched
+ 
+users
+ 
+/
+ 
+according
+ 
+to
+ 
+your
+ 
+chosen
+ 
+visibility
+ 
+setting.
+ 
+[  I  AGREE  &  VERIFY  ]  
+This  should  be  logged.  
+DigiLocker  itself  uses  consent-driven  document  access  and  maintains  logs  of  interactions. DigiLocker 
+
+--- PAGE 38 ---
+ 
+The  user  decides  which  badges  become  visible.  
+ 
+35.  MANGALSUTRA  PREMIUM  
+This  gives  you  a  business  model.  
+FREE  
+Basic  profile  
+Basic
+ 
+discovery
+ 
+Basic
+ 
+compatibility
+ 
+PREMIUM  
+Advanced  matching  
+Full
+ 
+compatibility
+ 
+AI
+ 
+relationship
+ 
+assistant
+ 
+Unlimited
+ 
+conversations
+ 
+VERIFIED  
+ChaanBean  Trust  Profile  
+Document
+ 
+verification
+ 
+Marriage
+ 
+verification
+ 
+PREMIUM  VERIFIED  
+Advanced  verification  bundle  
+Priority
+ 
+matching
+ 
+Relationship
+ 
+assessment
+ 
+Marriage
+ 
+preparation
+ 
+COUPLE  
+Couple  journey  
+Marriage
+ 
+readiness
+ 
+Pratha
+ 
+Wellness
+ 
+Counselling
+ 
+ 
+ 
+
+--- PAGE 39 ---
+37.  WHAT  I  WOULD  BUILD  FIRST  
+Don't  try  to  build  everything  immediately.  
+PHASE  1  —  WEB  LAUNCH  
+Mangalsutra  Web  1.0  
+1.  Login  2.  Profile  creation  3.  Marriage  mode  4.  Discovery  5.  Matching  6.  Astrology  7.  36  Guna  8.  4  Gotra  9.  Lifestyle  compatibility  10.  Chat  11.  Astro  AI  12.  Basic  verification  13.  Responsive  web  UX  
+Your  existing  Android  architecture  already  has  most  of  this  foundation.  
+Mangalsutra_Astra_How_I_Created…
+ 
+ 
+PHASE  2  —  "TRUST"  
+MS  Trust  integration  
+1.  Identity  2.  DOB  3.  Address  4.  Education  5.  Employment  6.  Marriage  certificate  7.  Divorce  verification  8.  Court  screening  9.  Police/antecedent  workflow  10.  Certificate  verification  11.  Trust  score/status  12.  Consent  management  13.  Audit  trail  
+
+--- PAGE 40 ---
+This  is  where  Mangalsutra  becomes  genuinely  differentiated.  
+ 
+PHASE  3  —  "MARRIAGE  
+INTELLIGENCE"
+ 
+Build:  
+Talk  Before  Marriage  
+Relationship  Compatibility  
+Marriage  Readiness  
+Red/Orange  discussion  signals  
+Couple  Journey  
+Counselling  
+First  100  Days  
+ 
+PHASE  4  —  "SECOND  CHAPTER"  
+Build:  
+Divorce  /  Widowed  /  Single  Parent  
+Second  Marriage  
+Healing  
+Co-parenting  
+Legal  assistance  
+Financial  restart  
+Relationship  readiness  
+
+--- PAGE 41 ---
+Dedicated  matching  
+This  can  become  a  major  category  of  its  own.  
+ 
+PHASE  5  —  PRATHA  
+Integrate:  
+Temples  
+Pooja  
+Rituals  
+Spiritual  journeys  
+Meditation  
+Couple  spirituality  
+Personalized  spiritual  recommendations  
+ 
+PHASE  6  —  MARKETPLACE  
+Finally:  
+Wedding  
+Beauty  
+Ayurveda  
+Wellness  
+Couple  products  
+Spiritual  products  
+Experiences  
+
+--- PAGE 42 ---
+Retreats  
+And  this  is  where  HERBALLY  and  your  other  wellness  businesses  can  eventually  
+participate,
+ 
+without
+ 
+making
+ 
+Mangalsutra
+ 
+look
+ 
+like
+ 
+an
+ 
+advertisement
+ 
+platform.
+ 
+ 
+38.  THE  POSITIONING  I  WOULD  
+USE
+ 
+ 
+ 
+MANGALSUTRA  
+Marriage,  With  Trust.  
+Or:  
+MANGALSUTRA  
+Find.  Verify.  Understand.  Belong.  
+Or  my  favourite:  
+MANGALSUTRA  
+More  Than  a  Match.  A  Life  Journey.  
+And  underneath:  
+AI-powered  matchmaking  •  Vedic  compatibility  •  Digital  verification  •  
+Relationship
+ 
+intelligence
+ 
+•
+ 
+Spiritual
+ 
+wellbeing
+ 
+ 
+And  the  long-term  vision  
+The  real  product  isn't  actually  the  matchmaking  engine.  
+
+--- PAGE 43 ---
+It  is:  
+            FIND  A  PERSON  
+                   ↓  
+             VERIFY  A  PERSON  
+                   ↓  
+          UNDERSTAND  EACH  OTHER  
+                   ↓  
+            PREPARE  FOR  MARRIAGE  
+                   ↓  
+                MARRY  
+                   ↓  
+          BUILD  A  HEALTHY  FAMILY  
+                   ↓  
+             LIVE  WELL  TOGETHER  
+                   ↓  
+              GROW  TOGETHER  
+That  gives  you  a  very  powerful  ecosystem:  
+MANGALSUTRA  =  Relationship  Platform  
+CHAANBEAN  =  Trust  Infrastructure  
+PRATHA  =  Spiritual  &  Inner  Wellbeing  
+MARKETPLACE  =  Physical  Wellbeing  &  Commerce  
+And  importantly,  the  verification  layer  should  be  consent-based  and  evidence-based,  
+not
+ 
+a
+ 
+system
+ 
+that
+ 
+labels
+ 
+people
+ 
+as
+ 
+"good"
+ 
+or
+ 
+"bad."
+ 
+For
+ 
+sensitive
+ 
+checks
+ 
+such
+ 
+as
+ 
+caste,
+ 
+court
+ 
+matters
+ 
+and
+ 
+police
+ 
+records,
+ 
+that
+ 
+distinction
+ 
+will
+ 
+be
+ 
+essential
+ 
+both
+ 
+ethically
+ 
+and
+ 
+legally.
+ 
+Government
+ 
+systems
+ 
+already
+ 
+vary
+ 
+significantly
+ 
+by
+ 
+state;
+ 
+for
+ 
+example,
+ 
+Kerala
+ 
+provides
+ 
+online
+ 
+civil-registration
+ 
+and
+ 
+marriage
+ 
+services
+ 
+through
+ 
+K-SMART,
+ 
+while
+ 
+caste-certificate
+ 
+services
+ 
+are
+ 
+also
+ 
+available
+ 
+through
+ 
+state
+ 
+e-governance
+ systems. LSGD  Kerala  |  തേ ശ  സ യംഭരണ  വകു  ് 
+
+--- PAGE 44 ---
+This  is  the  direction  I  would  take  for  the  web  launch:  first  make  Mangalsutra  the  most  
+trusted
+ 
+matchmaking
+ 
+experience,
+ 
+then
+ 
+make
+ 
+ChaanBean
+ 
+the
+ 
+invisible
+ 
+trust
+ 
+layer,
+ 
+and
+ 
+finally
+ 
+turn
+ 
+the
+ 
+platform
+ 
+into
+ 
+a
+ 
+lifelong
+ 
+marriage/wellbeing
+ 
+ecosystem.
+ 
+ 
+with  a  verification  date  and  a  limited  description.  
+  
