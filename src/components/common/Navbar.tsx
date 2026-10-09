@@ -10,6 +10,7 @@ import {
   User, 
   Map, 
   Sparkles, 
+  HeartHandshake,
   LogOut, 
   LogIn 
 } from 'lucide-react';
@@ -30,6 +31,7 @@ export const Navbar: React.FC = () => {
     { tab: 'matches', label: 'Matches', icon: Heart, badge: mutualConnections.length },
     { tab: 'messages', label: 'Messages', icon: MessageCircle, badge: 1 },
     { tab: 'trust', label: 'Trust Hub', icon: ShieldCheck },
+    { tab: 'intelligence', label: 'Intelligence', icon: HeartHandshake },
     { tab: 'profile', label: 'My Profile', icon: User },
     { tab: 'roadmap', label: 'Ecosystem', icon: Map },
   ];
@@ -124,7 +126,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Bottom Navigation Bar */}
       <nav className="bottom-nav-mobile" aria-label="Mobile Navigation">
-        {navItems.slice(0, 5).map((item) => {
+        {[navItems[0], navItems[1], navItems[3], navItems[4], navItems[5]].map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.tab;
           return (

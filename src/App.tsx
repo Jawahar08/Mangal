@@ -16,6 +16,7 @@ import { TrustDashboard } from './components/trust/TrustDashboard';
 import { ProfileView } from './components/profile/ProfileView';
 import { RoadmapView } from './components/roadmap/RoadmapView';
 import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
+import { MarriageIntelligenceHub } from './components/intelligence/MarriageIntelligenceHub';
 
 const MainRouter: React.FC = () => {
   const { activeTab } = useApp();
@@ -27,6 +28,7 @@ const MainRouter: React.FC = () => {
       {activeTab === 'matches' && <MatchesView />}
       {activeTab === 'messages' && <ChatView />}
       {activeTab === 'trust' && <TrustDashboard />}
+      {activeTab === 'intelligence' && <MarriageIntelligenceHub />}
       {activeTab === 'profile' && <ProfileView />}
       {activeTab === 'roadmap' && <RoadmapView />}
       {activeTab === 'onboarding' && <OnboardingFlow />}

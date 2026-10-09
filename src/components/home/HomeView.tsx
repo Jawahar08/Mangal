@@ -143,7 +143,7 @@ export const HomeView: React.FC = () => {
             <div 
               className="card-heritage" 
               style={{ padding: '1.5rem', cursor: 'pointer', borderTop: '3px solid var(--color-gold-dark)' }}
-              onClick={() => setActiveTab('discover')}
+              onClick={() => setActiveTab('intelligence')}
             >
               <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'var(--color-gold-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
                 <Sparkles size={22} color="var(--color-gold-dark)" />
@@ -160,7 +160,7 @@ export const HomeView: React.FC = () => {
             <div 
               className="card-heritage" 
               style={{ padding: '1.5rem', cursor: 'pointer', borderTop: '3px solid #8E2036' }}
-              onClick={() => setActiveTab('roadmap')}
+              onClick={() => setActiveTab('intelligence')}
             >
               <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#FFF1F2', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
                 <Flower2 size={22} color="#8E2036" />

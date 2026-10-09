@@ -152,12 +152,13 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'MARRIAGE_READINESS',
     title: 'Marriage Readiness Assessment',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'planned',
+    status: 'implemented_and_tested',
     summary: 'Non-judgmental readiness assessment identifying strength areas and conversations before engagement.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Non-diagnostic readiness summary, private self-reflection, topic recommendations.',
     features: [
-      { name: 'Individual Readiness Survey', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Individual Readiness Survey & Prompts', status: 'implemented_and_tested', note: 'Curated self-reflections across finances, family, and conflict' },
+      { name: 'Non-Diagnostic Growth Framing', status: 'implemented_and_tested', note: 'Never assigns credit-like score or divorce prediction' }
     ]
   },
   {
@@ -165,13 +166,14 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'TALK_BEFORE_YOU_MARRY',
     title: 'Talk Before You Marry Paced Prompts',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'partial',
-    summary: 'Curated prompts on money, parents, career, kids, religion, living arrangements. Phase 1 provides starter prompts in chat.',
+    status: 'implemented_and_tested',
+    summary: 'Curated prompts on money, parents, career, kids, religion, living arrangements. Supports private reflections and mutual consent sharing.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Paced prompts, private reflection before sharing, save and skip.',
     features: [
-      { name: 'Chat Icebreakers & Essential Questions', status: 'implemented_and_tested', note: 'Phase 1 chat includes curated starter topics' },
-      { name: 'Full Interactive Paced Reflection Engine', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Chat Icebreakers & Essential Questions', status: 'implemented_and_tested', note: 'Curated starter topics in Phase 1 chat' },
+      { name: 'Full Interactive Paced Reflection Studio', status: 'implemented_and_tested', note: 'Paced topics with independent reflection and mutual reveal' },
+      { name: 'Private Draft vs Partner Shared Toggle', status: 'implemented_and_tested', note: 'Strict privacy guard ensuring private drafts are never leaked' }
     ]
   },
   {
@@ -179,12 +181,13 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'COUPLE_CONVERSATION_MODE',
     title: 'Couple Conversation Mode',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'planned',
+    status: 'implemented_and_tested',
     summary: 'Private shared space accessible only after mutual opt-in with distinct private vs shared answer separation.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Mutual consent before activation, explicit controls per answer, never silently expose private notes.',
     features: [
-      { name: 'Shared Relationship Space', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Sacred Couple Sanctuary Mode', status: 'implemented_and_tested', note: 'Mutual opt-in handshake required before activation' },
+      { name: 'Shared Agreement Ledger & Notes', status: 'implemented_and_tested', note: 'Category-specific joint notes penned by each partner' }
     ]
   },
   {
@@ -192,12 +195,13 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'RELATIONSHIP_RISK_SIGNALS',
     title: 'Relationship Risk Signals',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'planned',
+    status: 'implemented_and_tested',
     summary: 'Objective signals regarding financial divergence, child expectation conflicts, or inconsistencies.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'State evidence source & uncertainty, no defamatory labels, suggest qualified counseling.',
     features: [
-      { name: 'Discussion Advisory Signals', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Discussion Advisory Signals', status: 'implemented_and_tested', note: 'Green advisory and Amber discussion signals with questions to ask' },
+      { name: 'Evidence Provenance & Professional Support', status: 'implemented_and_tested', note: 'Clear source attribution and licensed counseling links' }
     ]
   },
   {
@@ -205,13 +209,13 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'ASK_MS_TRUST',
     title: 'Ask MS Trust Confidential Helper',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'partial',
-    summary: 'Assistant guiding users on questions to ask, documents to verify, and red flags. Phase 1 Astra AI handles initial queries.',
+    status: 'implemented_and_tested',
+    summary: 'Assistant guiding users on questions to ask, documents to verify, and red flags with grounded non-diagnostic advice.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Distinguishes verified facts from user statements, safe non-legal suggestions.',
     features: [
       { name: 'Astra AI Relationship & Questions Guide', status: 'implemented_and_tested', note: 'Included in Phase 1 compatibility view' },
-      { name: 'Confidential Verification Advisory Bot', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Ask MS Trust Confidential Relationship Guide', status: 'implemented_and_tested', note: 'Interactive guidance on framing delicate queries and counseling' }
     ]
   },
   {
@@ -262,12 +266,13 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'MARRIAGE_JOURNEY_DASHBOARD',
     title: 'Marriage Journey Dashboard & Milestones',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'planned',
+    status: 'implemented_and_tested',
     summary: 'Configurable milestones: Matched, Trust Check, Know Each Other, Important Conversations, Engagement, Wedding, First 100 Days.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Mutual consent for shared progress, non-competitive milestones.',
     features: [
-      { name: 'Milestone Progress Tracker', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Mutual Milestone Progress Tracker', status: 'implemented_and_tested', note: '10 milestones from Discovery through Wedding and First Anniversary' },
+      { name: 'Mutual Affirmation Protocol', status: 'implemented_and_tested', note: 'Requires both partners to affirm milestones without competition' }
     ]
   },
   {
@@ -275,12 +280,12 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'FIRST_100_DAYS',
     title: 'First 100 Days Post-Marriage Guide',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'planned',
+    status: 'implemented_and_tested',
     summary: 'Structured guidance for days 1-7 (expectations), 8-30 (communication), 31-60 (money/family), 61-90 (lifestyle), 91-100 (reflection).',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Independent answers, conversational prompts, non-diagnostic.',
     features: [
-      { name: '100-Day Phased Prompts', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: '100-Day Phased Prompts & Reflection', status: 'implemented_and_tested', note: 'Five 20-30 day transition modules with partner-shared answers' }
     ]
   },
   {
@@ -288,12 +293,12 @@ export const ROADMAP_MODULES: RoadmapModule[] = [
     code: 'ANNUAL_HEALTH_CHECK',
     title: 'Annual Marriage Health Check',
     phase: 'Phase 3: Marriage Intelligence',
-    status: 'planned',
+    status: 'implemented_and_tested',
     summary: 'Yearly check-in on communication, finances, family, intimacy, and joint dreams with optional retreats/counselling.',
     phasePromptRef: '05_Phases_3_to_6_Ecosystem/01_PHASE_3_MARRIAGE_INTELLIGENCE_PROMPT.md',
     acceptanceCriteria: 'Private non-clinical language, voluntary couple check-in.',
     features: [
-      { name: 'Annual Marriage Reflection', status: 'planned', note: 'Phase 3 backlog item' }
+      { name: 'Annual Marriage Reflection Dashboard', status: 'implemented_and_tested', note: 'Evaluates harmony, finances, emotional intimacy, and joint dreams' }
     ]
   },
   {
