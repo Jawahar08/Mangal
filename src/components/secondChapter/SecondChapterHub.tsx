@@ -99,6 +99,9 @@ export const SecondChapterHub: React.FC = () => {
   };
 
   const handleSaveRebuildProfile = () => {
+    import('../../services/backend').then(({ SecondChapterBackendService }) => {
+      SecondChapterBackendService.updateProfileDetails(currentUser.id, scProfile);
+    });
     showToast(
       'Rebuild Profile Updated',
       'Your reflections and relationship priorities have been updated in your profile.',
@@ -107,6 +110,9 @@ export const SecondChapterHub: React.FC = () => {
   };
 
   const handleSaveChildrenSettings = () => {
+    import('../../services/backend').then(({ SecondChapterBackendService }) => {
+      SecondChapterBackendService.updateProfileDetails(currentUser.id, scProfile);
+    });
     showToast(
       'Family & Custody Disclosures Updated',
       `Custody visibility set to: ${scProfile.custodyPrivacy.replace(/_/g, ' ')}.`,

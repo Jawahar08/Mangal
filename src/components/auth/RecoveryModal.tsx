@@ -18,12 +18,12 @@ export const RecoveryModal: React.FC = () => {
       return;
     }
 
-    setIsSent(true);
-    showToast(
-      'Recovery Instructions Dispatched',
-      `A secure reset link has been dispatched to ${email}.`,
-      'success'
-    );
+    import('../../services/backend').then(({ AuthService }) => {
+      AuthService.requestPasswordRecovery(email).then((res) => {
+        setIsSent(true);
+        showToast('Recovery Instructions Dispatched', res.message, 'success');
+      });
+    });
   };
 
   const handleClose = () => {

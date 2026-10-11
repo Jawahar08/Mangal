@@ -21,7 +21,7 @@ import { StatusBadge } from '../common/Badge';
 import { Modal } from '../common/Modal';
 
 export const ProfileView: React.FC = () => {
-  const { currentUser, updateCurrentUser, showToast } = useApp();
+  const { currentUser, updateCurrentUser, showToast, deleteAccount } = useApp();
 
   const [activeLayer, setActiveLayer] = useState<'who_i_am' | 'my_life' | 'my_family' | 'my_expectations' | 'my_trust'>('who_i_am');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -475,7 +475,29 @@ export const ProfileView: React.FC = () => {
             </label>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem' }}>
+          {/* Account Deletion & Data Privacy */}
+          <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid var(--border-light)' }}>
+            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#991B1B', marginBottom: '0.4rem' }}>
+              Account & Data Privacy
+            </h4>
+            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+              Under our privacy charter, you can permanently delete your account and immediately purge all profile, verification, and chat records from the database.
+            </p>
+            <button
+              type="button"
+              className="btn-outline"
+              style={{ color: '#DC2626', borderColor: '#FCA5A5', fontSize: '0.82rem', padding: '0.4rem 0.8rem' }}
+              onClick={async () => {
+                if (window.confirm('Are you sure you want to permanently delete your account and all associated data? This action cannot be undone.')) {
+                  await deleteAccount();
+                }
+              }}
+            >
+              Permanently Delete Account
+            </button>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.25rem' }}>
             <button className="btn-outline" onClick={() => setIsEditModalOpen(false)}>
               Cancel
             </button>

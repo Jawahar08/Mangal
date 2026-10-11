@@ -105,6 +105,9 @@ How can I assist your relationship journey today?`,
     const updated = topics.map((t) => {
       if (t.id === topicId) {
         const nextShared = !t.isSharedWithPartner;
+        import('../../services/backend').then(({ IntelligenceService }) => {
+          IntelligenceService.saveReflection(currentUser.id, 'p_radhika_02', topicId, t.userPrivateReflection, nextShared);
+        });
         showToast(
           nextShared ? 'Reflection Shared' : 'Reflection Kept Private',
           nextShared
@@ -126,6 +129,9 @@ How can I assist your relationship journey today?`,
   const handleUpdateReflection = (text: string) => {
     const updated = topics.map((t) => {
       if (t.id === selectedTopicId) {
+        import('../../services/backend').then(({ IntelligenceService }) => {
+          IntelligenceService.saveReflection(currentUser.id, 'p_radhika_02', selectedTopicId, text, t.isSharedWithPartner);
+        });
         return { ...t, userPrivateReflection: text };
       }
       return t;

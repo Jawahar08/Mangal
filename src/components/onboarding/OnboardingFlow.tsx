@@ -155,44 +155,41 @@ export const OnboardingFlow: React.FC = () => {
     return true;
   };
 
-  // Biodata AI Extraction Simulation (Strict Rule: Mandates User Review Before Publishing)
-  const handleExtractBiodata = () => {
+  // Biodata AI Extraction with Mandatory Disclosure & User Review
+  const handleExtractBiodata = async () => {
     if (!rawBiodataText.trim()) return;
     setIsExtracting(true);
 
-    setTimeout(() => {
-      // Intelligent regex & pattern parser
-      const text = rawBiodataText;
+    try {
+      const { ProfileService } = await import('../../services/backend');
+      const res = await ProfileService.extractBiodata(rawBiodataText, true);
 
-      // Extract Name
-      const nameMatch = text.match(/(?:Name|Name:)\s*([A-Za-z\s]+)/i);
-      if (nameMatch && nameMatch[1]) setFullName(nameMatch[1].trim());
+      if (res.success && res.draft) {
+        if (res.draft.fullName) setFullName(res.draft.fullName);
+        if (res.draft.profession) setProfession(res.draft.profession);
+        if (res.draft.education) setEducation(res.draft.education);
+        if (res.draft.currentCity) setCurrentCity(res.draft.currentCity);
+        if (res.draft.diet) setDiet(res.draft.diet);
+        if (res.draft.religion) setReligion(res.draft.religion);
 
-      // Extract Profession
-      const profMatch = text.match(/(?:Working as|Profession|Designation|Role:)\s*([A-Za-z\s]+)/i);
-      if (profMatch && profMatch[1]) setProfession(profMatch[1].trim());
+        setBio(
+          `Cultured professional based in ${res.draft.currentCity || currentCity || 'Mumbai'}. Working as ${res.draft.profession || profession || 'Professional'}. Seeking an authentic, family-oriented partner with shared values and mutual respect.`
+        );
 
-      // Extract Education
-      const eduMatch = text.match(/(?:Education|Degree|Qualified:)\s*([A-Za-z\s]+)/i);
-      if (eduMatch && eduMatch[1]) setEducationField(eduMatch[1].trim());
-
-      // Extract City
-      const cityMatch = text.match(/(?:City|Location|Based in:)\s*([A-Za-z\s]+)/i);
-      if (cityMatch && cityMatch[1]) setCurrentCity(cityMatch[1].trim());
-
-      // Synthesize Bio
-      setBio(
-        `Born in a cultured family, currently residing in ${currentCity || 'Bangalore'}. Passionate about career and healthy life balance. Seeking an understanding partner who values family and open communication.`
-      );
-
+        setExtractionCompleted(true);
+        showToast(
+          'Biodata Fields Extracted',
+          res.draft.disclosureNotice || 'Please review each extracted field carefully. Information is never published without your explicit confirmation.',
+          'success'
+        );
+      } else {
+        showToast('Extraction Note', res.error || 'Please provide more details.', 'warning');
+      }
+    } catch (e: any) {
+      showToast('Extraction Error', e.message, 'warning');
+    } finally {
       setIsExtracting(false);
-      setExtractionCompleted(true);
-      showToast(
-        'Data Extracted Successfully',
-        'Please review and correct each extracted field. Extracted data is never published without your explicit confirmation.',
-        'success'
-      );
-    }, 1200);
+    }
   };
 
   const handleNext = () => {

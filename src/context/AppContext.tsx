@@ -1,11 +1,24 @@
-// App Context for Global State Management
+// App Context for Global State Management & Backend Integration
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { UserProfile, ChatMessage } from '../types';
 import { StorageService } from '../services/storageService';
 import { MOCK_DISCOVERY_PROFILES } from '../data/mockProfiles';
+import { AuthService, ProfileService, DiscoveryService } from '../services/backend';
 
-export type ActiveTab = 'home' | 'discover' | 'second_chapter' | 'matches' | 'messages' | 'trust' | 'intelligence' | 'pratha' | 'marketplace' | 'profile' | 'roadmap' | 'onboarding';
+export type ActiveTab = 
+  | 'home' 
+  | 'discover' 
+  | 'second_chapter' 
+  | 'matches' 
+  | 'messages' 
+  | 'trust' 
+  | 'intelligence' 
+  | 'pratha' 
+  | 'marketplace' 
+  | 'profile' 
+  | 'roadmap' 
+  | 'onboarding';
 
 interface ToastInfo {
   id: string;
@@ -45,6 +58,7 @@ interface AppContextType {
   isLoggedIn: boolean;
   loginUser: (email: string) => void;
   logoutUser: () => void;
+  deleteAccount: () => Promise<void>;
   startOnboarding: () => void;
 }
 
@@ -53,7 +67,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<UserProfile>(() => StorageService.getUserProfile());
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
-  const [discoveryProfiles] = useState<UserProfile[]>(MOCK_DISCOVERY_PROFILES);
+  const [discoveryProfiles, setDiscoveryProfiles] = useState<UserProfile[]>(MOCK_DISCOVERY_PROFILES);
   const [savedProfileIds, setSavedProfileIds] = useState<string[]>(() => StorageService.getSavedProfileIds());
   const [interestsSent, setInterestsSent] = useState<string[]>(() => StorageService.getInterestsSent());
   const [mutualConnections, setMutualConnections] = useState<string[]>(() => StorageService.getMutualConnections());
@@ -63,7 +77,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isRecoveryModalOpen, setIsRecoveryModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => StorageService.getAuthSession().isAuthenticated);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => AuthService.getSession().isAuthenticated);
+
+  // Sync profile on mount
+  useEffect(() => {
+    ProfileService.getProfile(currentUser.id).then((p) => {
+      if (p) setCurrentUser(p);
+    });
+  }, []);
 
   const showToast = (title: string, desc?: string, type: 'success' | 'info' | 'warning' | 'error' = 'info') => {
     const id = Date.now().toString() + Math.random().toString();
@@ -79,24 +100,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const updateCurrentUser = (profile: UserProfile) => {
     setCurrentUser(profile);
-    StorageService.saveUserProfile(profile);
+    ProfileService.updateProfile(profile);
   };
 
-  const toggleSaveProfile = (id: string) => {
-    const updated = StorageService.toggleSaveProfile(id);
-    setSavedProfileIds(updated);
-    const isSaved = updated.includes(id);
+  const toggleSaveProfile = async (targetId: string) => {
+    const res = await DiscoveryService.toggleSaveProfile(currentUser.id, targetId);
+    setSavedProfileIds(res.savedIds);
     showToast(
-      isSaved ? 'Profile Saved' : 'Profile Removed',
-      isSaved ? 'You can review this match anytime in your Saved tab.' : 'Removed from your saved list.',
+      res.isSaved ? 'Profile Saved' : 'Profile Removed',
+      res.isSaved ? 'You can review this match anytime in your Saved tab.' : 'Removed from your saved list.',
       'info'
     );
   };
 
-  const sendInterest = (id: string) => {
-    const { interests, isMutual } = StorageService.sendInterest(id);
-    setInterestsSent(interests);
-    if (isMutual) {
+  const sendInterest = async (targetId: string) => {
+    const res = await DiscoveryService.sendInterest(currentUser.id, targetId);
+    setInterestsSent(res.interests);
+    if (res.isMutual) {
       setMutualConnections(StorageService.getMutualConnections());
       showToast(
         '✨ It’s a Mutual Match!',
@@ -104,13 +124,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         'success'
       );
     } else {
-      showToast('Interest Expressed', 'Your expression of interest has been sent respectfully.', 'info');
+      showToast('Interest Expressed', res.message, 'info');
     }
   };
 
-  const requestPhotoAccess = (id: string) => {
-    const updated = StorageService.requestPhotoAccess(id);
-    setPhotoUnlockedIds(updated);
+  const requestPhotoAccess = async (targetId: string) => {
+    const res = await DiscoveryService.requestPhotoAccess(currentUser.id, targetId);
+    setPhotoUnlockedIds(res.unlockedIds);
     showToast(
       'Photo Access Granted',
       'The member’s privacy settings have unlocked their gallery for your verified profile.',
@@ -133,16 +153,23 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const loginUser = (email: string) => {
     setIsLoggedIn(true);
-    StorageService.setAuthSession({ isAuthenticated: true, email });
+    AuthService.signInWithEmail(email);
     setIsAuthModalOpen(false);
     showToast('Welcome Back', `Logged in as ${email}`, 'success');
   };
 
   const logoutUser = () => {
     setIsLoggedIn(false);
-    StorageService.setAuthSession({ isAuthenticated: false });
+    AuthService.signOut();
     setActiveTab('home');
     showToast('Logged Out', 'You have been safely signed out.', 'info');
+  };
+
+  const deleteAccount = async () => {
+    await AuthService.deleteAccount(currentUser.id);
+    setIsLoggedIn(false);
+    setActiveTab('home');
+    showToast('Account Deleted', 'Your profile and data have been permanently purged.', 'info');
   };
 
   const startOnboarding = () => {
@@ -182,6 +209,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         isLoggedIn,
         loginUser,
         logoutUser,
+        deleteAccount,
         startOnboarding,
       }}
     >

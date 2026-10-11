@@ -41,10 +41,26 @@ export const AuthModal: React.FC = () => {
       loginUser(email);
     } else {
       if (!otpSent) {
-        setOtpSent(true);
-        showToast('OTP Dispatched', 'A 6-digit verification code has been dispatched to your phone.', 'info');
+        import('../../services/backend').then(({ AuthService }) => {
+          AuthService.requestPhoneOtp(phone).then((res) => {
+            if (res.success) {
+              setOtpSent(true);
+              showToast('OTP Dispatched', res.message, 'info');
+            } else {
+              showToast('OTP Error', res.error, 'warning');
+            }
+          });
+        });
       } else {
-        loginUser(`${phone}@phone.mangalsutra`);
+        import('../../services/backend').then(({ AuthService }) => {
+          AuthService.verifyPhoneOtp(phone, otp).then((res) => {
+            if (res.success) {
+              loginUser(`${phone}@phone.mangalsutra`);
+            } else {
+              showToast('Invalid OTP', res.error, 'error');
+            }
+          });
+        });
       }
     }
   };

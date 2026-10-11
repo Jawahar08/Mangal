@@ -47,60 +47,60 @@ export const ChatView: React.FC = () => {
 
   useEffect(() => {
     if (activePartner) {
-      const msgs = StorageService.getChatMessages(activePartner.id);
-      setMessages(msgs);
+      import('../../services/backend').then(({ MessagingService }) => {
+        MessagingService.getMessages(currentUser.id, activePartner.id).then((msgs) => {
+          setMessages(msgs);
+        });
+      });
     }
-  }, [activePartner]);
+  }, [activePartner, currentUser.id]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSendMessage = (textToSend?: string, isPrompt: boolean = false) => {
+  const handleSendMessage = async (textToSend?: string, isPrompt: boolean = false) => {
     const content = textToSend || messageText;
     if (!content.trim() || !activePartner) return;
 
-    const newMsg: ChatMessage = {
-      id: `msg_${Date.now()}`,
-      senderId: currentUser.id,
-      receiverId: activePartner.id,
-      content,
-      timestamp: 'Just now',
-      isPromptStarter: isPrompt,
-    };
+    const { MessagingService } = await import('../../services/backend');
+    const res = await MessagingService.sendMessage(currentUser.id, activePartner.id, content, isPrompt);
 
-    const updated = StorageService.saveChatMessage(activePartner.id, newMsg);
-    setMessages(updated);
-    setMessageText('');
+    if (res.success) {
+      setMessages((prev) => [...prev, res.message]);
+      setMessageText('');
 
-    // Simulated responsive reply if it is a prompt
-    if (isPrompt) {
-      setTimeout(() => {
-        const reply: ChatMessage = {
-          id: `msg_reply_${Date.now()}`,
-          senderId: activePartner.id,
-          receiverId: currentUser.id,
-          content: `Thank you for asking this thoughtful question about ${content.slice(0, 35)}... I really appreciate open discussions like this. Let me share my perspective!`,
-          timestamp: 'Just now',
-        };
-        const withReply = StorageService.saveChatMessage(activePartner.id, reply);
-        setMessages(withReply);
-      }, 1500);
+      // Responsive reply if it is a prompt
+      if (isPrompt) {
+        setTimeout(async () => {
+          const reply = await MessagingService.sendMessage(
+            activePartner.id,
+            currentUser.id,
+            `Thank you for asking this thoughtful question about ${content.slice(0, 35)}... I really appreciate open discussions like this. Let me share my perspective!`,
+            false
+          );
+          if (reply.success) {
+            setMessages((prev) => [...prev, reply.message]);
+          }
+        }, 1500);
+      }
     }
   };
 
-  const handleBlockUser = () => {
+  const handleBlockUser = async () => {
     setIsBlockModalOpen(false);
-    showToast('User Blocked', `${activePartner?.name} has been blocked and removed from your conversation list.`, 'info');
+    if (!activePartner) return;
+    const { DiscoveryService } = await import('../../services/backend');
+    const res = await DiscoveryService.blockUser(currentUser.id, activePartner.id);
+    showToast('User Blocked', res.message, 'info');
   };
 
-  const handleReportUser = () => {
+  const handleReportUser = async () => {
     setIsReportModalOpen(false);
-    showToast(
-      'Report Submitted with Grievance Officer',
-      'Thank you for alerting our trust team. Our safety desk reviews all reports within 2 hours under our ethical charter.',
-      'success'
-    );
+    if (!activePartner) return;
+    const { DiscoveryService } = await import('../../services/backend');
+    const res = await DiscoveryService.reportUser(currentUser.id, activePartner.id, reportReason, reportDetails);
+    showToast('Report Submitted', res.message, 'success');
   };
 
   if (chatPartners.length === 0) {
