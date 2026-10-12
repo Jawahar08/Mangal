@@ -56,6 +56,7 @@ interface AppContextType {
   openRecoveryModal: () => void;
   closeRecoveryModal: () => void;
   isLoggedIn: boolean;
+  isUserVerified: boolean;
   loginUser: (email: string) => void;
   logoutUser: () => void;
   deleteAccount: () => Promise<void>;
@@ -73,11 +74,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [mutualConnections, setMutualConnections] = useState<string[]>(() => StorageService.getMutualConnections());
   const [photoUnlockedIds, setPhotoUnlockedIds] = useState<string[]>(() => StorageService.getPhotoUnlockedIds());
   const [activePartnerForDetail, setActivePartnerForDetail] = useState<UserProfile | null>(null);
-  const [activeChatPartnerId, setActiveChatPartnerId] = useState<string | null>('p_radhika_02');
+  const [activeChatPartnerId, setActiveChatPartnerId] = useState<string | null>(null);
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isRecoveryModalOpen, setIsRecoveryModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => AuthService.getSession().isAuthenticated);
+
+  const isUserVerified = Boolean(isLoggedIn && currentUser?.isRegisteredUser && currentUser.id !== 'usr_guest_unregistered');
 
   // Sync profile on mount
   useEffect(() => {
@@ -100,7 +103,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const updateCurrentUser = (profile: UserProfile) => {
     setCurrentUser(profile);
+    StorageService.saveUserProfile(profile);
     ProfileService.updateProfile(profile);
+    if (profile.isRegisteredUser) {
+      setIsLoggedIn(true);
+      StorageService.setAuthSession({ isAuthenticated: true, email: profile.name });
+    }
   };
 
   const toggleSaveProfile = async (targetId: string) => {
@@ -154,6 +162,21 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const loginUser = (email: string) => {
     setIsLoggedIn(true);
     AuthService.signInWithEmail(email);
+    if (email.toLowerCase().includes('arjun') || email.toLowerCase().includes('demo')) {
+      StorageService.loginAsDemoUser();
+      const demo = StorageService.getUserProfile();
+      setCurrentUser(demo);
+      setInterestsSent(StorageService.getInterestsSent());
+      setMutualConnections(StorageService.getMutualConnections());
+      setSavedProfileIds(StorageService.getSavedProfileIds());
+    } else {
+      const existing = StorageService.getUserProfile();
+      if (existing && existing.isRegisteredUser) {
+        setCurrentUser(existing);
+        setInterestsSent(StorageService.getInterestsSent());
+        setMutualConnections(StorageService.getMutualConnections());
+      }
+    }
     setIsAuthModalOpen(false);
     showToast('Welcome Back', `Logged in as ${email}`, 'success');
   };
@@ -161,6 +184,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const logoutUser = () => {
     setIsLoggedIn(false);
     AuthService.signOut();
+    setCurrentUser(StorageService.getUserProfile());
+    setInterestsSent([]);
+    setMutualConnections([]);
+    setSavedProfileIds([]);
+    setActiveChatPartnerId(null);
     setActiveTab('home');
     showToast('Logged Out', 'You have been safely signed out.', 'info');
   };
@@ -207,6 +235,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openRecoveryModal: () => setIsRecoveryModalOpen(true),
         closeRecoveryModal: () => setIsRecoveryModalOpen(false),
         isLoggedIn,
+        isUserVerified,
         loginUser,
         logoutUser,
         deleteAccount,

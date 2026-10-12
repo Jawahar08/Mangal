@@ -20,13 +20,41 @@ import { MarriageIntelligenceHub } from './components/intelligence/MarriageIntel
 import { SecondChapterHub } from './components/secondChapter/SecondChapterHub';
 import { PrathaHub } from './components/pratha/PrathaHub';
 import { MarketplaceHub } from './components/marketplace/MarketplaceHub';
+import { VerificationGate } from './components/common/VerificationGate';
 
 const MainRouter: React.FC = () => {
-  const { activeTab } = useApp();
+  const { activeTab, isUserVerified } = useApp();
 
+  // Public views
+  if (activeTab === 'home') return <main className="main-content"><HomeView /></main>;
+  if (activeTab === 'roadmap') return <main className="main-content"><RoadmapView /></main>;
+  if (activeTab === 'onboarding') return <main className="main-content"><OnboardingFlow /></main>;
+
+  // Security & Trust Gate: feature access requires verified account
+  if (!isUserVerified) {
+    const featureLabels: Record<string, string> = {
+      discover: 'Candidate Discovery',
+      second_chapter: 'Second Chapter (Remarriage)',
+      matches: 'Mutual Matches & Interests',
+      messages: 'Private Messages & Chat',
+      trust: 'ChaanBean Trust Vault',
+      intelligence: 'Marriage Intelligence Hub',
+      pratha: 'Pratha Ritual Traditions',
+      marketplace: 'Curated Wedding Marketplace',
+      profile: 'My 5-Layer Profile',
+    };
+    return (
+      <main className="main-content">
+        <VerificationGate 
+          featureName={featureLabels[activeTab] || 'This Feature'} 
+        />
+      </main>
+    );
+  }
+
+  // Verified Member Views
   return (
     <main className="main-content">
-      {activeTab === 'home' && <HomeView />}
       {activeTab === 'discover' && <DiscoverView />}
       {activeTab === 'second_chapter' && <SecondChapterHub />}
       {activeTab === 'matches' && <MatchesView />}
@@ -36,8 +64,6 @@ const MainRouter: React.FC = () => {
       {activeTab === 'pratha' && <PrathaHub />}
       {activeTab === 'marketplace' && <MarketplaceHub />}
       {activeTab === 'profile' && <ProfileView />}
-      {activeTab === 'roadmap' && <RoadmapView />}
-      {activeTab === 'onboarding' && <OnboardingFlow />}
     </main>
   );
 };

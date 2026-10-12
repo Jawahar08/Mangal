@@ -1,7 +1,7 @@
 // Local Storage Persistence Service for MangalSutra 2.0
 
 import { UserProfile, ChatMessage, ConnectionRequest } from '../types';
-import { INITIAL_USER, MOCK_DISCOVERY_PROFILES } from '../data/mockProfiles';
+import { INITIAL_USER, GUEST_USER, MOCK_DISCOVERY_PROFILES } from '../data/mockProfiles';
 
 const KEYS = {
   USER_PROFILE: 'ms_user_profile_v2',
@@ -19,11 +19,14 @@ export const StorageService = {
   getUserProfile(): UserProfile {
     try {
       const data = localStorage.getItem(KEYS.USER_PROFILE);
-      if (data) return JSON.parse(data);
+      if (data) {
+        const parsed = JSON.parse(data);
+        if (parsed && parsed.isRegisteredUser) return parsed;
+      }
     } catch (e) {
       console.warn('Storage read failed', e);
     }
-    return INITIAL_USER;
+    return GUEST_USER;
   },
 
   saveUserProfile(profile: UserProfile): void {
@@ -38,9 +41,9 @@ export const StorageService = {
   getSavedProfileIds(): string[] {
     try {
       const data = localStorage.getItem(KEYS.SAVED_PROFILES);
-      return data ? JSON.parse(data) : ['p_ananya_01'];
+      return data ? JSON.parse(data) : [];
     } catch {
-      return ['p_ananya_01'];
+      return [];
     }
   },
 
@@ -56,9 +59,9 @@ export const StorageService = {
   getInterestsSent(): string[] {
     try {
       const data = localStorage.getItem(KEYS.INTERESTS_SENT);
-      return data ? JSON.parse(data) : ['p_radhika_02'];
+      return data ? JSON.parse(data) : [];
     } catch {
-      return ['p_radhika_02'];
+      return [];
     }
   },
 
@@ -81,9 +84,9 @@ export const StorageService = {
   getMutualConnections(): string[] {
     try {
       const data = localStorage.getItem(KEYS.MUTUAL_CONNECTIONS);
-      return data ? JSON.parse(data) : ['p_radhika_02'];
+      return data ? JSON.parse(data) : [];
     } catch {
-      return ['p_radhika_02'];
+      return [];
     }
   },
 
@@ -187,13 +190,29 @@ export const StorageService = {
   getAuthSession(): { isAuthenticated: boolean; email?: string } {
     try {
       const data = localStorage.getItem(KEYS.AUTH_SESSION);
-      return data ? JSON.parse(data) : { isAuthenticated: true, email: 'arjun.sharma@example.com' };
+      return data ? JSON.parse(data) : { isAuthenticated: false };
     } catch {
-      return { isAuthenticated: true, email: 'arjun.sharma@example.com' };
+      return { isAuthenticated: false };
     }
   },
 
   setAuthSession(session: { isAuthenticated: boolean; email?: string }): void {
     localStorage.setItem(KEYS.AUTH_SESSION, JSON.stringify(session));
+  },
+
+  resetToGuest(): void {
+    localStorage.removeItem(KEYS.AUTH_SESSION);
+    localStorage.removeItem(KEYS.USER_PROFILE);
+    localStorage.removeItem(KEYS.INTERESTS_SENT);
+    localStorage.removeItem(KEYS.MUTUAL_CONNECTIONS);
+    localStorage.removeItem(KEYS.SAVED_PROFILES);
+  },
+
+  loginAsDemoUser(): void {
+    localStorage.setItem(KEYS.AUTH_SESSION, JSON.stringify({ isAuthenticated: true, email: 'arjun.sharma@example.com' }));
+    localStorage.setItem(KEYS.USER_PROFILE, JSON.stringify(INITIAL_USER));
+    localStorage.setItem(KEYS.INTERESTS_SENT, JSON.stringify(['p_radhika_02']));
+    localStorage.setItem(KEYS.MUTUAL_CONNECTIONS, JSON.stringify(['p_radhika_02']));
+    localStorage.setItem(KEYS.SAVED_PROFILES, JSON.stringify(['p_ananya_01']));
   },
 };

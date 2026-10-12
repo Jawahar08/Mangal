@@ -212,6 +212,18 @@ export const AuthModal: React.FC = () => {
             </>
           )}
         </div>
+
+        {/* Quick Demo Preview Option for testing */}
+        <div style={{ textAlign: 'center', borderTop: '1px solid var(--border-light)', paddingTop: '0.85rem', marginTop: '0.25rem' }}>
+          <button
+            type="button"
+            onClick={() => loginUser('arjun.sharma@example.com')}
+            style={{ fontSize: '0.78rem', color: 'var(--color-gold-dark)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600, background: 'none' }}
+          >
+            <Sparkles size={13} />
+            <span>Or explore as Verified Member (Demo Arjun Sharma)</span>
+          </button>
+        </div>
       </form>
     </Modal>
   );

@@ -10,12 +10,14 @@ import {
   User, 
   Map, 
   Sparkles, 
-  HeartHandshake,
-  Flower2,
-  Flame,
-  ShoppingBag,
+  HeartHandshake, 
+  Flower2, 
+  Flame, 
+  ShoppingBag, 
   LogOut, 
-  LogIn 
+  LogIn, 
+  Lock, 
+  UserPlus 
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -25,20 +27,22 @@ export const Navbar: React.FC = () => {
     mutualConnections, 
     currentUser, 
     isLoggedIn, 
+    isUserVerified, 
     openAuthModal, 
-    logoutUser 
+    logoutUser, 
+    startOnboarding 
   } = useApp();
 
-  const navItems: { tab: ActiveTab; label: string; icon: any; badge?: number }[] = [
-    { tab: 'discover', label: 'Discover', icon: Compass },
-    { tab: 'second_chapter', label: 'Second Chapter', icon: Flower2 },
-    { tab: 'matches', label: 'Matches', icon: Heart, badge: mutualConnections.length },
-    { tab: 'messages', label: 'Messages', icon: MessageCircle, badge: 1 },
-    { tab: 'trust', label: 'Trust Hub', icon: ShieldCheck },
-    { tab: 'intelligence', label: 'Intelligence', icon: HeartHandshake },
-    { tab: 'pratha', label: 'Pratha', icon: Flame },
-    { tab: 'marketplace', label: 'Marketplace', icon: ShoppingBag },
-    { tab: 'profile', label: 'My Profile', icon: User },
+  const navItems: { tab: ActiveTab; label: string; icon: any; badge?: number; isProtected?: boolean }[] = [
+    { tab: 'discover', label: 'Discover', icon: Compass, isProtected: true },
+    { tab: 'second_chapter', label: 'Second Chapter', icon: Flower2, isProtected: true },
+    { tab: 'matches', label: 'Matches', icon: Heart, badge: isUserVerified && mutualConnections.length > 0 ? mutualConnections.length : undefined, isProtected: true },
+    { tab: 'messages', label: 'Messages', icon: MessageCircle, badge: isUserVerified && mutualConnections.length > 0 ? 1 : undefined, isProtected: true },
+    { tab: 'trust', label: 'Trust Hub', icon: ShieldCheck, isProtected: true },
+    { tab: 'intelligence', label: 'Intelligence', icon: HeartHandshake, isProtected: true },
+    { tab: 'pratha', label: 'Pratha', icon: Flame, isProtected: true },
+    { tab: 'marketplace', label: 'Marketplace', icon: ShoppingBag, isProtected: true },
+    { tab: 'profile', label: 'My Profile', icon: User, isProtected: true },
     { tab: 'roadmap', label: 'Ecosystem', icon: Map },
   ];
 
@@ -67,6 +71,8 @@ export const Navbar: React.FC = () => {
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.tab;
+              const showLock = item.isProtected && !isUserVerified;
+
               return (
                 <button
                   key={item.tab}
@@ -75,6 +81,9 @@ export const Navbar: React.FC = () => {
                 >
                   <Icon size={18} />
                   <span>{item.label}</span>
+                  {showLock && (
+                    <Lock size={12} color="var(--color-gold-dark)" style={{ opacity: 0.7 }} />
+                  )}
                   {item.badge !== undefined && item.badge > 0 && (
                     <span
                       style={{
@@ -96,7 +105,7 @@ export const Navbar: React.FC = () => {
 
           {/* User Auth Actions */}
           <div className="nav-actions">
-            {isLoggedIn ? (
+            {isUserVerified ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                 <button
                   className="btn-outline"
@@ -121,10 +130,24 @@ export const Navbar: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <button className="btn-primary" style={{ padding: '0.5rem 1.1rem', fontSize: '0.85rem' }} onClick={openAuthModal}>
-                <LogIn size={16} />
-                <span>Sign In</span>
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button 
+                  className="btn-outline" 
+                  style={{ padding: '0.45rem 0.85rem', fontSize: '0.82rem' }} 
+                  onClick={openAuthModal}
+                >
+                  <LogIn size={15} />
+                  <span>Sign In</span>
+                </button>
+                <button 
+                  className="btn-primary" 
+                  style={{ padding: '0.45rem 1rem', fontSize: '0.82rem' }} 
+                  onClick={startOnboarding}
+                >
+                  <UserPlus size={15} />
+                  <span>Create Account</span>
+                </button>
+              </div>
             )}
           </div>
         </div>

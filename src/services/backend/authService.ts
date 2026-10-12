@@ -211,10 +211,11 @@ export const AuthService = {
   // 7. Get Current Session
   getSession(): AuthSession {
     const raw = StorageService.getAuthSession();
+    const isAuth = Boolean(raw.isAuthenticated);
     return {
-      userId: 'usr_arjun_99',
-      email: raw.email || 'arjun.sharma@example.com',
-      isAuthenticated: Boolean(raw.isAuthenticated),
+      userId: isAuth ? (raw.email ? `usr_${raw.email.split('@')[0]}` : 'usr_arjun_99') : 'usr_guest',
+      email: raw.email || '',
+      isAuthenticated: isAuth,
       isGuardian: false,
     };
   },
@@ -228,7 +229,7 @@ export const AuthService = {
         console.warn('Supabase signout failed', err);
       }
     }
-    StorageService.setAuthSession({ isAuthenticated: false });
+    StorageService.resetToGuest();
   },
 
   // 9. Account Deletion with Complete Data Purge
