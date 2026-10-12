@@ -1,9 +1,8 @@
 // App Context for Global State Management & Backend Integration
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { UserProfile, ChatMessage } from '../types';
 import { StorageService } from '../services/storageService';
-import { MOCK_DISCOVERY_PROFILES } from '../data/mockProfiles';
+import { MOCK_DISCOVERY_PROFILES, GUEST_USER } from '../data/mockProfiles';
 import { AuthService, ProfileService, DiscoveryService } from '../services/backend';
 
 export type ActiveTab = 
@@ -18,7 +17,8 @@ export type ActiveTab =
   | 'marketplace' 
   | 'profile' 
   | 'roadmap' 
-  | 'onboarding';
+  | 'onboarding'
+  | 'login';
 
 interface ToastInfo {
   id: string;
@@ -184,7 +184,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const logoutUser = () => {
     setIsLoggedIn(false);
     AuthService.signOut();
-    setCurrentUser(StorageService.getUserProfile());
+    setCurrentUser(GUEST_USER);
     setInterestsSent([]);
     setMutualConnections([]);
     setSavedProfileIds([]);

@@ -21,12 +21,14 @@ import { SecondChapterHub } from './components/secondChapter/SecondChapterHub';
 import { PrathaHub } from './components/pratha/PrathaHub';
 import { MarketplaceHub } from './components/marketplace/MarketplaceHub';
 import { VerificationGate } from './components/common/VerificationGate';
+import { LoginView } from './components/auth/LoginView';
 
 const MainRouter: React.FC = () => {
   const { activeTab, isUserVerified } = useApp();
 
   // Public views
   if (activeTab === 'home') return <main className="main-content"><HomeView /></main>;
+  if (activeTab === 'login') return <main className="main-content"><LoginView /></main>;
   if (activeTab === 'roadmap') return <main className="main-content"><RoadmapView /></main>;
   if (activeTab === 'onboarding') return <main className="main-content"><OnboardingFlow /></main>;
 

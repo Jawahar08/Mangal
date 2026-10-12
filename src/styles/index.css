@@ -194,6 +194,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .nav-brand {
@@ -201,6 +206,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .nav-brand-logo {
@@ -217,7 +223,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .nav-brand-title {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-burgundy-dark);
   letter-spacing: 0.5px;
@@ -238,25 +244,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .nav-links-desktop {
   display: none;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.35rem;
+  flex-shrink: 1;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   .nav-links-desktop {
     display: flex;
   }
 }
 
 .nav-item-btn {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-secondary);
-  padding: 0.5rem 0.85rem;
+  padding: 0.42rem 0.75rem;
   border-radius: var(--radius-sm);
   transition: all var(--trans-fast);
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .nav-item-btn:hover {
@@ -273,7 +283,24 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.nav-logout-btn {
+  transition: all var(--trans-fast);
+}
+
+.nav-logout-btn:hover {
+  background: #FEE2E2 !important;
+  border-color: #F87171 !important;
+  color: #7F1D1D !important;
+}
+
+.active-profile {
+  border-color: var(--color-gold) !important;
+  background: rgba(107, 23, 40, 0.08) !important;
+  box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.25) !important;
 }
 
 /* Mobile Bottom Navigation Bar */

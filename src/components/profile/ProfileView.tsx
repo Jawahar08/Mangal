@@ -15,13 +15,14 @@ import {
   Sparkles, 
   Eye, 
   EyeOff, 
-  Calendar 
+  Calendar,
+  LogOut 
 } from 'lucide-react';
 import { StatusBadge } from '../common/Badge';
 import { Modal } from '../common/Modal';
 
 export const ProfileView: React.FC = () => {
-  const { currentUser, updateCurrentUser, showToast, deleteAccount } = useApp();
+  const { currentUser, updateCurrentUser, showToast, deleteAccount, logoutUser } = useApp();
 
   const [activeLayer, setActiveLayer] = useState<'who_i_am' | 'my_life' | 'my_family' | 'my_expectations' | 'my_trust'>('who_i_am');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -116,10 +117,19 @@ export const ProfileView: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button className="btn-secondary" onClick={() => setIsEditModalOpen(true)}>
               <Edit3 size={16} />
               <span>Edit Profile & Privacy</span>
+            </button>
+            <button 
+              className="btn-outline" 
+              onClick={logoutUser}
+              style={{ color: '#DC2626', borderColor: '#FECACA', background: '#FEF2F2' }}
+              title="Sign out of account"
+            >
+              <LogOut size={16} color="#DC2626" />
+              <span>Log Out</span>
             </button>
           </div>
         </div>
