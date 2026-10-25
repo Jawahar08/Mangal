@@ -24,9 +24,25 @@ import {
   Lock, 
   UserCheck,
   MapPin,
-  ChevronDown
+  ChevronDown,
+  Zap,
+  RefreshCw,
+  Copy,
+  Check,
+  RotateCcw,
+  MessageSquare,
+  Edit3
 } from 'lucide-react';
 import { CitySelectModal } from '../common/CitySelectModal';
+import {
+  PERSONALITY_TAGS,
+  WEEKEND_TAGS,
+  VALUES_TAGS,
+  PERSONA_PRESETS,
+  PROMPT_STARTERS,
+  generateSmartBio,
+  PersonaPreset
+} from '../../data/bioGeneratorData';
 
 export const OnboardingFlow: React.FC = () => {
   const { currentUser, updateCurrentUser, setActiveTab, showToast } = useApp();
@@ -53,12 +69,26 @@ export const OnboardingFlow: React.FC = () => {
   const [currentCity, setCurrentCity] = useState('');
   const [height, setHeight] = useState(`5' 5"`);
 
-  // Biodata upload & Extraction
-  const [bioMethod, setBioMethod] = useState<'type' | 'biodata_text'>('type');
+  // Biodata & 1-Click Smart Generator State
+  const [bioMethod, setBioMethod] = useState<'smart_generator' | 'prompts' | 'type' | 'biodata_text'>('smart_generator');
+  const [selectedTags, setSelectedTags] = useState<string[]>([
+    'grounded', 'family_first', 'chai_talks', 'mutual_respect'
+  ]);
+  const [bioTone, setBioTone] = useState<'warm' | 'crisp' | 'traditional' | 'expressive'>('warm');
+  const [activePersona, setActivePersona] = useState<string | null>('grounded_pro');
+  const [bioVariation, setBioVariation] = useState<number>(0);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [promptAnswers, setPromptAnswers] = useState<{ [key: string]: string }>({
+    weekend: '',
+    friends_say: '',
+    partner_vision: ''
+  });
   const [rawBiodataText, setRawBiodataText] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
   const [extractionCompleted, setExtractionCompleted] = useState(false);
-  const [bio, setBio] = useState('');
+  const [bio, setBio] = useState(
+    'I consider myself someone with a calm, grounded, and balanced approach to life and close family bonds. Outside of work, my weekends are usually filled with savoring good tea with thoughtful, engaging conversations. In a life partner, I deeply cherish an equal partnership, open dialogue, and genuine mutual respect — looking forward to building a meaningful journey grounded in genuine companionship and mutual respect.'
+  );
 
   // Life & Career
   const [education, setEducation] = useState('Post Graduate');
@@ -116,6 +146,8 @@ export const OnboardingFlow: React.FC = () => {
       if (draft.profession) setProfession(draft.profession);
       if (draft.currentCity) setCurrentCity(draft.currentCity);
       if (draft.bio) setBio(draft.bio);
+      if (draft.bioMethod) setBioMethod(draft.bioMethod);
+      if (draft.selectedTags && Array.isArray(draft.selectedTags)) setSelectedTags(draft.selectedTags);
       if (draft.currentStep) setCurrentStep(draft.currentStep);
     }
   }, []);
@@ -130,6 +162,8 @@ export const OnboardingFlow: React.FC = () => {
       profession,
       currentCity,
       bio,
+      bioMethod,
+      selectedTags,
       currentStep,
       timestamp: new Date().toISOString(),
     };
@@ -199,6 +233,78 @@ export const OnboardingFlow: React.FC = () => {
     }
   };
 
+  // Smart Generator Handlers
+  const handleToggleTag = (tagId: string) => {
+    setSelectedTags((prev) => {
+      const next = prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId];
+      return next;
+    });
+    setActivePersona(null);
+  };
+
+  const handleApplyPersona = (preset: PersonaPreset) => {
+    setActivePersona(preset.id);
+    setSelectedTags(preset.tags);
+    setBioTone(preset.tone);
+    const generated = generateSmartBio({
+      tags: preset.tags,
+      tone: preset.tone,
+      variation: bioVariation,
+      profession,
+      city: currentCity
+    });
+    setBio(generated);
+    showToast('Persona Applied', `Applied "${preset.name}" preset and created your summary.`, 'info');
+  };
+
+  const handleGenerateBio = () => {
+    if (selectedTags.length === 0) {
+      showToast('Select a few tags', 'Please tap at least 1 or 2 tags to personalize your summary.', 'warning');
+      return;
+    }
+    const nextVariation = bioVariation + 1;
+    setBioVariation(nextVariation);
+    const generated = generateSmartBio({
+      tags: selectedTags,
+      tone: bioTone,
+      variation: nextVariation,
+      profession,
+      city: currentCity
+    });
+    setBio(generated);
+    showToast('Bio Generated!', 'Feel free to tweak any words or click regenerate for fresh phrasing.', 'success');
+  };
+
+  const handleCombinePrompts = () => {
+    const parts: string[] = [];
+    if (promptAnswers.weekend?.trim()) {
+      parts.push(`On weekends, you will usually find me ${promptAnswers.weekend.trim().replace(/\.$/, '')}.`);
+    }
+    if (promptAnswers.friends_say?.trim()) {
+      parts.push(`My close friends describe me as someone who is ${promptAnswers.friends_say.trim().replace(/\.$/, '')}.`);
+    }
+    if (promptAnswers.partner_vision?.trim()) {
+      parts.push(`In a life partner and marriage, what matters most to me is ${promptAnswers.partner_vision.trim().replace(/\.$/, '')}.`);
+    }
+
+    if (parts.length === 0) {
+      showToast('Empty Prompts', 'Please answer at least one prompt starter.', 'warning');
+      return;
+    }
+
+    const combined = parts.join(' ');
+    setBio(combined);
+    showToast('Prompts Combined!', 'Your bio has been compiled from your answers. You can edit it anytime.', 'success');
+  };
+
+  const handleCopyBio = () => {
+    if (!bio) return;
+    navigator.clipboard.writeText(bio);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+    showToast('Copied to Clipboard', 'Bio text copied.', 'info');
+  };
+
   const handleNext = () => {
     if (currentStep === 1) {
       if (isGuardian && !subjectConsentConfirmed) {
@@ -208,6 +314,17 @@ export const OnboardingFlow: React.FC = () => {
       if (!validateAge(dateOfBirth, gender)) {
         return;
       }
+    }
+    if (currentStep === 2 && !bio.trim()) {
+      // Auto-generate if left empty
+      const generated = generateSmartBio({
+        tags: selectedTags.length > 0 ? selectedTags : ['grounded', 'family_first', 'chai_talks', 'mutual_respect'],
+        tone: bioTone,
+        variation: 0,
+        profession,
+        city: currentCity
+      });
+      setBio(generated);
     }
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
@@ -494,39 +611,468 @@ export const OnboardingFlow: React.FC = () => {
         </div>
       )}
 
-      {/* STEP 2: About Me & Biodata Upload */}
+      {/* STEP 2: About Me & Biodata Upload - Efficient 1-Click Smart Generator */}
       {currentStep === 2 && (
         <div className="card-heritage" style={{ padding: '2.25rem' }}>
-          <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', borderBottom: '1px solid rgba(197, 160, 89, 0.2)', paddingBottom: '1rem' }}>
+          {/* Method Navigation Tabs */}
+          <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '1.75rem', borderBottom: '1px solid rgba(197, 160, 89, 0.25)', paddingBottom: '1rem', flexWrap: 'wrap' }}>
+            <button
+              className={bioMethod === 'smart_generator' ? 'btn-primary' : 'btn-outline'}
+              style={{ fontSize: '0.85rem', padding: '0.55rem 1.1rem', display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
+              onClick={() => setBioMethod('smart_generator')}
+            >
+              <Zap size={15} />
+              <span>1-Click Smart Bio</span>
+              <span style={{ 
+                background: bioMethod === 'smart_generator' ? 'rgba(255,255,255,0.22)' : 'var(--color-gold-subtle)', 
+                color: bioMethod === 'smart_generator' ? '#FFF' : 'var(--color-gold-dark)', 
+                fontSize: '0.68rem', 
+                fontWeight: 700, 
+                padding: '0.15rem 0.45rem', 
+                borderRadius: '9999px',
+                letterSpacing: '0.5px'
+              }}>
+                15 SECS
+              </span>
+            </button>
+
+            <button
+              className={bioMethod === 'prompts' ? 'btn-primary' : 'btn-outline'}
+              style={{ fontSize: '0.85rem', padding: '0.55rem 1.1rem', display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
+              onClick={() => setBioMethod('prompts')}
+            >
+              <MessageSquare size={15} />
+              <span>Guided Prompts</span>
+            </button>
+
             <button
               className={bioMethod === 'type' ? 'btn-primary' : 'btn-outline'}
-              style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}
+              style={{ fontSize: '0.85rem', padding: '0.55rem 1.1rem', display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
               onClick={() => setBioMethod('type')}
             >
-              Write In Your Own Words
+              <Edit3 size={15} />
+              <span>Write Freely</span>
             </button>
+
             <button
               className={bioMethod === 'biodata_text' ? 'btn-primary' : 'btn-outline'}
-              style={{ fontSize: '0.85rem', padding: '0.5rem 1rem' }}
+              style={{ fontSize: '0.85rem', padding: '0.55rem 1.1rem', display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
               onClick={() => setBioMethod('biodata_text')}
             >
-              Paste / Upload Biodata Text
+              <FileText size={15} />
+              <span>Paste Biodata</span>
             </button>
           </div>
 
-          {bioMethod === 'type' ? (
+          {/* METHOD 1: 1-Click Smart Generator */}
+          {bioMethod === 'smart_generator' && (
+            <div>
+              {/* Introduction Callout */}
+              <div style={{ 
+                background: 'linear-gradient(135deg, rgba(128,0,32,0.04) 0%, rgba(197,160,89,0.12) 100%)', 
+                border: '1px solid rgba(197, 160, 89, 0.35)', 
+                padding: '1.1rem 1.25rem', 
+                borderRadius: 'var(--radius-md)', 
+                marginBottom: '1.75rem',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '0.75rem'
+              }}>
+                <div style={{ color: 'var(--color-gold-dark)', marginTop: '2px' }}>
+                  <Sparkles size={20} />
+                </div>
+                <div>
+                  <h4 style={{ margin: '0 0 0.25rem', fontSize: '0.92rem', fontWeight: 700, color: 'var(--color-burgundy-dark)' }}>
+                    Skip Blank-Page Writing — Choose Chips & Auto-Synthesize
+                  </h4>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                    Pick a 1-tap ready persona or tap quick chips that describe your rhythm. We immediately craft an eloquent, high-response matrimonial summary for you.
+                  </p>
+                </div>
+              </div>
+
+              {/* 1-Tap Persona Presets */}
+              <div style={{ marginBottom: '1.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-burgundy-dark)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    ⚡ 1-Tap Persona Presets (Instant Fill)
+                  </span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Click to auto-select matching tags</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem' }}>
+                  {PERSONA_PRESETS.map((preset) => {
+                    const isSelected = activePersona === preset.id;
+                    return (
+                      <div
+                        key={preset.id}
+                        onClick={() => handleApplyPersona(preset)}
+                        style={{
+                          border: isSelected ? '2px solid var(--color-burgundy)' : '1px solid rgba(197, 160, 89, 0.35)',
+                          background: isSelected ? 'var(--color-burgundy-subtle)' : '#FFFFFF',
+                          borderRadius: 'var(--radius-md)',
+                          padding: '0.9rem',
+                          cursor: 'pointer',
+                          transition: 'all 200ms ease',
+                          boxShadow: isSelected ? '0 3px 8px rgba(128,0,32,0.1)' : 'none',
+                          position: 'relative'
+                        }}
+                      >
+                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-gold-dark)', marginBottom: '0.25rem' }}>
+                          {preset.badge}
+                        </div>
+                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--color-burgundy-dark)', marginBottom: '0.3rem' }}>
+                          {preset.name}
+                        </div>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', lineHeight: 1.35 }}>
+                          {preset.desc}
+                        </div>
+                        {isSelected && (
+                          <div style={{ position: 'absolute', top: '8px', right: '8px', color: 'var(--color-burgundy)' }}>
+                            <CheckCircle2 size={16} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Tag Categories */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '1.75rem' }}>
+                {/* 1. Personality & Vibe */}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <label className="form-label" style={{ marginBottom: 0, fontSize: '0.84rem' }}>
+                      1. Personality & Nature
+                    </label>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--color-gold-dark)', fontWeight: 600 }}>Tap 2–3 tags</span>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {PERSONALITY_TAGS.map((tag) => {
+                      const isSelected = selectedTags.includes(tag.id);
+                      return (
+                        <button
+                          key={tag.id}
+                          type="button"
+                          onClick={() => handleToggleTag(tag.id)}
+                          style={{
+                            padding: '0.45rem 0.85rem',
+                            borderRadius: '9999px',
+                            fontSize: '0.82rem',
+                            fontWeight: isSelected ? 700 : 500,
+                            cursor: 'pointer',
+                            transition: 'all 150ms ease',
+                            border: isSelected ? '1px solid var(--color-burgundy-dark)' : '1px solid rgba(197, 160, 89, 0.4)',
+                            background: isSelected ? 'var(--grad-burgundy)' : '#FFFFFF',
+                            color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
+                            boxShadow: isSelected ? '0 2px 5px rgba(128, 0, 32, 0.25)' : 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.35rem'
+                          }}
+                        >
+                          {isSelected && <Check size={13} />}
+                          <span>{tag.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 2. Weekend Passions */}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <label className="form-label" style={{ marginBottom: 0, fontSize: '0.84rem' }}>
+                      2. How I Spend Weekends & Downtime
+                    </label>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--color-gold-dark)', fontWeight: 600 }}>Tap 1–2 tags</span>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {WEEKEND_TAGS.map((tag) => {
+                      const isSelected = selectedTags.includes(tag.id);
+                      return (
+                        <button
+                          key={tag.id}
+                          type="button"
+                          onClick={() => handleToggleTag(tag.id)}
+                          style={{
+                            padding: '0.45rem 0.85rem',
+                            borderRadius: '9999px',
+                            fontSize: '0.82rem',
+                            fontWeight: isSelected ? 700 : 500,
+                            cursor: 'pointer',
+                            transition: 'all 150ms ease',
+                            border: isSelected ? '1px solid var(--color-burgundy-dark)' : '1px solid rgba(197, 160, 89, 0.4)',
+                            background: isSelected ? 'var(--grad-burgundy)' : '#FFFFFF',
+                            color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
+                            boxShadow: isSelected ? '0 2px 5px rgba(128, 0, 32, 0.25)' : 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.35rem'
+                          }}
+                        >
+                          {isSelected && <Check size={13} />}
+                          <span>{tag.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 3. Values in a Partner */}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <label className="form-label" style={{ marginBottom: 0, fontSize: '0.84rem' }}>
+                      3. What I Value Most in a Life Partner
+                    </label>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--color-gold-dark)', fontWeight: 600 }}>Tap 1–2 tags</span>
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                    {VALUES_TAGS.map((tag) => {
+                      const isSelected = selectedTags.includes(tag.id);
+                      return (
+                        <button
+                          key={tag.id}
+                          type="button"
+                          onClick={() => handleToggleTag(tag.id)}
+                          style={{
+                            padding: '0.45rem 0.85rem',
+                            borderRadius: '9999px',
+                            fontSize: '0.82rem',
+                            fontWeight: isSelected ? 700 : 500,
+                            cursor: 'pointer',
+                            transition: 'all 150ms ease',
+                            border: isSelected ? '1px solid var(--color-burgundy-dark)' : '1px solid rgba(197, 160, 89, 0.4)',
+                            background: isSelected ? 'var(--grad-burgundy)' : '#FFFFFF',
+                            color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
+                            boxShadow: isSelected ? '0 2px 5px rgba(128, 0, 32, 0.25)' : 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '0.35rem'
+                          }}
+                        >
+                          {isSelected && <Check size={13} />}
+                          <span>{tag.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Tone Selection & Generation Button */}
+              <div style={{ 
+                background: 'var(--bg-primary)', 
+                border: '1px solid rgba(197, 160, 89, 0.35)', 
+                borderRadius: 'var(--radius-md)', 
+                padding: '1.25rem', 
+                marginBottom: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '1rem'
+              }}>
+                <div>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-burgundy-dark)', marginBottom: '0.35rem' }}>
+                    Writing Tone / Style:
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                    {[
+                      { id: 'warm', label: 'Warm & Balanced' },
+                      { id: 'crisp', label: 'Crisp & Modern' },
+                      { id: 'traditional', label: 'Traditional & Grounded' },
+                      { id: 'expressive', label: 'Expressive & Heartfelt' },
+                    ].map((tone) => (
+                      <button
+                        key={tone.id}
+                        type="button"
+                        onClick={() => {
+                          setBioTone(tone.id as any);
+                          // Auto regenerate if bio already exists
+                          if (bio) {
+                            const generated = generateSmartBio({
+                              tags: selectedTags,
+                              tone: tone.id as any,
+                              variation: bioVariation,
+                              profession,
+                              city: currentCity
+                            });
+                            setBio(generated);
+                          }
+                        }}
+                        style={{
+                          fontSize: '0.75rem',
+                          padding: '0.35rem 0.75rem',
+                          borderRadius: 'var(--radius-sm)',
+                          cursor: 'pointer',
+                          fontWeight: bioTone === tone.id ? 700 : 500,
+                          border: bioTone === tone.id ? '1px solid var(--color-burgundy)' : '1px solid rgba(197, 160, 89, 0.3)',
+                          background: bioTone === tone.id ? 'var(--color-burgundy-subtle)' : '#FFFFFF',
+                          color: bioTone === tone.id ? 'var(--color-burgundy-dark)' : 'var(--text-secondary)',
+                          transition: 'all 150ms ease'
+                        }}
+                      >
+                        {tone.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                    <strong>{selectedTags.length}</strong> tags active
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-gold"
+                    onClick={handleGenerateBio}
+                    style={{ padding: '0.55rem 1.25rem', fontSize: '0.88rem' }}
+                  >
+                    <Sparkles size={16} />
+                    <span>{bio ? 'Regenerate Bio' : '✨ Generate My Bio (1-Click)'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Editable Live Bio Preview Card */}
+              {bio && (
+                <div style={{ 
+                  background: '#FCFAF6', 
+                  border: '1.5px solid rgba(197, 160, 89, 0.5)', 
+                  borderRadius: 'var(--radius-md)', 
+                  padding: '1.25rem',
+                  boxShadow: '0 4px 12px rgba(128,0,32,0.04)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-burgundy-dark)', fontWeight: 700, fontSize: '0.9rem' }}>
+                      <CheckCircle2 size={16} style={{ color: 'var(--color-gold-dark)' }} />
+                      <span>Your Profile Bio (Live Preview — Edit Freely)</span>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <button
+                        type="button"
+                        onClick={handleGenerateBio}
+                        style={{ fontSize: '0.75rem', color: 'var(--color-gold-dark)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600, background: 'transparent', border: 'none', cursor: 'pointer' }}
+                        title="Generate alternate phrasing"
+                      >
+                        <RefreshCw size={13} />
+                        <span>Alternate Phrasing</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleCopyBio}
+                        style={{ fontSize: '0.75rem', color: isCopied ? '#059669' : 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600, background: 'transparent', border: 'none', cursor: 'pointer' }}
+                      >
+                        {isCopied ? <Check size={13} /> : <Copy size={13} />}
+                        <span>{isCopied ? 'Copied' : 'Copy'}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <textarea
+                    className="form-textarea"
+                    rows={5}
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    style={{ 
+                      fontSize: '0.88rem', 
+                      lineHeight: 1.6, 
+                      background: '#FFFFFF', 
+                      borderColor: 'rgba(197,160,89,0.3)',
+                      color: 'var(--text-primary)'
+                    }}
+                    placeholder="Your generated bio will appear here. You can edit any sentence directly."
+                  />
+
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.6rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                    <span>
+                      {bio.length} characters • ~{bio.trim().split(/\s+/).filter(Boolean).length} words
+                    </span>
+                    <span style={{ color: '#059669', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <Check size={13} /> High match appeal profile
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* METHOD 2: Guided Prompts */}
+          {bioMethod === 'prompts' && (
+            <div>
+              <div style={{ 
+                background: 'var(--color-gold-subtle)', 
+                border: '1px solid rgba(197, 160, 89, 0.4)', 
+                padding: '1rem', 
+                borderRadius: 'var(--radius-md)', 
+                marginBottom: '1.5rem', 
+                fontSize: '0.85rem', 
+                color: 'var(--text-secondary)' 
+              }}>
+                <strong>Answer 3 Simple Prompts</strong>: Complete short answers to sentence starters below. We will seamlessly compile them into your bio!
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '1.5rem' }}>
+                {PROMPT_STARTERS.map((p) => (
+                  <div key={p.id} className="form-group" style={{ marginBottom: 0 }}>
+                    <label className="form-label" style={{ fontWeight: 700, color: 'var(--color-burgundy-dark)' }}>
+                      {p.prompt}
+                    </label>
+                    <input
+                      className="form-input"
+                      value={promptAnswers[p.id] || ''}
+                      onChange={(e) => setPromptAnswers({ ...promptAnswers, [p.id]: e.target.value })}
+                      placeholder={p.placeholder}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="btn-gold"
+                onClick={handleCombinePrompts}
+                style={{ marginBottom: '1.5rem' }}
+              >
+                <Sparkles size={16} />
+                <span>Compile Answers into Bio</span>
+              </button>
+
+              {bio && (
+                <div className="form-group">
+                  <label className="form-label">Compiled Bio (Editable)</label>
+                  <textarea
+                    className="form-textarea"
+                    rows={4}
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* METHOD 3: Write Freely */}
+          {bioMethod === 'type' && (
             <div className="form-group">
               <label className="form-label">About Yourself & What You Cherish</label>
               <textarea
                 className="form-textarea"
-                rows={5}
+                rows={6}
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Share your passions, what a normal weekend looks like, your core values, and what kind of partnership you envision..."
               />
               <span className="form-hint">A warm, genuine summary gets 3x more meaningful connection requests.</span>
             </div>
-          ) : (
+          )}
+
+          {/* METHOD 4: Paste Biodata Text */}
+          {bioMethod === 'biodata_text' && (
             <div>
               <div style={{ background: 'var(--color-gold-subtle)', border: '1px solid rgba(197, 160, 89, 0.4)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '1.25rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                 <strong>AI Biodata Parser Notice</strong>: Paste your biodata text below. Our parser will extract education, profession, location, and family details. <em>Rule: Extracted data is presented for your review before being saved to your profile.</em>
