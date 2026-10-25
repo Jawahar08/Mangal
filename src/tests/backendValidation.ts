@@ -8,6 +8,14 @@ import { TrustService } from '../services/backend/trustService';
 import { IntelligenceService } from '../services/backend/intelligenceService';
 import { SecondChapterBackendService } from '../services/backend/secondChapterService';
 import { MarketplaceBackendService } from '../services/backend/marketplaceService';
+import {
+  RealtimeVerificationService,
+  DigiLockerAdapter,
+  TelecomSMSAdapter,
+  WorkEmailAdapter,
+  MedicalCouncilAdapter,
+  ESignAffidavitAdapter,
+} from '../services/backend';
 
 interface TestResult {
   suite: string;
@@ -246,6 +254,65 @@ export async function runAllBackendValidationTests(): Promise<{
     );
   } catch (err: any) {
     record('Marketplace & Commercial Architecture', 'Suite Execution', false, err.message);
+  }
+
+  // ----------------------------------------------------
+  // SUITE 6: Real-time Verification Adapters (Phase 1)
+  // ----------------------------------------------------
+  try {
+    // Test 15: DigiLocker Aadhaar e-KYC masked ID & age computation
+    const dglSession = await DigiLockerAdapter.createSession('usr_test_01', 'Dr. Ananya Sen');
+    const dglVerify = await DigiLockerAdapter.verifySession(dglSession.sessionId, '482910', 'Dr. Ananya Sen', '1998-08-22');
+    const isValidMaskedAadhaar = dglVerify.maskedAadhaar.startsWith('XXXXXXXX') && dglVerify.maskedAadhaar.length === 12;
+    record(
+      'Real-Time Verification Adapters (Phase 1)',
+      'DigiLocker e-KYC must mask 12-digit Aadhaar and verify statutory age',
+      dglVerify.success && isValidMaskedAadhaar && dglVerify.calculatedAge >= 21,
+      `Masked: "${dglVerify.maskedAadhaar}". Calculated Age: ${dglVerify.calculatedAge}. Issuer: "${dglVerify.issuerAuthority}"`
+    );
+
+    // Test 16: Telecom SMS OTP 2FA challenge and verification
+    const smsDispatch = await TelecomSMSAdapter.sendOTP('9876543210');
+    const smsVerify = TelecomSMSAdapter.verifyOTP('9876543210', smsDispatch.testOtp || '123456');
+    const smsFail = TelecomSMSAdapter.verifyOTP('9876543210', '000000');
+    record(
+      'Real-Time Verification Adapters (Phase 1)',
+      'Telecom SMS adapter must validate 6-digit OTP and reject wrong code',
+      smsDispatch.success && smsVerify.verified && !smsFail.verified,
+      `DLT Template: "${smsDispatch.dltTemplateId}". Phone Masked: "${smsDispatch.phoneMasked}". Valid OTP passed, 000000 rejected.`
+    );
+
+    // Test 17: Work email domain rejection for free providers and acceptance for institutional domains
+    const freeEmailTest = await WorkEmailAdapter.sendChallenge('ananya@gmail.com');
+    const corpEmailTest = await WorkEmailAdapter.sendChallenge('ananya@rainbowchildrens.in');
+    const tokenVerify = WorkEmailAdapter.verifyChallenge('ananya@rainbowchildrens.in', corpEmailTest.challengeToken || '123456');
+    record(
+      'Real-Time Verification Adapters (Phase 1)',
+      'Work email adapter must reject free email domains (e.g. Gmail) and verify institutional domains',
+      !freeEmailTest.success && corpEmailTest.success && tokenVerify.verified,
+      `gmail.com rejected with note: "${freeEmailTest.errorMessage}". rainbowchildrens.in verified domain with hash: ${tokenVerify.auditHash.slice(0, 24)}...`
+    );
+
+    // Test 18: State Medical Council registration validation
+    const medVerify = await MedicalCouncilAdapter.verifyRegistration('Maharashtra Medical Council', 'MMC/88219', 'Dr. Rohan Deshmukh', 2018);
+    record(
+      'Real-Time Verification Adapters (Phase 1)',
+      'Medical Council adapter must validate registration number and active practitioner standing',
+      medVerify.verified && medVerify.currentStanding === 'Active - Good Standing' && medVerify.qualifications.length > 0,
+      `Council: "${medVerify.councilName}". Reg: "${medVerify.registrationNumber}". Standing: "${medVerify.currentStanding}". Qualifications: ${medVerify.qualifications.join(', ')}`
+    );
+
+    // Test 19: Information Technology Act Section 3A digital marital affidavit eSign
+    const affidavit = ESignAffidavitAdapter.generateAndSignDeclaration('Dr. Rohan Deshmukh', 'never_married');
+    const carriesITActRef = affidavit.validityScope.includes('Section 65B') && affidavit.digitalCertificateHash.startsWith('0x_sig');
+    record(
+      'Real-Time Verification Adapters (Phase 1)',
+      'Marital Declaration adapter must generate legally binding Section 3A IT Act affidavit with certificate hash',
+      affidavit.declaredStatus === 'never_married' && carriesITActRef,
+      `Affidavit ID: "${affidavit.affidavitId}". Signer: "${affidavit.candidateName}". Certificate: "${affidavit.digitalCertificateHash.slice(0, 24)}..."`
+    );
+  } catch (err: any) {
+    record('Real-Time Verification Adapters (Phase 1)', 'Suite Execution', false, err.message);
   }
 
   // Calculate totals

@@ -10,3 +10,5 @@ export * from './intelligenceService';
 export * from './secondChapterService';
 export * from './prathaService';
 export * from './marketplaceService';
+export * from './realtimeVerificationService';
+export * from './adapters';
