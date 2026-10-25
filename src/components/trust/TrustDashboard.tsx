@@ -10,6 +10,7 @@ import { CourtScreeningModal } from './CourtScreeningModal';
 import { MaritalVerificationModal } from './MaritalVerificationModal';
 import { ConsentRevocationModal } from './ConsentRevocationModal';
 import { DisputeCorrectionModal } from './DisputeCorrectionModal';
+import { GatewayCompliancePanel } from './GatewayCompliancePanel';
 import { ALL_VERIFICATION_CHECK_DEFINITIONS } from '../../services/chaanbeanVault';
 import { 
   ShieldCheck, 
@@ -28,13 +29,14 @@ import {
   EyeOff, 
   Trash2, 
   RefreshCw, 
-  History 
+  History,
+  Settings
 } from 'lucide-react';
 
 export const TrustDashboard: React.FC = () => {
   const { currentUser, updateCurrentUser, showToast } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit'>('credentials');
+  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit' | 'gateway_compliance'>('credentials');
 
   // Modal State
   const [selectedCheckForWizard, setSelectedCheckForWizard] = useState<VerificationCheck | null>(null);
@@ -148,6 +150,7 @@ export const TrustDashboard: React.FC = () => {
           { id: 'marital', label: 'Marital & Divorce Audit', icon: HeartHandshake },
           { id: 'court', label: 'Court Screening (eCourts)', icon: Scale },
           { id: 'audit', label: `Audit Trail & Consents (${currentUser.trustProfile.auditLogs.length})`, icon: History },
+          { id: 'gateway_compliance', label: 'Gateways & DPDP (Phase 2)', icon: Settings },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -483,6 +486,9 @@ export const TrustDashboard: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* TAB 5: PRODUCTION GATEWAYS & DPDP ACT 2023 COMPLIANCE (PHASE 2) */}
+      {activeTab === 'gateway_compliance' && <GatewayCompliancePanel />}
 
       {/* Wizard Modal */}
       <VerificationWizardModal

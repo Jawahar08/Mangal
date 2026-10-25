@@ -15,6 +15,7 @@ import {
   WorkEmailAdapter,
   MedicalCouncilAdapter,
   ESignAffidavitAdapter,
+  GatewayConfigService,
 } from '../services/backend';
 
 interface TestResult {
@@ -313,6 +314,78 @@ export async function runAllBackendValidationTests(): Promise<{
     );
   } catch (err: any) {
     record('Real-Time Verification Adapters (Phase 1)', 'Suite Execution', false, err.message);
+  }
+
+  // ----------------------------------------------------
+  // SUITE 7: Production Gateways & DPDP Act 2023 Compliance (Phase 2)
+  // ----------------------------------------------------
+  try {
+    // Test 20: Gateway Configuration & connector ping diagnostics
+    const connectors = GatewayConfigService.getAllConnectors();
+    const digiLockerPing = await GatewayConfigService.pingConnector('conn_digilocker');
+    const dltPing = await GatewayConfigService.pingConnector('conn_telecom_dlt');
+    record(
+      'Production Gateways & DPDP Compliance (Phase 2)',
+      'Gateway configuration manager must maintain 5 authoritative connectors and pass diagnostic ping',
+      connectors.length === 5 && digiLockerPing.success && dltPing.success,
+      `Active Connectors: ${connectors.length}. DigiLocker Ping: ${digiLockerPing.latencyMs}ms. DLT Ping: ${dltPing.latencyMs}ms.`
+    );
+
+    // Test 21: TRAI DLT Template ID & Header registry verification
+    const dltTemplates = GatewayConfigService.getDLTTemplates();
+    const primaryTemplate = dltTemplates.find((t) => t.templateId === '1207168291038291823');
+    record(
+      'Production Gateways & DPDP Compliance (Phase 2)',
+      'TRAI DLT registry must register authorized MNGLST header and immutable Template IDs',
+      Boolean(primaryTemplate && primaryTemplate.header === 'MNGLST' && primaryTemplate.registeredEntityId.length >= 10),
+      `Header: "${primaryTemplate?.header}". Template ID: "${primaryTemplate?.templateId}". Entity: "${primaryTemplate?.registeredEntityId}".`
+    );
+
+    // Test 22: DPDP Act 2023 Section 11 Data Principal personal data and consent ledger export package
+    const mockUser: any = {
+      id: 'usr_ananya_99',
+      name: 'Dr. Ananya Sen',
+      gender: 'female',
+      age: 28,
+      currentCity: 'Bangalore',
+      profession: 'Pediatrician',
+      trustProfile: {
+        trustScoreLevel: 'Verified',
+        checks: [{ id: 'chk_aad_1', status: 'verified', title: 'Aadhaar e-KYC' }],
+        consentLedger: [{ id: 'cst_1', checkId: 'chk_aad_1', purpose: 'Age proof', isRevoked: false }],
+        auditLogs: [{ id: 'log_1', action: 'status_changed', checkTitle: 'Aadhaar' }],
+      },
+    };
+    const exportedPackage = GatewayConfigService.exportDataPrincipalPackage(mockUser);
+    const parsedPackage = JSON.parse(exportedPackage);
+    const isValidDPDPPackage = Boolean(
+      parsedPackage.statutoryFramework.includes('DPDP Act 2023') &&
+      parsedPackage.dataPrincipal.name === 'Dr. Ananya Sen' &&
+      Array.isArray(parsedPackage.consentLedgerRecords)
+    );
+    record(
+      'Production Gateways & DPDP Compliance (Phase 2)',
+      'DPDP Section 11 compliance export must produce verifiable cryptographic Personal Data Dossier',
+      isValidDPDPPackage,
+      `Statutory Framework: "${parsedPackage.statutoryFramework}". Data Principal: "${parsedPackage.dataPrincipal.name}". Consents Exported: ${parsedPackage.consentLedgerRecords.length}.`
+    );
+
+    // Test 23: DPDP Section 13 statutory grievance ticket generation and 48-hour response SLA affirmation
+    const dpdpProfile = GatewayConfigService.getDPDPComplianceProfile();
+    const grievanceRes = await GatewayConfigService.submitGrievanceTicket({
+      userId: 'usr_ananya_99',
+      userName: 'Dr. Ananya Sen',
+      category: 'Data Correction (Section 12)',
+      description: 'Request correction of residential city from Bangalore to Mumbai',
+    });
+    record(
+      'Production Gateways & DPDP Compliance (Phase 2)',
+      'DPDP Section 13 Grievance Redressal must assign ticket ID and enforce 48-hour statutory response SLA',
+      grievanceRes.ticketId.startsWith('GRV-DPDP-') && grievanceRes.statutorySlaHours === 48 && dpdpProfile.dataProtectionOfficer.email.includes('@'),
+      `Ticket: "${grievanceRes.ticketId}". DPO: "${dpdpProfile.dataProtectionOfficer.name}". Statutory SLA: ${grievanceRes.statutorySlaHours} hours.`
+    );
+  } catch (err: any) {
+    record('Production Gateways & DPDP Compliance (Phase 2)', 'Suite Execution', false, err.message);
   }
 
   // Calculate totals

@@ -12,3 +12,4 @@ export * from './prathaService';
 export * from './marketplaceService';
 export * from './realtimeVerificationService';
 export * from './adapters';
+export * from './config/gatewayConfig';
