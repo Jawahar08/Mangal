@@ -78,7 +78,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setActiveTab(isUserVerified ? 'discover' : 'home')}
             role="button"
             tabIndex={0}
-            title="MangalSutra 2.0 Home"
+            title="MangalSutra Home"
           >
             <div className="nav-brand-logo">
               <Sparkles size={20} color="#D4AF37" />
@@ -86,7 +86,6 @@ export const Navbar: React.FC = () => {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <span className="nav-brand-title">MangalSutra</span>
-                <span className="nav-brand-tag">2.0</span>
               </div>
               <div style={{ fontSize: '0.62rem', letterSpacing: '0.5px', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Marriage, With Trust

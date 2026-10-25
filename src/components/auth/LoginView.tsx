@@ -110,7 +110,7 @@ export const LoginView: React.FC = () => {
             <Sparkles size={26} color="#D4AF37" />
           </div>
           <h1 className="heading-section" style={{ fontSize: '1.85rem', color: 'var(--color-burgundy-dark)', marginBottom: '0.25rem' }}>
-            MangalSutra 2.0
+            MangalSutra
           </h1>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', letterSpacing: '0.5px' }}>
             Marriage, With Trust • Member Authentication Portal

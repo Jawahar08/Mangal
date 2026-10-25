@@ -121,7 +121,7 @@ export const VerificationGate: React.FC<VerificationGateProps> = ({
         {/* Quick Demo Preview Option */}
         <div style={{ background: 'var(--bg-primary)', border: '1px dashed var(--color-gold)', borderRadius: 'var(--radius-md)', padding: '1rem 1.5rem', maxWidth: '560px', margin: '0 auto 2.5rem', textAlign: 'center' }}>
           <div style={{ fontSize: '0.82rem', color: 'var(--color-burgundy-dark)', fontWeight: 700, marginBottom: '0.35rem' }}>
-            Evaluating or Testing MangalSutra 2.0?
+            Evaluating or Testing MangalSutra?
           </div>
           <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
             You can instantly load a pre-verified sample member account to preview discovery, 36 Guna scores, and messaging.

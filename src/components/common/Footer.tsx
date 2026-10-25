@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
                 <Sparkles size={16} color="#D4AF37" />
               </div>
               <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 700, color: '#FDFBF7' }}>
-                MangalSutra 2.0
+                MangalSutra
               </span>
             </div>
             <p style={{ fontSize: '0.85rem', color: '#D4C5C8', lineHeight: 1.6, marginBottom: '1.25rem' }}>
@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
 
         <div style={{ borderTop: '1px solid rgba(197, 160, 89, 0.2)', paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', fontSize: '0.78rem', color: '#A08E92' }}>
           <div>
-            © 2026 MangalSutra 2.0 Technologies. All rights reserved. Built with pride for life journeys.
+            © 2026 MangalSutra Technologies. All rights reserved. Built with pride for life journeys.
           </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
             <span style={{ cursor: 'pointer' }}>Privacy Policy</span>

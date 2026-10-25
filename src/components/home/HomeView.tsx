@@ -48,7 +48,7 @@ export const HomeView: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}>
             <Sparkles size={16} color="#C5A059" />
-            <span>MANGALSUTRA 2.0 — MORE THAN A MATCH. A LIFE JOURNEY.</span>
+            <span>MANGALSUTRA — MORE THAN A MATCH. A LIFE JOURNEY.</span>
           </div>
 
           <h1 className="heading-hero" style={{ marginBottom: '1.25rem' }}>
