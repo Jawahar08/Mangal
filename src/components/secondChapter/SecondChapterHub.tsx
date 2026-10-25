@@ -62,15 +62,27 @@ export const SecondChapterHub: React.FC = () => {
   const [newChildAge, setNewChildAge] = useState<number>(6);
   const [newChildGender, setNewChildGender] = useState<'son' | 'daughter'>('daughter');
 
-  // Combined profiles for discovery
+  // Target partner gender (defaults to complementary gender)
+  const targetGender = currentUser?.gender === 'female' ? 'male' : currentUser?.gender === 'male' ? 'female' : 'all';
+
+  // Combined profiles for discovery (excluding current user and filtered by complementary gender)
   const allSecondChapterProfiles: UserProfile[] = [
     ...discoveryProfiles.filter((p) => p.maritalStatus !== 'never_married' || p.intent === 'remarriage'),
     ...ADDITIONAL_SECOND_CHAPTER_PROFILES,
-  ];
+  ].filter((p) => {
+    if (currentUser && p.id === currentUser.id) return false;
+    if (targetGender !== 'all' && p.gender !== targetGender) return false;
+    return true;
+  });
 
-  const displayedProfiles = discoveryScope === 'second_chapter_only'
+  const displayedProfiles = (discoveryScope === 'second_chapter_only'
     ? allSecondChapterProfiles
-    : [...allSecondChapterProfiles, ...discoveryProfiles.filter((p) => p.maritalStatus === 'never_married')];
+    : [...allSecondChapterProfiles, ...discoveryProfiles.filter((p) => p.maritalStatus === 'never_married')])
+    .filter((p) => {
+      if (currentUser && p.id === currentUser.id) return false;
+      if (targetGender !== 'all' && p.gender !== targetGender) return false;
+      return true;
+    });
 
   // Rebuild priorities available
   const availablePriorities: RebuildPriority[] = [

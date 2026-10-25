@@ -11,6 +11,7 @@ export interface DiscoveryFilterOptions {
   selectedReligion?: string;
   verifiedOnly?: boolean;
   maxAge?: number;
+  targetGender?: 'male' | 'female' | 'all';
 }
 
 export const DiscoveryService = {
@@ -41,8 +42,16 @@ export const DiscoveryService = {
 
     // Apply Server-Side Matching Filter Pipeline
     const filtered = list.filter((p) => {
+      // Exclude current user
+      if (userId && p.id === userId) return false;
+
       // Exclude blocked profiles
       if (blockedIds.includes(p.id)) return false;
+
+      // Target gender filter
+      if (filters?.targetGender && filters.targetGender !== 'all') {
+        if (p.gender !== filters.targetGender) return false;
+      }
 
       // Tab selection
       if (filters?.tab === 'saved') {

@@ -1,6 +1,6 @@
 // Module D: Discovery & Matchmaking View
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { UserProfile } from '../../types';
 import { MatchCard } from './MatchCard';
@@ -19,6 +19,7 @@ import {
 
 export const DiscoverView: React.FC = () => {
   const { 
+    currentUser,
     discoveryProfiles, 
     savedProfileIds, 
     activePartnerForDetail, 
@@ -34,9 +35,29 @@ export const DiscoverView: React.FC = () => {
   const [verifiedOnly, setVerifiedOnly] = useState<boolean>(false);
   const [maxAge, setMaxAge] = useState<number>(36);
 
+  // Target partner gender (defaults to complementary gender of currentUser)
+  const defaultTargetGender = currentUser?.gender === 'female' ? 'male' : currentUser?.gender === 'male' ? 'female' : 'all';
+  const [targetGender, setTargetGender] = useState<'male' | 'female' | 'all'>(defaultTargetGender);
+
+  useEffect(() => {
+    if (currentUser?.gender === 'female') {
+      setTargetGender('male');
+    } else if (currentUser?.gender === 'male') {
+      setTargetGender('female');
+    }
+  }, [currentUser?.gender]);
+
   // Filter Logic
   const filteredProfiles = useMemo(() => {
     return discoveryProfiles.filter((p) => {
+      // Exclude current logged in user from discovery results
+      if (currentUser && p.id === currentUser.id) return false;
+
+      // Filter by target partner gender
+      if (targetGender !== 'all' && p.gender !== targetGender) {
+        return false;
+      }
+
       // Tab matching
       if (activeTab === 'saved') {
         if (!savedProfileIds.includes(p.id)) return false;
@@ -72,13 +93,14 @@ export const DiscoverView: React.FC = () => {
 
       return true;
     });
-  }, [discoveryProfiles, activeTab, savedProfileIds, searchKeyword, selectedReligion, verifiedOnly, maxAge]);
+  }, [discoveryProfiles, currentUser, targetGender, activeTab, savedProfileIds, searchKeyword, selectedReligion, verifiedOnly, maxAge]);
 
   const handleResetFilters = () => {
     setSearchKeyword('');
     setSelectedReligion('all');
     setVerifiedOnly(false);
     setMaxAge(36);
+    setTargetGender(defaultTargetGender);
   };
 
   return (
@@ -152,6 +174,21 @@ export const DiscoverView: React.FC = () => {
               onChange={(e) => setSearchKeyword(e.target.value)}
               placeholder="Profession, city, hobby..."
             />
+          </div>
+
+          {/* Seeking Partner */}
+          <div className="form-group" style={{ marginBottom: 0 }}>
+            <label className="form-label" style={{ fontSize: '0.8rem' }}>Seeking Partner</label>
+            <select
+              className="form-select"
+              style={{ padding: '0.55rem 0.85rem' }}
+              value={targetGender}
+              onChange={(e) => setTargetGender(e.target.value as any)}
+            >
+              <option value="male">Grooms (Men)</option>
+              <option value="female">Brides (Women)</option>
+              <option value="all">All Candidates</option>
+            </select>
           </div>
 
           {/* Religion */}
