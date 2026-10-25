@@ -101,6 +101,12 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
         <img
           src={partner.photoUrl}
           alt={partner.name}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = partner.gender === 'male'
+              ? '/images/profiles/aditya.jpg'
+              : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80';
+          }}
           style={{ width: '84px', height: '84px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-gold)' }}
         />
         <div style={{ flex: 1 }}>

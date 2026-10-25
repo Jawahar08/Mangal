@@ -53,6 +53,12 @@ export const MatchCard: React.FC<MatchCardProps> = ({ partner }) => {
         <img
           src={partner.photoUrl}
           alt={partner.name}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = partner.gender === 'male' 
+              ? '/images/profiles/aditya.jpg' 
+              : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80';
+          }}
           style={{
             width: '100%',
             height: '100%',

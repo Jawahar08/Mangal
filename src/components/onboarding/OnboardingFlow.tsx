@@ -376,7 +376,7 @@ export const OnboardingFlow: React.FC = () => {
       secondChapterLearnings: intent === 'remarriage' ? secondChapterLearnings : undefined,
       photoUrl: gender === 'female' 
         ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'
-        : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+        : '/images/profiles/aditya.jpg',
       additionalPhotos: [],
       photosBlurred: false,
       astrology: {

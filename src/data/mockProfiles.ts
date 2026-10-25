@@ -729,7 +729,7 @@ export const MOCK_DISCOVERY_PROFILES: UserProfile[] = [
     fatherOccupation: 'IAS Officer (Retd.), UP Cadre',
     motherOccupation: 'Senior Botanist & Homemaker',
     siblings: '1 younger sister (Software Engineer in Seattle)',
-    photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&auto=format&fit=crop&q=80',
+    photoUrl: '/images/profiles/aditya.jpg',
     additionalPhotos: [],
     photosBlurred: false,
     astrology: {
@@ -815,7 +815,7 @@ export const MOCK_DISCOVERY_PROFILES: UserProfile[] = [
     fatherOccupation: 'Civil Engineer (Consultant), Mumbai',
     motherOccupation: 'Pediatrician (Private Clinic)',
     siblings: '1 elder brother (Married, Radiologist)',
-    photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80',
+    photoUrl: '/images/profiles/rohan.jpg',
     additionalPhotos: [],
     photosBlurred: false,
     astrology: {
@@ -904,7 +904,7 @@ export const MOCK_DISCOVERY_PROFILES: UserProfile[] = [
     childrenCount: 1,
     custodyStatus: 'Amicable shared custody of 6-year-old son; boy lives with mother in Bangalore with regular weekend parenting.',
     secondChapterLearnings: 'True compatibility is about emotional security, open conflict resolution, and giving each other wings to grow rather than fitting into societal molds.',
-    photoUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=600&auto=format&fit=crop&q=80',
+    photoUrl: '/images/profiles/siddharth.jpg',
     additionalPhotos: [],
     photosBlurred: false,
     astrology: {
@@ -995,7 +995,7 @@ export const MOCK_DISCOVERY_PROFILES: UserProfile[] = [
     fatherOccupation: 'Retd. Brigadier, Indian Army',
     motherOccupation: 'Heritage Conservationist & Author',
     siblings: '1 elder brother (Major, Indian Army)',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+    photoUrl: '/images/profiles/vikram.jpg',
     additionalPhotos: [],
     photosBlurred: false,
     astrology: {
@@ -1081,7 +1081,7 @@ export const MOCK_DISCOVERY_PROFILES: UserProfile[] = [
     fatherOccupation: 'Chief Engineer (Retd.), Punjab Irrigation',
     motherOccupation: 'Professor of English Literature',
     siblings: '1 elder sister (Architect in Vancouver)',
-    photoUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&auto=format&fit=crop&q=80',
+    photoUrl: '/images/profiles/kabir.jpg',
     additionalPhotos: [],
     photosBlurred: false,
     astrology: {
