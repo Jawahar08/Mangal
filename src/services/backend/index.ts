@@ -15,3 +15,5 @@ export * from './adapters';
 export * from './config/gatewayConfig';
 export * from './vault/quarantineVaultService';
 export * from './webhooks/webhookProcessorService';
+export * from './lifecycle/fuzzyNameMatcher';
+export * from './lifecycle/verificationLifecycleService';

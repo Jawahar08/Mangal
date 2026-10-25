@@ -12,6 +12,7 @@ import { ConsentRevocationModal } from './ConsentRevocationModal';
 import { DisputeCorrectionModal } from './DisputeCorrectionModal';
 import { GatewayCompliancePanel } from './GatewayCompliancePanel';
 import { WebhookVaultExplorer } from './WebhookVaultExplorer';
+import { VerificationDiagnosticsPanel } from './VerificationDiagnosticsPanel';
 import { ALL_VERIFICATION_CHECK_DEFINITIONS } from '../../services/chaanbeanVault';
 import { 
   ShieldCheck, 
@@ -32,13 +33,14 @@ import {
   RefreshCw, 
   History,
   Settings,
-  Cpu
+  Cpu,
+  Activity
 } from 'lucide-react';
 
 export const TrustDashboard: React.FC = () => {
   const { currentUser, updateCurrentUser, showToast } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit' | 'gateway_compliance' | 'vault_webhooks'>('credentials');
+  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit' | 'gateway_compliance' | 'vault_webhooks' | 'diagnostics_lifecycle'>('credentials');
 
   // Modal State
   const [selectedCheckForWizard, setSelectedCheckForWizard] = useState<VerificationCheck | null>(null);
@@ -154,6 +156,7 @@ export const TrustDashboard: React.FC = () => {
           { id: 'audit', label: `Audit Trail & Consents (${currentUser.trustProfile.auditLogs.length})`, icon: History },
           { id: 'gateway_compliance', label: 'Gateways & DPDP (Phase 2)', icon: Settings },
           { id: 'vault_webhooks', label: 'Quarantine Vault & Webhooks (Phase 3)', icon: Cpu },
+          { id: 'diagnostics_lifecycle', label: 'Go-Live Diagnostics & Fuzzy Engine (Phase 4)', icon: Activity },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -495,6 +498,9 @@ export const TrustDashboard: React.FC = () => {
 
       {/* TAB 6: QUARANTINED EVIDENCE VAULT & ASYNCHRONOUS WEBHOOKS (PHASE 3) */}
       {activeTab === 'vault_webhooks' && <WebhookVaultExplorer />}
+
+      {/* TAB 7: GO-LIVE DIAGNOSTICS & FUZZY MATCHING (PHASE 4) */}
+      {activeTab === 'diagnostics_lifecycle' && <VerificationDiagnosticsPanel />}
 
       {/* Wizard Modal */}
       <VerificationWizardModal

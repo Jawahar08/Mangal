@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { VerificationCheck, VerificationState } from '../../types';
 import { ChaanBeanService } from '../../services/chaanbeanVault';
+import { VerificationLifecycleService } from '../../services/backend/lifecycle/verificationLifecycleService';
 import { Modal } from '../common/Modal';
 import { AlertTriangle, Trash2, ShieldOff, CheckCircle2 } from 'lucide-react';
 
@@ -24,62 +25,19 @@ export const ConsentRevocationModal: React.FC<ConsentRevocationModalProps> = ({ 
     setIsProcessing(true);
 
     setTimeout(() => {
-      // Create revocation audit log
-      const audit = ChaanBeanService.createAuditEntry(
-        'consent_revoked',
-        check.title,
-        `User revoked consent. Quarantined evidence purged from Trust Vault. Badge removed from matchmaking views.`,
-        check.status,
-        'user_supplied'
+      // Execute statutory DPDP Section 6(4) revocation and cryptographic key purging
+      const { updatedUser, message } = VerificationLifecycleService.revokeConsentAndDowngradeBadge(
+        currentUser,
+        check.id
       );
 
-      // Update consent ledger
-      const updatedLedger = currentUser.trustProfile.consentLedger.map((c) => {
-        if (c.checkId === check.id) {
-          return {
-            ...c,
-            isRevoked: true,
-            revokedAt: new Date().toISOString().split('T')[0],
-          };
-        }
-        return c;
-      });
-
-      // Update check
-      const updatedChecks = currentUser.trustProfile.checks.map((c) => {
-        if (c.id === check.id) {
-          return {
-            ...c,
-            status: 'user_supplied' as VerificationState,
-            evidenceFileName: undefined,
-            evidenceHash: undefined,
-            verifiedAt: undefined,
-            visibility: 'hidden' as const,
-            sourceNote: 'Consent revoked by user. Evidence purged.',
-          };
-        }
-        return c;
-      });
-
-      updateCurrentUser({
-        ...currentUser,
-        trustProfile: {
-          ...currentUser.trustProfile,
-          checks: updatedChecks,
-          consentLedger: updatedLedger,
-          auditLogs: [audit, ...currentUser.trustProfile.auditLogs],
-        },
-      });
-
+      updateCurrentUser(updatedUser);
       setIsProcessing(false);
       onClose();
-      showToast(
-        'Consent Revoked & Evidence Purged',
-        `Verification badge for ${check.title} has been removed.`,
-        'info'
-      );
-    }, 900);
+      showToast('Consent Revoked & Evidence Purged', message, 'info');
+    }, 800);
   };
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={`Revoke Consent: ${check.title}`} maxWidth="560px">

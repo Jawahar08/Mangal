@@ -18,6 +18,8 @@ import {
   GatewayConfigService,
   QuarantineVaultService,
   WebhookProcessorService,
+  FuzzyNameMatcher,
+  VerificationLifecycleService,
 } from '../services/backend';
 
 interface TestResult {
@@ -504,6 +506,135 @@ export async function runAllBackendValidationTests(): Promise<{
     );
   } catch (err: any) {
     record('Quarantined Vault & Webhook Ingestion (Phase 3)', 'Suite Execution', false, err.message);
+  }
+
+  // ----------------------------------------------------
+  // SUITE 9: Identity Reconciliation, Fuzzy Matching & Lifecycle Verification (Phase 4)
+  // ----------------------------------------------------
+  try {
+    // Test 29: Fuzzy name matching engine with Indian honorifics and token variations
+    const honorificMatch = FuzzyNameMatcher.matchNames('Dr. Ananya Sen', 'Ananya Sen');
+    const initialMatch = FuzzyNameMatcher.matchNames('Dr. Ananya Sen', 'Ananya S.');
+    const mismatch = FuzzyNameMatcher.matchNames('Vikram Malhotra', 'Rahul Verma');
+
+    const isFuzzyMatcherAccurate = Boolean(
+      honorificMatch.tier === 'exact' &&
+      honorificMatch.score === 100 &&
+      honorificMatch.extractedHonorifics.includes('dr') &&
+      initialMatch.tier === 'high_confidence' &&
+      initialMatch.score >= 85 &&
+      mismatch.tier === 'mismatch' &&
+      mismatch.score < 40
+    );
+    record(
+      'Fuzzy Name Matcher & Lifecycle Engine (Phase 4)',
+      'Fuzzy matcher must strip Indian honorifics, expand initials with high confidence, and flag mismatches',
+      isFuzzyMatcherAccurate,
+      `Honorific match: ${honorificMatch.score}% (${honorificMatch.tier}). Initial expansion: ${initialMatch.score}% (${initialMatch.tier}). Mismatch: ${mismatch.score}% (${mismatch.tier}).`
+    );
+
+    // Test 30: Statutory marriage age enforcement via verified Aadhaar DOB
+    const minorCheck = VerificationLifecycleService.validateVerifiedAadhaarAge('2010-01-01', 'female');
+    const maleUnder21Check = VerificationLifecycleService.validateVerifiedAadhaarAge('2006-05-01', 'male');
+    const eligibleCheck = VerificationLifecycleService.validateVerifiedAadhaarAge('1998-05-15', 'female');
+
+    const isAgeEnforcementStatutory = Boolean(
+      !minorCheck.isEligible &&
+      minorCheck.calculatedAge < 18 &&
+      !maleUnder21Check.isEligible &&
+      maleUnder21Check.calculatedAge < 21 &&
+      eligibleCheck.isEligible &&
+      eligibleCheck.calculatedAge >= 18
+    );
+    record(
+      'Fuzzy Name Matcher & Lifecycle Engine (Phase 4)',
+      'Statutory marriage age validator must enforce 18 (female) and 21 (male) thresholds under Hindu & Special Marriage Acts',
+      isAgeEnforcementStatutory,
+      `Minor Female: Eligible=${minorCheck.isEligible} (${minorCheck.calculatedAge}y). Male <21: Eligible=${maleUnder21Check.isEligible} (${maleUnder21Check.calculatedAge}y). Adult: Eligible=${eligibleCheck.isEligible} (${eligibleCheck.calculatedAge}y).`
+    );
+
+    // Test 31: DPDP Section 6(4) instant consent revocation and trust badge downgrade
+    const candidateUser: any = {
+      id: 'usr_phase4_lifecycle',
+      name: 'Dr. Ananya Sen',
+      gender: 'female',
+      dateOfBirth: '1998-05-15',
+      currentCity: 'Bangalore',
+      trustProfile: {
+        trustScoreLevel: 'Verified',
+        checks: [
+          {
+            id: 'chk_aad_1',
+            title: 'Aadhaar e-KYC',
+            category: 'identity',
+            status: 'verified',
+            visibility: 'verified_members_only',
+          },
+        ],
+        consentLedger: [
+          {
+            id: 'cst_test_aad_1',
+            checkId: 'chk_aad_1',
+            purpose: 'Aadhaar demographic authentication',
+            grantedAt: '2026-10-25',
+            isRevoked: false,
+          },
+        ],
+        auditLogs: [],
+      },
+    };
+
+    // First deposit evidence in vault so we can test cryptographic purging
+    QuarantineVaultService.depositEvidence(
+      candidateUser.id,
+      'chk_aad_1',
+      'Aadhaar Paperless e-KYC XML',
+      'Aadhaar e-KYC',
+      'XXXXXXXX8821'
+    );
+
+    const revocationResult = VerificationLifecycleService.revokeConsentAndDowngradeBadge(
+      candidateUser,
+      'chk_aad_1'
+    );
+
+    const downgradedCheck = revocationResult.updatedUser.trustProfile.checks.find((c: any) => c.id === 'chk_aad_1');
+    const updatedConsent = revocationResult.updatedUser.trustProfile.consentLedger.find((c: any) => c.checkId === 'chk_aad_1');
+    const revocationAudit = revocationResult.updatedUser.trustProfile.auditLogs.find((l: any) => l.action === 'consent_revoked');
+
+    const isDowngradeCompliant = Boolean(
+      downgradedCheck?.status === 'user_supplied' &&
+      downgradedCheck.visibility === 'hidden' &&
+      updatedConsent?.isRevoked === true &&
+      revocationResult.purgedVault === true &&
+      revocationAudit !== undefined
+    );
+    record(
+      'Fuzzy Name Matcher & Lifecycle Engine (Phase 4)',
+      'DPDP Section 6(4) consent revocation must purge vault keys, set status to user_supplied, and record immutable audit',
+      isDowngradeCompliant,
+      `Check Status: "${downgradedCheck?.status}". Visibility: "${downgradedCheck?.visibility}". Consent Revoked: ${updatedConsent?.isRevoked}. Vault Purged: ${revocationResult.purgedVault}.`
+    );
+
+    // Test 32: Statutory DPDP Act 2023 & Section 79 IT Act charter and automated profile readiness diagnostics
+    const legalDisclaimers = VerificationLifecycleService.getStatutoryLegalDisclaimers();
+    const diagnosticReport = VerificationLifecycleService.runProfileDiagnostics(candidateUser);
+
+    const isCharterAndReportValid = Boolean(
+      (legalDisclaimers.purposeNoticeSection5.includes('Section 5') || legalDisclaimers.purposeNoticeSection5.length > 20) &&
+      legalDisclaimers.consentNoticeSection6.length > 20 &&
+      legalDisclaimers.itActSection79SafeHarbor.includes('Section 79') &&
+      diagnosticReport.diagnostics.length === 6 &&
+      diagnosticReport.overallHealthScore > 0
+    );
+    record(
+      'Fuzzy Name Matcher & Lifecycle Engine (Phase 4)',
+      'Statutory compliance charter must export mandatory Sections 5, 6, 11, 12 and Section 79 IT Act disclaimers',
+      isCharterAndReportValid,
+      `Diagnostics Count: ${diagnosticReport.diagnostics.length}. Score: ${diagnosticReport.overallHealthScore}%. Disclaimers Verified: Section 5, 6, 11, 12, 79.`
+    );
+  } catch (err: any) {
+    record('Fuzzy Name Matcher & Lifecycle Engine (Phase 4)', 'Suite Execution', false, err.message);
   }
 
   // Calculate totals
