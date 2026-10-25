@@ -33,7 +33,6 @@ import {
   MessageSquare,
   Edit3
 } from 'lucide-react';
-import { CitySelectModal } from '../common/CitySelectModal';
 import {
   PERSONALITY_TAGS,
   WEEKEND_TAGS,
@@ -130,10 +129,6 @@ export const OnboardingFlow: React.FC = () => {
 
   // Validation Error State
   const [ageError, setAgeError] = useState<string | null>(null);
-
-  // City Selection Popups
-  const [isHometownModalOpen, setIsHometownModalOpen] = useState(false);
-  const [isCurrentCityModalOpen, setIsCurrentCityModalOpen] = useState(false);
 
   // Restore draft if available
   useEffect(() => {
@@ -1183,61 +1178,20 @@ export const OnboardingFlow: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>Current City</span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-gold-dark)', fontWeight: 600 }}>Tap to select</span>
-              </label>
-              <div
-                onClick={() => setIsCurrentCityModalOpen(true)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem 1rem',
-                  border: currentCity ? '1.5px solid var(--color-burgundy)' : '1px solid rgba(197, 160, 89, 0.45)',
-                  borderRadius: 'var(--radius-md)',
-                  background: currentCity ? 'var(--color-burgundy-subtle)' : '#FFFFFF',
-                  cursor: 'pointer',
-                  transition: 'all 150ms ease',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
-                }}
-                title="Click to open city selection popup"
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flex: 1, minWidth: 0 }}>
-                  <MapPin size={18} color="var(--color-burgundy)" style={{ flexShrink: 0 }} />
-                  {currentCity ? (
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--color-burgundy-dark)' }}>
-                        {currentCity}
-                      </div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                        Current Residence Location
-                      </div>
-                    </div>
-                  ) : (
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-                      e.g. Bangalore, Karnataka
-                    </span>
-                  )}
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
-                  <span
-                    style={{
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      color: 'var(--color-burgundy)',
-                      background: 'rgba(107, 23, 40, 0.08)',
-                      padding: '2px 8px',
-                      borderRadius: 'var(--radius-sm)',
-                    }}
-                  >
-                    {currentCity ? 'Change' : 'Select City'}
-                  </span>
-                  <ChevronDown size={14} color="var(--color-burgundy)" />
-                </div>
+              <label className="form-label">Current City</label>
+              <div style={{ position: 'relative' }}>
+                <MapPin size={17} color="var(--color-burgundy)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
+                <input
+                  type="text"
+                  className="form-input"
+                  style={{ paddingLeft: '2.4rem' }}
+                  value={currentCity}
+                  onChange={(e) => setCurrentCity(e.target.value)}
+                  placeholder="e.g. Bangalore, Karnataka (or type any city worldwide)"
+                  list="major-cities-list"
+                />
               </div>
-              <span className="form-hint">Click to choose your present residential city from the popup list or search.</span>
+              <span className="form-hint">Type your current residential or work city.</span>
             </div>
 
             <div className="form-group">
@@ -1341,61 +1295,20 @@ export const OnboardingFlow: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>Ancestral Hometown</span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--color-gold-dark)', fontWeight: 600 }}>Tap to select</span>
-              </label>
-              <div
-                onClick={() => setIsHometownModalOpen(true)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem 1rem',
-                  border: hometown ? '1.5px solid var(--color-burgundy)' : '1px solid rgba(197, 160, 89, 0.45)',
-                  borderRadius: 'var(--radius-md)',
-                  background: hometown ? 'var(--color-burgundy-subtle)' : '#FFFFFF',
-                  cursor: 'pointer',
-                  transition: 'all 150ms ease',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
-                }}
-                title="Click to open Ancestral Hometown popup screen"
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flex: 1, minWidth: 0 }}>
-                  <MapPin size={18} color="var(--color-burgundy)" style={{ flexShrink: 0 }} />
-                  {hometown ? (
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--color-burgundy-dark)' }}>
-                        {hometown}
-                      </div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                        Ancestral Heritage Roots
-                      </div>
-                    </div>
-                  ) : (
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-                      e.g. Jaipur, Rajasthan
-                    </span>
-                  )}
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
-                  <span
-                    style={{
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      color: 'var(--color-burgundy)',
-                      background: 'rgba(107, 23, 40, 0.08)',
-                      padding: '2px 8px',
-                      borderRadius: 'var(--radius-sm)',
-                    }}
-                  >
-                    {hometown ? 'Change' : 'Select City'}
-                  </span>
-                  <ChevronDown size={14} color="var(--color-burgundy)" />
-                </div>
+              <label className="form-label">Ancestral Hometown</label>
+              <div style={{ position: 'relative' }}>
+                <MapPin size={17} color="var(--color-burgundy)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
+                <input
+                  type="text"
+                  className="form-input"
+                  style={{ paddingLeft: '2.4rem' }}
+                  value={hometown}
+                  onChange={(e) => setHometown(e.target.value)}
+                  placeholder="e.g. Jaipur, Rajasthan (or ancestral town/village)"
+                  list="major-cities-list"
+                />
               </div>
-              <span className="form-hint">Click to choose your ancestral town/state from our popup list or enter custom village.</span>
+              <span className="form-hint">Type your family’s ancestral native roots or home district.</span>
             </div>
           </div>
 
@@ -1634,30 +1547,40 @@ export const OnboardingFlow: React.FC = () => {
         )}
       </div>
 
-      {/* City Selection Popups */}
-      <CitySelectModal
-        isOpen={isHometownModalOpen}
-        onClose={() => setIsHometownModalOpen(false)}
-        onSelectCity={(cityStr) => {
-          setHometown(cityStr);
-          showToast('Hometown Selected', `Ancestral roots set to ${cityStr}`, 'success');
-        }}
-        currentValue={hometown}
-        title="Select Ancestral Hometown"
-        subtitle="Choose your native heritage roots, ancestral district, or state"
-      />
-
-      <CitySelectModal
-        isOpen={isCurrentCityModalOpen}
-        onClose={() => setIsCurrentCityModalOpen(false)}
-        onSelectCity={(cityStr) => {
-          setCurrentCity(cityStr);
-          showToast('Current City Selected', `Residence city set to ${cityStr}`, 'success');
-        }}
-        currentValue={currentCity}
-        title="Select Current City"
-        subtitle="Choose the city where you are presently living and working"
-      />
+      {/* Datalist for fast native city autocomplete suggestions */}
+      <datalist id="major-cities-list">
+        <option value="Bangalore, Karnataka" />
+        <option value="Mumbai, Maharashtra" />
+        <option value="Delhi NCR" />
+        <option value="Pune, Maharashtra" />
+        <option value="Hyderabad, Telangana" />
+        <option value="Chennai, Tamil Nadu" />
+        <option value="Kolkata, West Bengal" />
+        <option value="Ahmedabad, Gujarat" />
+        <option value="Jaipur, Rajasthan" />
+        <option value="Chandigarh" />
+        <option value="Lucknow, Uttar Pradesh" />
+        <option value="Indore, Madhya Pradesh" />
+        <option value="Surat, Gujarat" />
+        <option value="Kochi, Kerala" />
+        <option value="Coimbatore, Tamil Nadu" />
+        <option value="Bhopal, Madhya Pradesh" />
+        <option value="Nagpur, Maharashtra" />
+        <option value="Patna, Bihar" />
+        <option value="Vadodara, Gujarat" />
+        <option value="Visakhapatnam, Andhra Pradesh" />
+        <option value="Dehradun, Uttarakhand" />
+        <option value="Noida, Uttar Pradesh" />
+        <option value="Gurugram, Haryana" />
+        <option value="London, United Kingdom" />
+        <option value="New York, USA" />
+        <option value="San Francisco, USA" />
+        <option value="Seattle, USA" />
+        <option value="Dubai, UAE" />
+        <option value="Singapore" />
+        <option value="Toronto, Canada" />
+        <option value="Sydney, Australia" />
+      </datalist>
     </div>
   );
 };
