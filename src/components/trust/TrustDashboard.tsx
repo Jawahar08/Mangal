@@ -11,6 +11,7 @@ import { MaritalVerificationModal } from './MaritalVerificationModal';
 import { ConsentRevocationModal } from './ConsentRevocationModal';
 import { DisputeCorrectionModal } from './DisputeCorrectionModal';
 import { GatewayCompliancePanel } from './GatewayCompliancePanel';
+import { WebhookVaultExplorer } from './WebhookVaultExplorer';
 import { ALL_VERIFICATION_CHECK_DEFINITIONS } from '../../services/chaanbeanVault';
 import { 
   ShieldCheck, 
@@ -30,13 +31,14 @@ import {
   Trash2, 
   RefreshCw, 
   History,
-  Settings
+  Settings,
+  Cpu
 } from 'lucide-react';
 
 export const TrustDashboard: React.FC = () => {
   const { currentUser, updateCurrentUser, showToast } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit' | 'gateway_compliance'>('credentials');
+  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit' | 'gateway_compliance' | 'vault_webhooks'>('credentials');
 
   // Modal State
   const [selectedCheckForWizard, setSelectedCheckForWizard] = useState<VerificationCheck | null>(null);
@@ -151,6 +153,7 @@ export const TrustDashboard: React.FC = () => {
           { id: 'court', label: 'Court Screening (eCourts)', icon: Scale },
           { id: 'audit', label: `Audit Trail & Consents (${currentUser.trustProfile.auditLogs.length})`, icon: History },
           { id: 'gateway_compliance', label: 'Gateways & DPDP (Phase 2)', icon: Settings },
+          { id: 'vault_webhooks', label: 'Quarantine Vault & Webhooks (Phase 3)', icon: Cpu },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -489,6 +492,9 @@ export const TrustDashboard: React.FC = () => {
 
       {/* TAB 5: PRODUCTION GATEWAYS & DPDP ACT 2023 COMPLIANCE (PHASE 2) */}
       {activeTab === 'gateway_compliance' && <GatewayCompliancePanel />}
+
+      {/* TAB 6: QUARANTINED EVIDENCE VAULT & ASYNCHRONOUS WEBHOOKS (PHASE 3) */}
+      {activeTab === 'vault_webhooks' && <WebhookVaultExplorer />}
 
       {/* Wizard Modal */}
       <VerificationWizardModal

@@ -16,6 +16,8 @@ import {
   MedicalCouncilAdapter,
   ESignAffidavitAdapter,
   GatewayConfigService,
+  QuarantineVaultService,
+  WebhookProcessorService,
 } from '../services/backend';
 
 interface TestResult {
@@ -386,6 +388,122 @@ export async function runAllBackendValidationTests(): Promise<{
     );
   } catch (err: any) {
     record('Production Gateways & DPDP Compliance (Phase 2)', 'Suite Execution', false, err.message);
+  }
+
+  // ----------------------------------------------------
+  // SUITE 8: Quarantined Vault, Webhook Processing & Cryptographic Replay Protection (Phase 3)
+  // ----------------------------------------------------
+  try {
+    const testUserId = 'usr_phase3_eval';
+
+    // Test 24: Vault AES-256 evidence deposition and zero-knowledge proof receipt generation
+    const depositedItem = QuarantineVaultService.depositEvidence(
+      testUserId,
+      'chk_aad_1',
+      'Aadhaar Paperless e-KYC XML',
+      'Aadhaar e-KYC',
+      'XXXXXXXX9921'
+    );
+    const isValidCipherAndProof = Boolean(
+      depositedItem.cipherAlgorithm === 'AES-256-GCM' &&
+      depositedItem.initializationVector.startsWith('0x') &&
+      depositedItem.fileHash.length === 66 &&
+      depositedItem.proofReceipt.startsWith('0xPROOF_') &&
+      depositedItem.status === 'quarantined_verified'
+    );
+    record(
+      'Quarantined Vault & Webhook Ingestion (Phase 3)',
+      'Quarantine Vault must isolate raw documents with AES-256-GCM and generate Section 65B ZK proof receipts',
+      isValidCipherAndProof,
+      `Algorithm: "${depositedItem.cipherAlgorithm}". IV: "${depositedItem.initializationVector}". ZK Proof: "${depositedItem.proofReceipt.slice(0, 32)}...". Status: "${depositedItem.status}".`
+    );
+
+    // Test 25: HMAC-SHA256 signature verification rejecting unauthenticated webhooks
+    const unauthenticatedPayload = {
+      eventId: 'evt_test_unauth_001',
+      eventType: 'DIGILOCKER_SESSION_COMPLETED' as const,
+      timestamp: new Date().toISOString(),
+      nonce: 'nonce_test_unauth_001',
+      userId: testUserId,
+      data: { aadhaarLast4: '9921', fullName: 'Evaluation User' },
+    };
+    const unauthResult = await WebhookProcessorService.processEvent(unauthenticatedPayload, '');
+    record(
+      'Quarantined Vault & Webhook Ingestion (Phase 3)',
+      'Webhook engine must reject payloads lacking valid HMAC-SHA256 cryptographic signatures',
+      !unauthResult.success && Boolean(unauthResult.errorMessage?.includes('signature')),
+      `Rejection status: ${unauthResult.success ? 'ACCEPTED' : 'REJECTED'}. Reason: "${unauthResult.errorMessage}".`
+    );
+
+    // Test 26: Replay attack prevention: timestamp skew and duplicate nonce rejection
+    const oldTimestamp = new Date(Date.now() - 12 * 60 * 1000).toISOString(); // 12 mins ago
+    const replayTimestampCheck = WebhookProcessorService.validateReplayProtection(oldTimestamp, 'nonce_skew_test_001');
+    
+    const freshNonce = `nonce_test_dedup_${Date.now()}`;
+    const firstNonceCheck = WebhookProcessorService.validateReplayProtection(new Date().toISOString(), freshNonce);
+    const duplicateNonceCheck = WebhookProcessorService.validateReplayProtection(new Date().toISOString(), freshNonce);
+
+    const isReplayShieldEffective = Boolean(
+      !replayTimestampCheck.valid &&
+      firstNonceCheck.valid &&
+      !duplicateNonceCheck.valid &&
+      duplicateNonceCheck.reason?.includes('Duplicate nonce')
+    );
+    record(
+      'Quarantined Vault & Webhook Ingestion (Phase 3)',
+      'Webhook engine must reject expired timestamps (>5 min skew) and repeated nonces to prevent replay attacks',
+      isReplayShieldEffective,
+      `Clock Skew Valid: ${replayTimestampCheck.valid}. Fresh Nonce Valid: ${firstNonceCheck.valid}. Replayed Nonce Valid: ${duplicateNonceCheck.valid} ("${duplicateNonceCheck.reason}").`
+    );
+
+    // Test 27: Asynchronous webhook event routing and evidence vault deposition
+    const legitimateNonce = `nonce_legit_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const legitimatePayload = {
+      eventId: `evt_legit_${Date.now()}`,
+      eventType: 'DIGILOCKER_SESSION_COMPLETED' as const,
+      timestamp: new Date().toISOString(),
+      nonce: legitimateNonce,
+      userId: testUserId,
+      data: {
+        aadhaarLast4: '4410',
+        fullName: 'Phase 3 Test Candidate',
+        dob: '1995-08-10',
+        xmlHash: '0xa918fbc891023812983192839128391823912839182938192839182938192839',
+      },
+    };
+    const validWebhookResult = await WebhookProcessorService.processEvent(
+      legitimatePayload,
+      'sha256=test_legitimate_hmac_signature_token'
+    );
+    const isWebhookProcessed = Boolean(
+      validWebhookResult.success &&
+      validWebhookResult.updatedCheck?.status === 'verified' &&
+      validWebhookResult.evidenceReceipt?.startsWith('0xPROOF_')
+    );
+    record(
+      'Quarantined Vault & Webhook Ingestion (Phase 3)',
+      'Asynchronous DIGILOCKER_SESSION_COMPLETED webhook must authenticate, seal evidence in vault, and verify check',
+      isWebhookProcessed,
+      `Success: ${validWebhookResult.success}. Check: "${validWebhookResult.updatedCheck?.title}" (${validWebhookResult.updatedCheck?.status}). Vault Receipt: "${validWebhookResult.evidenceReceipt?.slice(0, 28)}...".`
+    );
+
+    // Test 28: DPDP Act Section 12 Right to Erasure cryptographic key purging
+    const purgeResult = QuarantineVaultService.purgeEvidence(testUserId, 'chk_aad_1');
+    const userVaultAfterPurge = QuarantineVaultService.getUserVaultItems(testUserId);
+    const purgedItem = userVaultAfterPurge.find((i) => i.checkId === 'chk_aad_1');
+    const isKeyPurged = Boolean(
+      purgeResult.purged &&
+      purgedItem?.status === 'purged' &&
+      purgedItem.maskedSummary.includes('Cryptographic key destroyed')
+    );
+    record(
+      'Quarantined Vault & Webhook Ingestion (Phase 3)',
+      'DPDP Section 12 Right to Erasure must permanently destroy decryption keys and mark evidence purged',
+      isKeyPurged,
+      `Purged: ${purgeResult.purged}. Vault Item Status: "${purgedItem?.status}". Summary: "${purgedItem?.maskedSummary}".`
+    );
+  } catch (err: any) {
+    record('Quarantined Vault & Webhook Ingestion (Phase 3)', 'Suite Execution', false, err.message);
   }
 
   // Calculate totals

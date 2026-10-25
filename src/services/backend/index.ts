@@ -13,3 +13,5 @@ export * from './marketplaceService';
 export * from './realtimeVerificationService';
 export * from './adapters';
 export * from './config/gatewayConfig';
+export * from './vault/quarantineVaultService';
+export * from './webhooks/webhookProcessorService';
