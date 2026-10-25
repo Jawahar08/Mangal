@@ -10,9 +10,6 @@ import { CourtScreeningModal } from './CourtScreeningModal';
 import { MaritalVerificationModal } from './MaritalVerificationModal';
 import { ConsentRevocationModal } from './ConsentRevocationModal';
 import { DisputeCorrectionModal } from './DisputeCorrectionModal';
-import { GatewayCompliancePanel } from './GatewayCompliancePanel';
-import { WebhookVaultExplorer } from './WebhookVaultExplorer';
-import { VerificationDiagnosticsPanel } from './VerificationDiagnosticsPanel';
 import { ALL_VERIFICATION_CHECK_DEFINITIONS } from '../../services/chaanbeanVault';
 import { 
   ShieldCheck, 
@@ -31,17 +28,13 @@ import {
   EyeOff, 
   Trash2, 
   RefreshCw, 
-  History,
-  Settings,
-  Cpu,
-  Activity,
-  RotateCcw
+  History
 } from 'lucide-react';
 
 export const TrustDashboard: React.FC = () => {
   const { currentUser, updateCurrentUser, showToast } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit' | 'gateway_compliance' | 'vault_webhooks' | 'diagnostics_lifecycle'>('credentials');
+  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit'>('credentials');
 
   // Modal State
   const [selectedCheckForWizard, setSelectedCheckForWizard] = useState<VerificationCheck | null>(null);
@@ -107,111 +100,6 @@ export const TrustDashboard: React.FC = () => {
     });
   };
 
-  // Reset all verifications to clean unverified initial state for testing
-  const handleResetAllVerifications = () => {
-    const cleanChecks: VerificationCheck[] = [
-      {
-        id: 'chk_aad_1',
-        category: 'identity',
-        title: 'Aadhaar e-KYC Verification',
-        description: 'ChaanBean Trust Vault verified photo & demographic hash via DigiLocker MeitY.',
-        status: 'user_supplied',
-        visibility: 'mutual_connections_only',
-        providerName: 'MeitY DigiLocker & UIDAI Gateway',
-        providerType: 'digilocker',
-        documentType: 'Aadhaar Paperless e-KYC XML',
-      },
-      {
-        id: 'chk_mob_1',
-        category: 'identity',
-        title: 'Mobile Number Verification',
-        description: 'Two-factor OTP SMS verification via TRAI DLT-registered telecom gateway.',
-        status: 'user_supplied',
-        visibility: 'mutual_connections_only',
-        providerName: 'Telecom SMS Gateway (DLT: MNGLST)',
-        providerType: 'digilocker',
-        documentType: 'SMS OTP Token',
-      },
-      {
-        id: 'chk_eml_1',
-        category: 'identity',
-        title: 'Corporate / Hospital Work Email',
-        description: 'Active institutional mailbox domain challenge and DNS authentication.',
-        status: 'user_supplied',
-        visibility: 'mutual_connections_only',
-        providerName: 'Institutional Domain Verifier',
-        providerType: 'corporate_hr',
-        documentType: 'Corporate DNS Token',
-      },
-      {
-        id: 'chk_edu_1',
-        category: 'education',
-        title: 'Medical Council & Academic Standing',
-        description: 'State Medical Council & National Medical Commission (NMC) active register standing.',
-        status: 'user_supplied',
-        visibility: 'mutual_connections_only',
-        providerName: 'State Medical Council / NMC',
-        providerType: 'nad',
-        documentType: 'Medical Council Registration Certificate',
-      },
-      {
-        id: 'chk_mrt_1',
-        category: 'marital_status',
-        title: 'Marital Status Declaration & Affidavit',
-        description: 'Signed digital declaration under solemn oath affirming marital status (Section 3A IT Act).',
-        status: 'user_supplied',
-        visibility: 'mutual_connections_only',
-        providerName: 'ChaanBean Legal Desk / Leegality eSign',
-        providerType: 'self_affirmed',
-        documentType: 'Signed Digital Oath (Section 3A IT Act)',
-      },
-      {
-        id: 'chk_crt_1',
-        category: 'court',
-        title: 'Public Court Record Screening',
-        description: 'Public eCourts CNR civil and matrimonial litigation registry screening with non-defamatory safe harbor.',
-        status: 'user_supplied',
-        visibility: 'mutual_connections_only',
-        providerName: 'eCourts Public Search Registry',
-        providerType: 'ecourts',
-        documentType: 'eCourts Public Screening Record',
-      },
-    ];
-
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.removeItem('mgl_quarantine_vault_v3');
-    }
-
-    const updatedUser = {
-      ...currentUser,
-      trustProfile: {
-        ...currentUser.trustProfile,
-        trustScoreLevel: 'Basic' as const,
-        checks: cleanChecks,
-        consentLedger: [],
-        auditLogs: [
-          {
-            id: `log_rst_${Date.now()}`,
-            timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
-            action: 'status_changed' as const,
-            checkTitle: 'All Verifications',
-            actor: 'User (Test Reset)',
-            details: 'All verification credentials and quarantined vault records reset to pristine test state.',
-            previousStatus: 'verified' as any,
-            newStatus: 'user_supplied' as any,
-          },
-        ],
-      },
-    };
-
-    updateCurrentUser(updatedUser);
-    showToast(
-      'All Verifications Reset',
-      'All 6 credentials have been reset to unverified initial state. You can now test each verification from scratch!',
-      'success'
-    );
-  };
-
   return (
     <div className="container" style={{ maxWidth: '1040px', padding: '1.5rem 1.25rem 4rem', animation: 'fadeIn 250ms ease-out' }}>
       
@@ -230,7 +118,7 @@ export const TrustDashboard: React.FC = () => {
         <div style={{ maxWidth: '720px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#86EFAC', fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>
             <ShieldCheck size={18} />
-            <span>ChaanBean Digital Trust Vault (Phase 2 Live)</span>
+            <span>ChaanBean Digital Trust Vault</span>
           </div>
           <h1 className="heading-section" style={{ color: '#FFFFFF', marginBottom: '0.75rem', fontSize: '2.2rem' }}>
             Evidence-Based Trust & Verification
@@ -260,9 +148,6 @@ export const TrustDashboard: React.FC = () => {
           { id: 'marital', label: 'Marital & Divorce Audit', icon: HeartHandshake },
           { id: 'court', label: 'Court Screening (eCourts)', icon: Scale },
           { id: 'audit', label: `Audit Trail & Consents (${currentUser.trustProfile.auditLogs.length})`, icon: History },
-          { id: 'gateway_compliance', label: 'Gateways & DPDP (Phase 2)', icon: Settings },
-          { id: 'vault_webhooks', label: 'Quarantine Vault & Webhooks (Phase 3)', icon: Cpu },
-          { id: 'diagnostics_lifecycle', label: 'Go-Live Diagnostics & Fuzzy Engine (Phase 4)', icon: Activity },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -312,38 +197,14 @@ export const TrustDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Header Bar with Reset Button */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--color-burgundy-dark)' }}>
-                Verification Checklist ({currentUser.trustProfile.checks.filter((c) => c.status === 'verified').length} / {currentUser.trustProfile.checks.length} Verified)
-              </h3>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-                Click <strong>"Verify Now"</strong> on any credential below to run its interactive verification gateway.
-              </p>
-            </div>
-
-            <button
-              onClick={handleResetAllVerifications}
-              className="btn"
-              style={{
-                fontSize: '0.8rem',
-                padding: '0.45rem 0.85rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                borderColor: '#DC2626',
-                color: '#DC2626',
-                background: '#FEF2F2',
-                border: '1px solid #FCA5A5',
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
-              title="Reset all 6 credentials to unverified initial state to test from scratch"
-            >
-              <RotateCcw size={14} />
-              <span>Reset All Verifications for Testing</span>
-            </button>
+          {/* Credentials Header Bar */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--color-burgundy-dark)' }}>
+              ChaanBean Trust Credentials ({currentUser.trustProfile.checks.filter((c) => c.status === 'verified').length} / {currentUser.trustProfile.checks.length} Verified)
+            </h3>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+              Institutional and self-affirmed credentials. Raw sensitive documents are never displayed to other users.
+            </p>
           </div>
 
           {/* Credentials List */}
@@ -632,15 +493,6 @@ export const TrustDashboard: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* TAB 5: PRODUCTION GATEWAYS & DPDP ACT 2023 COMPLIANCE (PHASE 2) */}
-      {activeTab === 'gateway_compliance' && <GatewayCompliancePanel />}
-
-      {/* TAB 6: QUARANTINED EVIDENCE VAULT & ASYNCHRONOUS WEBHOOKS (PHASE 3) */}
-      {activeTab === 'vault_webhooks' && <WebhookVaultExplorer />}
-
-      {/* TAB 7: GO-LIVE DIAGNOSTICS & FUZZY MATCHING (PHASE 4) */}
-      {activeTab === 'diagnostics_lifecycle' && <VerificationDiagnosticsPanel />}
 
       {/* Wizard Modal */}
       <VerificationWizardModal

@@ -9,7 +9,6 @@ import {
   MessageCircle, 
   ShieldCheck, 
   User, 
-  Map, 
   Sparkles, 
   HeartHandshake, 
   Flower2, 
@@ -63,7 +62,6 @@ export const Navbar: React.FC = () => {
     { tab: 'second_chapter', label: 'Second Chapter', sub: 'Remarriage & Family Transition', icon: Flower2, isProtected: true },
     { tab: 'pratha', label: 'Pratha Traditions', sub: 'Rituals, Vedic Astrologers & Pujas', icon: Flame, isProtected: true },
     { tab: 'marketplace', label: 'Marketplace', sub: 'Curated Wedding Venues & Photographers', icon: ShoppingBag, isProtected: true },
-    { tab: 'roadmap', label: 'Ecosystem Vision', sub: 'Architecture & Innovation Roadmap', icon: Map },
   ];
 
   const isEcosystemActive = ecosystemItems.some((item) => item.tab === activeTab);

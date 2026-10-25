@@ -47,13 +47,18 @@ export const Footer: React.FC = () => {
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab('roadmap')} style={{ color: 'inherit', textAlign: 'left' }}>
-                  • <strong>Pratha</strong>: Spirituality & Rituals (Phase 5)
+                <button onClick={() => setActiveTab('pratha')} style={{ color: 'inherit', textAlign: 'left' }}>
+                  • <strong>Pratha</strong>: Spirituality & Ritual Traditions
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab('roadmap')} style={{ color: 'inherit', textAlign: 'left' }}>
-                  • <strong>Marketplace</strong>: Wedding & Wellness (Phase 6)
+                <button onClick={() => setActiveTab('marketplace')} style={{ color: 'inherit', textAlign: 'left' }}>
+                  • <strong>Marketplace</strong>: Wedding Services & Venues
+                </button>
+              </li>
+              <li>
+                <button onClick={() => setActiveTab('second_chapter')} style={{ color: 'inherit', textAlign: 'left' }}>
+                  • <strong>Second Chapter</strong>: Remarriage & Transition
                 </button>
               </li>
             </ul>
@@ -92,7 +97,7 @@ export const Footer: React.FC = () => {
             <span style={{ cursor: 'pointer' }}>Privacy Policy</span>
             <span style={{ cursor: 'pointer' }}>Terms of Service</span>
             <span style={{ cursor: 'pointer' }}>Trust Guidelines</span>
-            <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('roadmap')}>Architecture Roadmap</span>
+            <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('trust')}>DPDP Trust Vault</span>
           </div>
         </div>
       </div>
