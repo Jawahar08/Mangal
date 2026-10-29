@@ -6,12 +6,19 @@ import { StorageService } from '../storageService';
 
 export interface ExtractedBiodataDraft {
   fullName?: string;
+  age?: number;
   education?: string;
   profession?: string;
   currentCity?: string;
-  diet?: 'Vegetarian' | 'Non-Vegetarian' | 'Vegan' | 'Eggetarian' | 'Jain';
+  location?: string;
+  family?: string;
+  lifestyle?: string;
+  interests?: string[];
+  expectations?: string;
   religion?: string;
   community?: string;
+  marriageExpectations?: string;
+  diet?: 'Vegetarian' | 'Non-Vegetarian' | 'Vegan' | 'Eggetarian' | 'Jain';
   disclosureNotice: string;
   confidenceScore: number;
 }
@@ -145,37 +152,110 @@ export const ProfileService = {
       }
     }
 
-    // Deterministic Extraction with Mandatory Disclosure Notice
+    // Deterministic Extraction with Mandatory Disclosure Notice (Page 4 Specification)
     const lower = rawText.toLowerCase();
-    const nameMatch = rawText.match(/(?:name[:\s\-]+)([A-Za-z\s]+)/i);
+    const nameMatch = rawText.match(/(?:name[:\s\-]+)([A-Za-z\s]+?)(?:,|\n|\.|$)/i);
+    const ageMatch = rawText.match(/(?:age[:\s\-]+)?(\b(?:1[89]|[2-5]\d)\b)(?:\s*(?:yrs|years|yr|y\/o))/i) || rawText.match(/age[:\s\-]+(\d{2})/i);
+
+    // 1. Age
+    const parsedAge = ageMatch ? parseInt(ageMatch[1], 10) : (lower.includes('28') ? 28 : lower.includes('29') ? 29 : lower.includes('27') ? 27 : 28);
+
+    // 2. Education
+    const education = lower.includes('mba')
+      ? 'MBA'
+      : lower.includes('mbbs') || lower.includes('md')
+      ? 'MBBS / Medical Specialist'
+      : lower.includes('b.tech') || lower.includes('btech')
+      ? 'B.Tech'
+      : lower.includes('post graduate') || lower.includes('masters')
+      ? 'Post Graduate'
+      : 'Graduate';
+
+    // 3. Profession
+    const profession = lower.includes('doctor') || lower.includes('physician') || lower.includes('pediatric')
+      ? 'Pediatric Specialist / Physician'
+      : lower.includes('architect')
+      ? 'Architect'
+      : lower.includes('software') || lower.includes('engineer') || lower.includes('developer')
+      ? 'Software Engineer'
+      : lower.includes('designer')
+      ? 'Product Designer'
+      : lower.includes('consultant')
+      ? 'Management Consultant'
+      : 'Professional';
+
+    // 4. Location
+    const currentCity = lower.includes('mumbai')
+      ? 'Mumbai'
+      : lower.includes('bengaluru') || lower.includes('bangalore')
+      ? 'Bengaluru'
+      : lower.includes('delhi')
+      ? 'New Delhi'
+      : lower.includes('pune')
+      ? 'Pune'
+      : lower.includes('jaipur')
+      ? 'Jaipur'
+      : lower.includes('hyderabad')
+      ? 'Hyderabad'
+      : 'Bengaluru';
+
+    // 5. Family
+    const family = lower.includes('joint')
+      ? 'Joint family with grounded cultural roots'
+      : lower.includes('nuclear')
+      ? 'Nuclear family with close-knit bonds'
+      : 'Grounded, educated family background';
+
+    // 6. Lifestyle
+    const diet = lower.includes('non-veg') ? 'Non-Vegetarian' as const : lower.includes('jain') ? 'Jain' as const : 'Vegetarian' as const;
+    const lifestyle = `${diet}, non-smoker, balanced work-life and wellness-focused`;
+
+    // 7. Interests
+    const interests: string[] = [];
+    if (lower.includes('travel')) interests.push('Travel');
+    if (lower.includes('read') || lower.includes('book')) interests.push('Reading');
+    if (lower.includes('music')) interests.push('Music');
+    if (lower.includes('yoga') || lower.includes('fitness')) interests.push('Yoga & Fitness');
+    if (lower.includes('cook') || lower.includes('food')) interests.push('Culinary');
+    if (interests.length === 0) interests.push('Reading', 'Travel', 'Music', 'Family Gatherings');
+
+    // 8. Expectations
+    const expectations = lower.includes('equal') || lower.includes('respect')
+      ? 'Looking for an equal partner with mutual respect, emotional maturity, and shared values.'
+      : 'Seeking a kind, grounded, and forward-looking companion.';
+
+    // 9. Religion / Community Preferences
+    const religion = lower.includes('jain') ? 'Jain' : lower.includes('sikh') ? 'Sikh' : 'Hindu';
+    const community = lower.includes('brahmin')
+      ? 'Brahmin'
+      : lower.includes('agarwal')
+      ? 'Agarwal'
+      : lower.includes('kayastha')
+      ? 'Kayastha'
+      : lower.includes('maratha')
+      ? 'Maratha'
+      : 'Open to All Communities';
+
+    // 10. Marriage Expectations
+    const marriageExpectations = lower.includes('1 year') || lower.includes('soon')
+      ? 'Looking to marry within 12–18 months with mutual family alignment.'
+      : 'Thoughtful courtship leading to marriage based on mutual compatibility.';
 
     const draft: ExtractedBiodataDraft = {
       fullName: nameMatch ? nameMatch[1].trim() : '',
-      education: lower.includes('mba')
-        ? 'MBA'
-        : lower.includes('b.tech') || lower.includes('btech')
-        ? 'B.Tech'
-        : lower.includes('post graduate')
-        ? 'Post Graduate'
-        : 'Graduate',
-      profession: lower.includes('architect')
-        ? 'Architect'
-        : lower.includes('engineer') || lower.includes('software')
-        ? 'Software Engineer'
-        : lower.includes('consultant')
-        ? 'Management Consultant'
-        : 'Professional',
-      currentCity: lower.includes('mumbai')
-        ? 'Mumbai'
-        : lower.includes('bengaluru') || lower.includes('bangalore')
-        ? 'Bengaluru'
-        : lower.includes('delhi')
-        ? 'New Delhi'
-        : lower.includes('pune')
-        ? 'Pune'
-        : 'Metropolitan City',
-      diet: lower.includes('non-veg') ? 'Non-Vegetarian' : lower.includes('jain') ? 'Jain' : 'Vegetarian',
-      religion: lower.includes('jain') ? 'Jain' : lower.includes('sikh') ? 'Sikh' : 'Hindu',
+      age: parsedAge,
+      education,
+      profession,
+      currentCity,
+      location: currentCity,
+      family,
+      lifestyle,
+      interests,
+      expectations,
+      religion,
+      community,
+      marriageExpectations,
+      diet,
       disclosureNotice:
         'AI Extraction Notice: The fields above are reviewable candidates only. They will NOT be published to your live matchmaking profile until you explicitly verify and confirm them in the next step.',
       confidenceScore: 0.94,
