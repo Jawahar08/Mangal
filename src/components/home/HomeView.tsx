@@ -31,7 +31,7 @@ export const HomeView: React.FC = () => {
         borderBottom: 'var(--border-delicate)', 
         padding: '3.5rem 0 4.5rem' 
       }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '940px' }}>
+        <div className="container" style={{ textAlign: 'center', maxWidth: '1040px' }}>
           {/* Sacred motif badge */}
           <div style={{
             display: 'inline-flex',
@@ -39,7 +39,7 @@ export const HomeView: React.FC = () => {
             gap: '0.5rem',
             background: 'var(--color-gold-subtle)',
             border: '1px solid rgba(197, 160, 89, 0.4)',
-            padding: '0.4rem 1rem',
+            padding: '0.45rem 1.25rem',
             borderRadius: 'var(--radius-full)',
             color: 'var(--color-burgundy-dark)',
             fontSize: '0.85rem',
@@ -48,7 +48,7 @@ export const HomeView: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}>
             <Sparkles size={16} color="#C5A059" />
-            <span>MANGALSUTRA — MORE THAN A MATCH. A LIFE JOURNEY.</span>
+            <span>NOT ANOTHER MATRIMONIAL WEBSITE — A SACRED LIFE JOURNEY</span>
           </div>
 
           <h1 className="heading-hero" style={{ marginBottom: '1.25rem' }}>
@@ -98,78 +98,98 @@ export const HomeView: React.FC = () => {
             </button>
           </div>
 
-          {/* Four Core Actions Grid */}
+          {/* Four Large Options Grid (Page 2 Specification) */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
             gap: '1.25rem',
             textAlign: 'left'
           }}>
-            {/* 1. Find a Match */}
+            {/* 1. FIND A MATCH */}
             <div 
               className="card-heritage" 
-              style={{ padding: '1.5rem', cursor: 'pointer', borderTop: '3px solid var(--color-burgundy)' }}
+              style={{ 
+                padding: '1.75rem 1.5rem', 
+                cursor: 'pointer', 
+                borderTop: '4px solid var(--color-burgundy)',
+                transition: 'transform 200ms ease, box-shadow 200ms ease'
+              }}
               onClick={() => setActiveTab('discover')}
             >
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'var(--color-burgundy-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                <Heart size={22} color="var(--color-burgundy)" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>❤️</span>
+                <h3 className="heading-card" style={{ fontSize: '1.15rem', color: 'var(--color-burgundy-dark)', fontWeight: 700, margin: 0 }}>
+                  FIND A MATCH
+                </h3>
               </div>
-              <h3 className="heading-card" style={{ fontSize: '1.15rem', marginBottom: '0.4rem', color: 'var(--color-burgundy-dark)' }}>
-                1. Find a Match
-              </h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Discover deeply compatible life partners through multi-layered values and Vedic harmony.
+              <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                Find compatible people.
               </p>
             </div>
 
-            {/* 2. Verify a Profile */}
+            {/* 2. VERIFY A PROFILE */}
             <div 
               className="card-heritage" 
-              style={{ padding: '1.5rem', cursor: 'pointer', borderTop: '3px solid #15803D' }}
+              style={{ 
+                padding: '1.75rem 1.5rem', 
+                cursor: 'pointer', 
+                borderTop: '4px solid #15803D',
+                transition: 'transform 200ms ease, box-shadow 200ms ease'
+              }}
               onClick={() => setActiveTab('trust')}
             >
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#DCFCE7', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                <ShieldCheck size={22} color="#15803D" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>🔐</span>
+                <h3 className="heading-card" style={{ fontSize: '1.15rem', color: '#15803D', fontWeight: 700, margin: 0 }}>
+                  VERIFY A PROFILE
+                </h3>
               </div>
-              <h3 className="heading-card" style={{ fontSize: '1.15rem', marginBottom: '0.4rem', color: '#15803D' }}>
-                2. Verify a Profile
-              </h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Verify identity, education, and credentials with consent via ChaanBean Trust Vault.
+              <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                Verify identity, education, documents and other permitted checks.
               </p>
             </div>
 
-            {/* 3. Prepare for Marriage */}
+            {/* 3. PREPARE FOR MARRIAGE */}
             <div 
               className="card-heritage" 
-              style={{ padding: '1.5rem', cursor: 'pointer', borderTop: '3px solid var(--color-gold-dark)' }}
+              style={{ 
+                padding: '1.75rem 1.5rem', 
+                cursor: 'pointer', 
+                borderTop: '4px solid var(--color-gold-dark)',
+                transition: 'transform 200ms ease, box-shadow 200ms ease'
+              }}
               onClick={() => setActiveTab('intelligence')}
             >
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'var(--color-gold-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                <Sparkles size={22} color="var(--color-gold-dark)" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>🧘</span>
+                <h3 className="heading-card" style={{ fontSize: '1.15rem', color: 'var(--color-gold-dark)', fontWeight: 700, margin: 0 }}>
+                  PREPARE FOR MARRIAGE
+                </h3>
               </div>
-              <h3 className="heading-card" style={{ fontSize: '1.15rem', marginBottom: '0.4rem', color: 'var(--color-gold-dark)' }}>
-                3. Prepare for Marriage
-              </h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                12 modern dimensions, 36 Guna analysis, and paced "Talk Before You Marry" discussions.
+              <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                Understand yourself, your partner and your relationship.
               </p>
             </div>
 
-            {/* 4. Live a Better Marriage */}
+            {/* 4. LIVE A BETTER MARRIAGE */}
             <div 
               className="card-heritage" 
-              style={{ padding: '1.5rem', cursor: 'pointer', borderTop: '3px solid #8E2036' }}
-              onClick={() => setActiveTab('intelligence')}
+              style={{ 
+                padding: '1.75rem 1.5rem', 
+                cursor: 'pointer', 
+                borderTop: '4px solid #059669',
+                transition: 'transform 200ms ease, box-shadow 200ms ease'
+              }}
+              onClick={() => setActiveTab('pratha')}
             >
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: '#FFF1F2', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                <Flower2 size={22} color="#8E2036" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>🌿</span>
+                <h3 className="heading-card" style={{ fontSize: '1.15rem', color: '#047857', fontWeight: 700, margin: 0 }}>
+                  LIVE A BETTER MARRIAGE
+                </h3>
               </div>
-              <h3 className="heading-card" style={{ fontSize: '1.15rem', marginBottom: '0.4rem', color: '#8E2036' }}>
-                4. Live Better
-              </h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                Nurture your union with Pratha spiritual rituals, First 100 Days guide, and couple wellness.
+              <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                Wellbeing, spirituality, counselling, rituals and couple experiences.
               </p>
             </div>
           </div>
