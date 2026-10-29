@@ -15,7 +15,8 @@ import {
   ShoppingBag, 
   HelpCircle,
   FileCheck2,
-  CalendarCheck
+  CalendarCheck,
+  HeartHandshake
 } from 'lucide-react';
 import { Modal } from '../common/Modal';
 
@@ -196,19 +197,295 @@ export const HomeView: React.FC = () => {
         </div>
       </section>
 
-      {/* The 8-Stage Life Journey Section */}
+      {/* 3. The New MangalSutra User Journey (Page 3 Blueprint) */}
       <section style={{ padding: '5rem 0', background: 'var(--bg-surface)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem' }}>
+          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 3.5rem' }}>
             <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-gold-dark)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              The Philosophy
+              3. THE NEW MANGALSUTRA USER JOURNEY
             </span>
             <h2 className="heading-section" style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>
-              From First Discovery to Lifelong Union
+              The 8-Stage Lifecycle Architecture
             </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
-              Conventional matchmaking stops when the wedding occurs. MangalSutra guides you across the entire continuum of companionship.
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.6 }}>
+              I would design the entire platform around <strong>8 stages</strong> — uniting matchmaking discovery, ChaanBean verification, relationship preparation, and ongoing marriage wellbeing into one seamless journey.
             </p>
+          </div>
+
+          {/* Page 3 Architectural Flow Diagram */}
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid rgba(197, 160, 89, 0.35)',
+            borderRadius: 'var(--radius-lg)',
+            padding: '2.5rem 1.5rem',
+            marginBottom: '3.5rem',
+            boxShadow: 'var(--shadow-sm)',
+            position: 'relative'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-gold-dark)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                ECOSYSTEM TREE SPECIFICATION
+              </span>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.45rem', color: 'var(--color-burgundy-dark)', marginTop: '0.3rem' }}>
+                Interactive User Journey Architecture
+              </h3>
+            </div>
+
+            {/* Tree Flow Container */}
+            <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              
+              {/* Root Node: MANGALSUTRA */}
+              <div 
+                style={{
+                  background: 'linear-gradient(135deg, #4A0E17 0%, #8E2036 100%)',
+                  color: '#FFF',
+                  padding: '0.7rem 2.5rem',
+                  borderRadius: 'var(--radius-full)',
+                  fontWeight: 700,
+                  fontSize: '1.05rem',
+                  letterSpacing: '1.5px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  boxShadow: 'var(--shadow-md)',
+                  cursor: 'pointer'
+                }}
+                onClick={() => setActiveTab('discover')}
+                title="MangalSutra Matrimonial Platform"
+              >
+                <Sparkles size={18} color="#D4AF37" />
+                <span>MANGALSUTRA</span>
+              </div>
+
+              {/* Vertical line down from MANGALSUTRA */}
+              <div style={{ width: '2px', height: '24px', background: 'var(--color-gold)' }}></div>
+
+              {/* Branch bar across 3 Upper Pillars */}
+              <div style={{ width: '85%', height: '2px', background: 'var(--color-gold)', position: 'relative' }}></div>
+
+              {/* Three Upper Pillars: DISCOVER, VERIFY, PREPARE */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', width: '100%', marginTop: '0' }}>
+                {/* DISCOVER */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+                  <div 
+                    className="card-heritage" 
+                    style={{ 
+                      padding: '1.1rem 0.75rem', 
+                      textAlign: 'center', 
+                      width: '100%', 
+                      cursor: 'pointer', 
+                      borderTop: '3px solid var(--color-burgundy)',
+                      transition: 'transform 150ms ease'
+                    }}
+                    onClick={() => setActiveTab('discover')}
+                  >
+                    <div style={{ fontWeight: 700, color: 'var(--color-burgundy-dark)', fontSize: '0.98rem', letterSpacing: '0.5px' }}>DISCOVER</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-gold-dark)', fontWeight: 600, marginTop: '0.2rem' }}>Match Engine</div>
+                  </div>
+                  <div style={{ width: '2px', height: '18px', background: 'var(--color-gold)' }}></div>
+                </div>
+
+                {/* VERIFY */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+                  <div 
+                    className="card-heritage" 
+                    style={{ 
+                      padding: '1.1rem 0.75rem', 
+                      textAlign: 'center', 
+                      width: '100%', 
+                      cursor: 'pointer', 
+                      borderTop: '3px solid #15803D',
+                      transition: 'transform 150ms ease'
+                    }}
+                    onClick={() => setActiveTab('trust')}
+                  >
+                    <div style={{ fontWeight: 700, color: '#15803D', fontSize: '0.98rem', letterSpacing: '0.5px' }}>VERIFY</div>
+                    <div style={{ fontSize: '0.78rem', color: '#15803D', fontWeight: 600, marginTop: '0.2rem' }}>ChaanBean</div>
+                  </div>
+                  <div style={{ width: '2px', height: '18px', background: 'var(--color-gold)' }}></div>
+                </div>
+
+                {/* PREPARE */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+                  <div 
+                    className="card-heritage" 
+                    style={{ 
+                      padding: '1.1rem 0.75rem', 
+                      textAlign: 'center', 
+                      width: '100%', 
+                      cursor: 'pointer', 
+                      borderTop: '3px solid var(--color-gold-dark)',
+                      transition: 'transform 150ms ease'
+                    }}
+                    onClick={() => setActiveTab('intelligence')}
+                  >
+                    <div style={{ fontWeight: 700, color: 'var(--color-gold-dark)', fontSize: '0.98rem', letterSpacing: '0.5px' }}>PREPARE</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '0.2rem' }}>Relationship AI</div>
+                  </div>
+                  <div style={{ width: '2px', height: '18px', background: 'var(--color-gold)' }}></div>
+                </div>
+              </div>
+
+              {/* Convergence line to CONNECT */}
+              <div style={{ width: '85%', height: '2px', background: 'var(--color-gold)' }}></div>
+              <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+
+              {/* CONNECT Node */}
+              <div 
+                className="card-heritage" 
+                style={{ 
+                  padding: '0.55rem 2.2rem', 
+                  textAlign: 'center', 
+                  cursor: 'pointer', 
+                  border: '1.5px solid var(--color-burgundy)',
+                  background: '#FFF'
+                }}
+                onClick={() => setActiveTab('matches')}
+              >
+                <div style={{ fontWeight: 700, color: 'var(--color-burgundy-dark)', fontSize: '0.92rem', letterSpacing: '0.8px' }}>
+                  CONNECT
+                </div>
+              </div>
+
+              {/* Vertical line to ENGAGE */}
+              <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+
+              {/* ENGAGE Node */}
+              <div 
+                className="card-heritage" 
+                style={{ 
+                  padding: '0.55rem 2.2rem', 
+                  textAlign: 'center', 
+                  cursor: 'pointer', 
+                  border: '1.5px solid var(--color-gold-dark)',
+                  background: '#FFF'
+                }}
+                onClick={() => setActiveTab('messages')}
+              >
+                <div style={{ fontWeight: 700, color: 'var(--color-burgundy-dark)', fontSize: '0.92rem', letterSpacing: '0.8px' }}>
+                  ENGAGE
+                </div>
+              </div>
+
+              {/* Vertical line to MARRIAGE READY */}
+              <div style={{ width: '2px', height: '20px', background: 'var(--color-gold)' }}></div>
+
+              {/* Central Milestone: MARRIAGE READY */}
+              <div style={{
+                background: 'var(--color-gold-subtle)',
+                border: '1.5px solid var(--color-gold)',
+                color: 'var(--color-burgundy-dark)',
+                padding: '0.65rem 2.2rem',
+                borderRadius: 'var(--radius-full)',
+                fontWeight: 700,
+                fontSize: '0.95rem',
+                letterSpacing: '1px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                boxShadow: 'var(--shadow-sm)'
+              }}>
+                <HeartHandshake size={16} color="var(--color-burgundy)" />
+                <span>MARRIAGE READY</span>
+              </div>
+
+              {/* Vertical line from MARRIAGE READY */}
+              <div style={{ width: '2px', height: '20px', background: 'var(--color-gold)' }}></div>
+
+              {/* Branch bar across Lower Pillars */}
+              <div style={{ width: '65%', height: '2px', background: 'var(--color-gold)' }}></div>
+
+              {/* Two Lower Pillars: PRATHA & MARKETPLACE */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', width: '75%', marginTop: '0' }}>
+                {/* PRATHA */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+                  <div 
+                    className="card-heritage" 
+                    style={{ 
+                      padding: '1.1rem 0.75rem', 
+                      textAlign: 'center', 
+                      width: '100%', 
+                      cursor: 'pointer', 
+                      borderTop: '3px solid #D97706',
+                      transition: 'transform 150ms ease'
+                    }}
+                    onClick={() => setActiveTab('pratha')}
+                  >
+                    <div style={{ fontWeight: 700, color: '#92400E', fontSize: '0.98rem', letterSpacing: '0.5px' }}>PRATHA</div>
+                    <div style={{ fontSize: '0.78rem', color: '#D97706', fontWeight: 600, marginTop: '0.2rem' }}>Spiritual Life</div>
+                  </div>
+                  <div style={{ width: '2px', height: '18px', background: 'var(--color-gold)' }}></div>
+                </div>
+
+                {/* MARKETPLACE */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+                  <div 
+                    className="card-heritage" 
+                    style={{ 
+                      padding: '1.1rem 0.75rem', 
+                      textAlign: 'center', 
+                      width: '100%', 
+                      cursor: 'pointer', 
+                      borderTop: '3px solid #7E22CE',
+                      transition: 'transform 150ms ease'
+                    }}
+                    onClick={() => setActiveTab('marketplace')}
+                  >
+                    <div style={{ fontWeight: 700, color: '#581C87', fontSize: '0.98rem', letterSpacing: '0.5px' }}>MARKETPLACE</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600, marginTop: '0.2rem' }}>Wellness/Ecommerce</div>
+                  </div>
+                  <div style={{ width: '2px', height: '18px', background: 'var(--color-gold)' }}></div>
+                </div>
+              </div>
+
+              {/* Convergence line to NURTURE */}
+              <div style={{ width: '65%', height: '2px', background: 'var(--color-gold)' }}></div>
+              <div style={{ width: '2px', height: '16px', background: 'var(--color-gold)' }}></div>
+
+              {/* NURTURE Node */}
+              <div 
+                className="card-heritage" 
+                style={{ 
+                  padding: '0.55rem 2.2rem', 
+                  textAlign: 'center', 
+                  cursor: 'pointer', 
+                  border: '1.5px solid #059669',
+                  background: '#FFF'
+                }}
+                onClick={() => setActiveTab('pratha')}
+              >
+                <div style={{ fontWeight: 700, color: '#047857', fontSize: '0.92rem', letterSpacing: '0.8px' }}>
+                  NURTURE
+                </div>
+              </div>
+
+              {/* Vertical line to MARRIAGE LIFE */}
+              <div style={{ width: '2px', height: '20px', background: 'var(--color-gold)' }}></div>
+
+              {/* Destination: MARRIAGE LIFE */}
+              <div style={{
+                background: 'linear-gradient(135deg, #14301D 0%, #15803D 100%)',
+                color: '#FFF',
+                padding: '0.75rem 2.5rem',
+                borderRadius: 'var(--radius-full)',
+                fontWeight: 700,
+                fontSize: '1.05rem',
+                letterSpacing: '1.5px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.6rem',
+                boxShadow: 'var(--shadow-md)'
+              }}>
+                <Flower2 size={18} color="#86EFAC" />
+                <span>MARRIAGE LIFE</span>
+              </div>
+
+            </div>
           </div>
 
           {/* Journey Steps Cards */}
