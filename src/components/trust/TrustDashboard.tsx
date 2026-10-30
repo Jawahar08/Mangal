@@ -30,11 +30,12 @@ import {
   RefreshCw, 
   History
 } from 'lucide-react';
+import { MangalsutraTrustProfile } from './MangalsutraTrustProfile';
 
 export const TrustDashboard: React.FC = () => {
   const { currentUser, updateCurrentUser, showToast } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'credentials' | 'marital' | 'court' | 'audit'>('credentials');
+  const [activeTab, setActiveTab] = useState<'trust_profile' | 'credentials' | 'marital' | 'court' | 'audit'>('trust_profile');
 
   // Modal State
   const [selectedCheckForWizard, setSelectedCheckForWizard] = useState<VerificationCheck | null>(null);
@@ -144,6 +145,7 @@ export const TrustDashboard: React.FC = () => {
       {/* Trust Hub Navigation Tabs */}
       <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--border-light)', marginBottom: '1.75rem', overflowX: 'auto', scrollbarWidth: 'none' }}>
         {[
+          { id: 'trust_profile', label: '🛡️ Mangalsutra Trust Profile', icon: ShieldCheck },
           { id: 'credentials', label: `My Credentials (${currentUser.trustProfile.checks.length})`, icon: ShieldCheck },
           { id: 'marital', label: 'Marital & Divorce Audit', icon: HeartHandshake },
           { id: 'court', label: 'Court Screening (eCourts)', icon: Scale },
@@ -174,6 +176,20 @@ export const TrustDashboard: React.FC = () => {
           );
         })}
       </div>
+
+      {/* TAB 0: PAGE 6 SEPARATE MANGALSUTRA TRUST PROFILE */}
+      {activeTab === 'trust_profile' && (
+        <div style={{ marginBottom: '2rem' }}>
+          <MangalsutraTrustProfile 
+            user={currentUser} 
+            isCompact={false} 
+            showActions={true} 
+            onOpenVault={() => setActiveTab('credentials')}
+            onOpenCourtScreening={() => setIsCourtModalOpen(true)}
+            onOpenMaritalAudit={() => setIsMaritalModalOpen(true)}
+          />
+        </div>
+      )}
 
       {/* TAB 1: CREDENTIALS CHECKLIST */}
       {activeTab === 'credentials' && (

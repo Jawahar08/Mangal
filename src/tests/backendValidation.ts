@@ -21,6 +21,7 @@ import {
   FuzzyNameMatcher,
   VerificationLifecycleService,
   ProfileService,
+  TrustProfileResolver,
 } from '../services/backend';
 
 interface TestResult {
@@ -659,6 +660,30 @@ export async function runAllBackendValidationTests(): Promise<{
       'Layer D (MY EXPECTATIONS) must audit marriage expectations, children, career, location, finances',
       Boolean(hasAllExpectationDimensions && layerD && layerD.total >= 5),
       `Layer D Fields: [${layerDFieldKeys.join(', ')}]. Subtitle: "${layerD?.layerSubtitle}".`
+    );
+
+    // Test 35: [Page 6 Blueprint] Separate MANGALSUTRA TRUST PROFILE with 10 discrete verification dimensions
+    const trustProfileData = TrustProfileResolver.resolveTrustProfile(candidateUser);
+    const hasAll10Dimensions = Boolean(
+      trustProfileData.identity &&
+      trustProfileData.identity.mobileVerified &&
+      trustProfileData.identity.emailVerified &&
+      trustProfileData.identity.identityVerified &&
+      trustProfileData.ageDob?.statusLabel === 'Verified' &&
+      trustProfileData.education &&
+      trustProfileData.employment &&
+      trustProfileData.address &&
+      trustProfileData.marriageStatus &&
+      trustProfileData.divorceStatus &&
+      trustProfileData.courtVerification &&
+      trustProfileData.policeVerification &&
+      trustProfileData.certificates
+    );
+    record(
+      'The Most Important New Feature — Trust Profile (Page 6)',
+      'Trust Profile Resolver must compute separate MANGALSUTRA TRUST PROFILE across 10 discrete verification dimensions',
+      hasAll10Dimensions,
+      `User: "${trustProfileData.userName}". 10 Dimensions verified: Identity (Mobile/Email/ID=${trustProfileData.identity.mobileVerified && trustProfileData.identity.emailVerified && trustProfileData.identity.identityVerified}), Age (${trustProfileData.ageDob.statusLabel}), Education (${trustProfileData.education.statusLabel}), Employment (${trustProfileData.employment.statusLabel}), Address (${trustProfileData.address.statusLabel}), Marriage (${trustProfileData.marriageStatus.statusLabel}), Divorce (${trustProfileData.divorceStatus.statusLabel}), Court (${trustProfileData.courtVerification.statusLabel}), Police (${trustProfileData.policeVerification.statusLabel}), Certificates (${trustProfileData.certificates.statusLabel}).`
     );
   } catch (err: any) {
     record('Fuzzy Name Matcher & Lifecycle Engine (Phase 4)', 'Suite Execution', false, err.message);

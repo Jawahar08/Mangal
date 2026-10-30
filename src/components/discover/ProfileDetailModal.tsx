@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { StatusBadge } from '../common/Badge';
 import { Modal } from '../common/Modal';
+import { MangalsutraTrustProfile } from '../trust/MangalsutraTrustProfile';
 
 interface ProfileDetailModalProps {
   partner: UserProfile | null;
@@ -37,7 +38,8 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
     interestsSent, 
     mutualConnections, 
     sendInterest, 
-    startChatWith 
+    startChatWith,
+    openTrustProfileModal 
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'layers' | 'astrology' | 'modern' | 'astra'>('layers');
@@ -130,7 +132,17 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
         </div>
 
         {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '0.6rem' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+          <button
+            className="btn-outline"
+            style={{ padding: '0.5rem 0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', border: '1.5px solid var(--color-gold)', color: 'var(--color-burgundy-dark)', fontWeight: 600 }}
+            onClick={() => openTrustProfileModal(partner)}
+            title="Open Separate Mangalsutra Trust Profile"
+          >
+            <ShieldCheck size={16} color="var(--color-burgundy)" />
+            <span>🛡️ Trust Profile</span>
+          </button>
+
           <button
             className="btn-outline"
             style={{ padding: '0.5rem 0.85rem' }}
@@ -337,9 +349,9 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
             </div>
           )}
 
-          {/* Layer E: MY TRUST PROFILE (This is where ChaanBean enters) */}
+          {/* Layer E: MY TRUST PROFILE (This is where ChaanBean enters - Page 6: Separate MANGALSUTRA TRUST PROFILE) */}
           {activeLayer === 'my_trust' && (
-            <div style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
+            <div>
               {/* Page 5 Blueprint Mandate: This is where ChaanBean enters banner */}
               <div style={{ 
                 background: 'linear-gradient(135deg, rgba(139, 21, 56, 0.08) 0%, rgba(197, 160, 89, 0.15) 100%)', 
@@ -348,36 +360,32 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
                 padding: '1rem 1.25rem', 
                 marginBottom: '1.25rem' 
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                  <ShieldCheck size={18} color="var(--color-burgundy)" />
-                  <strong style={{ fontSize: '1rem', color: 'var(--color-burgundy-dark)' }}>
-                    Layer E: This is where ChaanBean enters.
-                  </strong>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <ShieldCheck size={18} color="var(--color-burgundy)" />
+                    <strong style={{ fontSize: '1rem', color: 'var(--color-burgundy-dark)' }}>
+                      Layer E: This is where ChaanBean enters.
+                    </strong>
+                  </div>
+                  <button
+                    className="btn-outline"
+                    style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem', border: '1px solid var(--color-burgundy)', color: 'var(--color-burgundy-dark)' }}
+                    onClick={() => openTrustProfileModal(partner)}
+                  >
+                    Open Standalone Trust Profile Modal
+                  </button>
                 </div>
-                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0.35rem 0 0', lineHeight: 1.5 }}>
                   Every credential on this profile has undergone institutional verification via official databases with cryptographic consent.
                 </p>
               </div>
 
-              <div style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--color-burgundy-dark)', marginBottom: '0.75rem' }}>
-                ChaanBean Verified Credentials ({partner.trustProfile.trustScoreLevel})
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                {partner.trustProfile.checks.map((c) => (
-                  <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#FFF', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: '0.86rem', color: 'var(--color-burgundy-dark)' }}>{c.title}</div>
-                      <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)' }}>{c.description}</div>
-                      {c.verifiedAt && (
-                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                          Verified on: {c.verifiedAt}
-                        </div>
-                      )}
-                    </div>
-                    <StatusBadge status={c.status} size="sm" />
-                  </div>
-                ))}
-              </div>
+              {/* Page 6 Full Separate Mangalsutra Trust Profile */}
+              <MangalsutraTrustProfile 
+                user={partner} 
+                isCompact={false} 
+                showActions={false} 
+              />
             </div>
           )}
         </div>

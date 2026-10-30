@@ -24,9 +24,18 @@ import {
 } from 'lucide-react';
 import { StatusBadge } from '../common/Badge';
 import { Modal } from '../common/Modal';
+import { MangalsutraTrustProfile } from '../trust/MangalsutraTrustProfile';
 
 export const ProfileView: React.FC = () => {
-  const { currentUser, updateCurrentUser, showToast, deleteAccount, logoutUser, setActiveTab } = useApp();
+  const { 
+    currentUser, 
+    updateCurrentUser, 
+    showToast, 
+    deleteAccount, 
+    logoutUser, 
+    setActiveTab,
+    openTrustProfileModal 
+  } = useApp();
 
   const [activeLayer, setActiveLayer] = useState<'who_i_am' | 'my_life' | 'my_family' | 'my_expectations' | 'my_trust'>('who_i_am');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -112,6 +121,15 @@ export const ProfileView: React.FC = () => {
           </div>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button 
+              className="btn-outline" 
+              onClick={() => openTrustProfileModal(currentUser)}
+              style={{ border: '1.5px solid var(--color-gold)', color: 'var(--color-burgundy-dark)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+              title="Open Separate Mangalsutra Trust Profile"
+            >
+              <ShieldCheck size={16} color="var(--color-burgundy)" />
+              <span>🛡️ Trust Profile</span>
+            </button>
             <button className="btn-secondary" onClick={() => setIsEditModalOpen(true)}>
               <Edit3 size={16} />
               <span>Edit Profile & Privacy</span>
@@ -598,40 +616,12 @@ export const ProfileView: React.FC = () => {
             </div>
           </div>
 
-          <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--color-burgundy-dark)', marginBottom: '1rem' }}>
-            Active Verified Credentials
-          </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-            {currentUser.trustProfile.checks.map((check) => (
-              <div
-                key={check.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '1rem 1.25rem',
-                  borderRadius: 'var(--radius-md)',
-                  background: 'var(--bg-primary)',
-                  border: '1px solid rgba(197, 160, 89, 0.25)',
-                }}
-              >
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--color-burgundy-dark)' }}>
-                    {check.title}
-                  </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                    {check.description}
-                  </div>
-                  {check.verifiedAt && (
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                      Verified via Digilocker & ChaanBean Vault on: {check.verifiedAt}
-                    </div>
-                  )}
-                </div>
-                <StatusBadge status={check.status} />
-              </div>
-            ))}
-          </div>
+          {/* Page 6 Full Separate Mangalsutra Trust Profile */}
+          <MangalsutraTrustProfile 
+            user={currentUser} 
+            isCompact={false} 
+            showActions={true} 
+          />
         </div>
       )}
 

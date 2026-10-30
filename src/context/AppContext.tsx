@@ -61,6 +61,9 @@ interface AppContextType {
   logoutUser: () => void;
   deleteAccount: () => Promise<void>;
   startOnboarding: () => void;
+  activeTrustProfileUser: UserProfile | null;
+  openTrustProfileModal: (user: UserProfile) => void;
+  closeTrustProfileModal: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -78,6 +81,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isRecoveryModalOpen, setIsRecoveryModalOpen] = useState(false);
+  const [activeTrustProfileUser, setActiveTrustProfileUser] = useState<UserProfile | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => AuthService.getSession().isAuthenticated);
 
   const isUserVerified = Boolean(isLoggedIn && currentUser?.isRegisteredUser && currentUser.id !== 'usr_guest_unregistered');
@@ -240,6 +244,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         logoutUser,
         deleteAccount,
         startOnboarding,
+        activeTrustProfileUser,
+        openTrustProfileModal: (user: UserProfile) => setActiveTrustProfileUser(user),
+        closeTrustProfileModal: () => setActiveTrustProfileUser(null),
       }}
     >
       {children}

@@ -14,7 +14,8 @@ import {
   Briefcase, 
   GraduationCap, 
   CheckCircle2, 
-  MessageCircle 
+  MessageCircle,
+  ShieldCheck 
 } from 'lucide-react';
 import { StatusBadge } from '../common/Badge';
 
@@ -33,7 +34,8 @@ export const MatchCard: React.FC<MatchCardProps> = ({ partner }) => {
     sendInterest, 
     requestPhotoAccess, 
     openPartnerDetail,
-    startChatWith 
+    startChatWith,
+    openTrustProfileModal 
   } = useApp();
 
   const isSaved = savedProfileIds.includes(partner.id);
@@ -101,8 +103,32 @@ export const MatchCard: React.FC<MatchCardProps> = ({ partner }) => {
         )}
 
         {/* Top Badges */}
-        <div style={{ position: 'absolute', top: '12px', left: '12px', display: 'flex', gap: '0.4rem' }}>
-          <StatusBadge status="verified" customLabel="ChaanBean" size="sm" />
+        <div style={{ position: 'absolute', top: '12px', left: '12px', display: 'flex', gap: '0.4rem', zIndex: 2 }}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              openTrustProfileModal(partner);
+            }}
+            style={{
+              background: 'rgba(20, 48, 29, 0.9)',
+              backdropFilter: 'blur(4px)',
+              color: '#86EFAC',
+              border: '1px solid #86EFAC',
+              borderRadius: '9999px',
+              padding: '3px 9px',
+              fontSize: '0.72rem',
+              fontWeight: 700,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              cursor: 'pointer',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+            title="View separate MangalSutra Trust Profile"
+          >
+            <ShieldCheck size={12} />
+            <span>Trust Profile</span>
+          </button>
           {partner.intent === 'remarriage' && (
             <span style={{ background: '#831843', color: '#FFF', fontSize: '0.7rem', padding: '2px 8px', borderRadius: '9999px', fontWeight: 700 }}>
               Second Chapter
@@ -202,13 +228,23 @@ export const MatchCard: React.FC<MatchCardProps> = ({ partner }) => {
         </div>
 
         {/* Card Actions */}
-        <div style={{ paddingTop: '0.75rem', borderTop: 'var(--border-light)', display: 'flex', gap: '0.6rem' }}>
+        <div style={{ paddingTop: '0.75rem', borderTop: 'var(--border-light)', display: 'flex', gap: '0.45rem' }}>
           <button
             className="btn-outline"
-            style={{ flex: 1, padding: '0.55rem', fontSize: '0.82rem' }}
+            style={{ flex: 1, padding: '0.5rem', fontSize: '0.8rem' }}
             onClick={() => openPartnerDetail(partner)}
           >
             View 5 Layers
+          </button>
+
+          <button
+            className="btn-outline"
+            style={{ padding: '0.5rem 0.65rem', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '4px', borderColor: '#86EFAC', color: '#15803D', background: '#F0FDF4' }}
+            onClick={() => openTrustProfileModal(partner)}
+            title="Open separate MangalSutra Trust Profile"
+          >
+            <ShieldCheck size={14} color="#15803D" />
+            <span>Trust</span>
           </button>
 
           {isMutual ? (

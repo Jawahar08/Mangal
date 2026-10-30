@@ -22,6 +22,7 @@ import { PrathaHub } from './components/pratha/PrathaHub';
 import { MarketplaceHub } from './components/marketplace/MarketplaceHub';
 import { VerificationGate } from './components/common/VerificationGate';
 import { LoginView } from './components/auth/LoginView';
+import { MangalsutraTrustProfileModal } from './components/trust/MangalsutraTrustProfileModal';
 
 const MainRouter: React.FC = () => {
   const { activeTab, isUserVerified } = useApp();
@@ -70,6 +71,26 @@ const MainRouter: React.FC = () => {
   );
 };
 
+const AppModals: React.FC = () => {
+  const { activeTrustProfileUser, closeTrustProfileModal, setActiveTab } = useApp();
+  return (
+    <>
+      <ToastContainer />
+      <AuthModal />
+      <RecoveryModal />
+      <MangalsutraTrustProfileModal
+        user={activeTrustProfileUser}
+        isOpen={Boolean(activeTrustProfileUser)}
+        onClose={closeTrustProfileModal}
+        onOpenVault={() => {
+          closeTrustProfileModal();
+          setActiveTab('trust');
+        }}
+      />
+    </>
+  );
+};
+
 export const App: React.FC = () => {
   return (
     <AppProvider>
@@ -77,9 +98,7 @@ export const App: React.FC = () => {
         <Navbar />
         <MainRouter />
         <Footer />
-        <ToastContainer />
-        <AuthModal />
-        <RecoveryModal />
+        <AppModals />
       </div>
     </AppProvider>
   );

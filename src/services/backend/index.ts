@@ -17,3 +17,4 @@ export * from './vault/quarantineVaultService';
 export * from './webhooks/webhookProcessorService';
 export * from './lifecycle/fuzzyNameMatcher';
 export * from './lifecycle/verificationLifecycleService';
+export * from './trustProfileResolver';
