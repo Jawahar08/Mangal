@@ -92,30 +92,107 @@ export const ProfileService = {
     return { success: true, profile };
   },
 
-  // 3. Calculate Profile Readiness & Completion Percentage
-  calculateReadiness(profile: UserProfile): { percentage: number; missingFields: string[]; readinessLevel: string } {
-    const checks: { field: string; label: string; valid: boolean }[] = [
-      { field: 'name', label: 'Full Name', valid: Boolean(profile.name) },
+  // 3. Calculate Profile Readiness & Completion Percentage (Page 5 Blueprint: 20+ Required Fields across 5 Layers)
+  calculateReadiness(profile: UserProfile): {
+    percentage: number;
+    completedCount: number;
+    totalCount: number;
+    missingFields: string[];
+    readinessLevel: string;
+    layers: {
+      layerId: 'who_i_am' | 'my_life' | 'my_family' | 'my_expectations' | 'my_trust';
+      layerLetter: 'A' | 'B' | 'C' | 'D' | 'E';
+      layerTitle: string;
+      layerSubtitle: string;
+      completed: number;
+      total: number;
+      percentage: number;
+      fields: { field: string; label: string; valid: boolean }[];
+    }[];
+  } {
+    // Layer A: WHO I AM (Basic identity)
+    const layerAFields = [
+      { field: 'name', label: 'Full Name', valid: Boolean(profile.name && profile.name.trim().length > 1) },
       { field: 'photo', label: 'Primary Photograph', valid: Boolean(profile.photoUrl) },
-      { field: 'bio', label: 'About Me Bio', valid: Boolean(profile.bio && profile.bio.length >= 20) },
-      { field: 'education', label: 'Education Degree', valid: Boolean(profile.education) },
-      { field: 'profession', label: 'Profession', valid: Boolean(profile.profession) },
-      { field: 'city', label: 'Current Residence City', valid: Boolean(profile.currentCity) },
-      { field: 'nakshatra', label: 'Nakshatra / Astrology', valid: Boolean(profile.astrology?.nakshatra) },
-      { field: 'diet', label: 'Dietary Preference', valid: Boolean(profile.diet) },
-      { field: 'family', label: 'Family Background', valid: Boolean(profile.familyType && profile.familyValues) },
-      { field: 'expectations', label: 'Partner Expectations', valid: Boolean(profile.expectations?.partnerAgeMin) },
+      { field: 'dob', label: 'Date of Birth / Statutory Age', valid: Boolean(profile.dateOfBirth && profile.age >= 18) },
+      { field: 'height', label: 'Height', valid: Boolean(profile.height) },
+      { field: 'religion_community', label: 'Religion & Community', valid: Boolean(profile.religion && profile.community) },
+      { field: 'mother_tongue', label: 'Mother Tongue', valid: Boolean(profile.motherTongue) },
+      { field: 'marital_status', label: 'Marital Status', valid: Boolean(profile.maritalStatus) },
+      { field: 'bio', label: 'About Me Bio narrative (20+ chars)', valid: Boolean(profile.bio && profile.bio.length >= 20) },
     ];
 
-    const completed = checks.filter((c) => c.valid).length;
-    const percentage = Math.round((completed / checks.length) * 100);
-    const missingFields = checks.filter((c) => !c.valid).map((c) => c.label);
+    // Layer B: MY LIFE (Education, profession, lifestyle, interests)
+    const layerBFields = [
+      { field: 'education', label: 'Education Degree', valid: Boolean(profile.education) },
+      { field: 'education_field', label: 'University / Major', valid: Boolean(profile.educationField) },
+      { field: 'profession', label: 'Profession & Role', valid: Boolean(profile.profession) },
+      { field: 'company', label: 'Company / Sector', valid: Boolean(profile.companyOrIndustry) },
+      { field: 'income', label: 'Income Bracket', valid: Boolean(profile.incomeBracket) },
+      { field: 'city', label: 'Current Residence City', valid: Boolean(profile.currentCity) },
+      { field: 'hometown', label: 'Hometown / Cultural Roots', valid: Boolean(profile.hometown) },
+      { field: 'diet', label: 'Dietary Lifestyle', valid: Boolean(profile.diet) },
+      { field: 'habits', label: 'Drinking & Smoking Habits', valid: Boolean(profile.drinking && profile.smoking) },
+      { field: 'interests', label: 'Interests & Passions', valid: Boolean(profile.interests && profile.interests.length > 0) },
+    ];
+
+    // Layer C: MY FAMILY (Family structure, parents, siblings, cultural background)
+    const layerCFields = [
+      { field: 'family_structure', label: 'Family Type (Nuclear / Joint)', valid: Boolean(profile.familyType) },
+      { field: 'family_values', label: 'Family Values Orientation', valid: Boolean(profile.familyValues) },
+      { field: 'father_occupation', label: "Father's Occupation", valid: Boolean(profile.fatherOccupation) },
+      { field: 'mother_occupation', label: "Mother's Occupation", valid: Boolean(profile.motherOccupation) },
+      { field: 'siblings', label: 'Siblings Background', valid: Boolean(profile.siblings) },
+      { field: 'gotra_astrology', label: 'Gotra & Vedic Nakshatra', valid: Boolean(profile.astrology?.gotra || profile.astrology?.nakshatra) },
+    ];
+
+    // Layer D: MY EXPECTATIONS (Marriage expectations, children, location, career, lifestyle, finances etc.)
+    const layerDFields = [
+      { field: 'partner_age', label: 'Preferred Age Range', valid: Boolean(profile.expectations?.partnerAgeMin && profile.expectations?.partnerAgeMax) },
+      { field: 'children', label: 'Children Aspirations', valid: Boolean(profile.expectations?.childrenExpectations) },
+      { field: 'finances', label: 'Financial Philosophy', valid: Boolean(profile.expectations?.financialPhilosophy) },
+      { field: 'locations', label: 'Preferred Partner Locations', valid: Boolean(profile.expectations?.partnerLocation && profile.expectations.partnerLocation.length > 0) },
+      { field: 'relocation', label: 'Relocation Openness', valid: Boolean(profile.expectations?.relocationOpenness) },
+    ];
+
+    // Layer E: MY TRUST PROFILE (This is where ChaanBean enters)
+    const layerEFields = [
+      { field: 'chaanbean_id', label: 'ChaanBean Identity Verification', valid: Boolean(profile.trustProfile?.checks?.some((c) => c.category === 'identity' && c.status === 'verified')) },
+      { field: 'chaanbean_credentials', label: 'ChaanBean Audited Credentials', valid: Boolean(profile.trustProfile?.checks?.some((c) => c.status === 'verified')) },
+    ];
+
+    const mapLayer = (
+      layerId: 'who_i_am' | 'my_life' | 'my_family' | 'my_expectations' | 'my_trust',
+      layerLetter: 'A' | 'B' | 'C' | 'D' | 'E',
+      layerTitle: string,
+      layerSubtitle: string,
+      fields: { field: string; label: string; valid: boolean }[]
+    ) => {
+      const completed = fields.filter((f) => f.valid).length;
+      const total = fields.length;
+      const percentage = Math.round((completed / total) * 100);
+      return { layerId, layerLetter, layerTitle, layerSubtitle, completed, total, percentage, fields };
+    };
+
+    const layers = [
+      mapLayer('who_i_am', 'A', 'WHO I AM', 'Basic identity', layerAFields),
+      mapLayer('my_life', 'B', 'MY LIFE', 'Education, profession, lifestyle, interests', layerBFields),
+      mapLayer('my_family', 'C', 'MY FAMILY', 'Family structure, parents, siblings, cultural background', layerCFields),
+      mapLayer('my_expectations', 'D', 'MY EXPECTATIONS', 'Marriage expectations, children, location, career, lifestyle, finances etc.', layerDFields),
+      mapLayer('my_trust', 'E', 'MY TRUST PROFILE', 'This is where ChaanBean enters', layerEFields),
+    ];
+
+    const allFields = [...layerAFields, ...layerBFields, ...layerCFields, ...layerDFields, ...layerEFields];
+    const completedCount = allFields.filter((f) => f.valid).length;
+    const totalCount = allFields.length;
+    const percentage = Math.round((completedCount / totalCount) * 100);
+    const missingFields = allFields.filter((f) => !f.valid).map((f) => f.label);
 
     let readinessLevel = 'Developing';
     if (percentage >= 90) readinessLevel = 'Profile Ready & Optimized';
     else if (percentage >= 70) readinessLevel = 'Sufficient for Discovery';
 
-    return { percentage, missingFields, readinessLevel };
+    return { percentage, completedCount, totalCount, missingFields, readinessLevel, layers };
   },
 
   // 4. AI Biodata Text Extraction with Mandatory Disclosure & Consent

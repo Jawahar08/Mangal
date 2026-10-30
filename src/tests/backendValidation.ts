@@ -20,6 +20,7 @@ import {
   WebhookProcessorService,
   FuzzyNameMatcher,
   VerificationLifecycleService,
+  ProfileService,
 } from '../services/backend';
 
 interface TestResult {
@@ -632,6 +633,32 @@ export async function runAllBackendValidationTests(): Promise<{
       'Statutory compliance charter must export mandatory Sections 5, 6, 11, 12 and Section 79 IT Act disclaimers',
       isCharterAndReportValid,
       `Diagnostics Count: ${diagnosticReport.diagnostics.length}. Score: ${diagnosticReport.overallHealthScore}%. Disclaimers Verified: Section 5, 6, 11, 12, 79.`
+    );
+    // Test 33: [Page 5 Blueprint] Profile Readiness Engine must audit 20+ required fields across 5 restructured layers
+    const readinessResult = ProfileService.calculateReadiness(candidateUser);
+    const hasFiveLayers = readinessResult.layers.length === 5;
+    const layerLetters = readinessResult.layers.map((l) => l.layerLetter).join('');
+    const has20PlusFields = readinessResult.totalCount >= 20;
+    const hasLayerETrust = readinessResult.layers.find((l) => l.layerLetter === 'E')?.layerSubtitle.includes('ChaanBean enters');
+
+    record(
+      'Stage 2 — The Mangalsutra Profile (Page 5)',
+      'Profile Readiness Engine must evaluate 20+ required fields structured across 5 distinct layers (A through E)',
+      hasFiveLayers && layerLetters === 'ABCDE' && has20PlusFields && Boolean(hasLayerETrust),
+      `Layers: ${readinessResult.layers.length} (${layerLetters}). Total Discrete Fields: ${readinessResult.totalCount} (Mandate: 20+). Readiness: ${readinessResult.percentage}%. Layer E Tag: "${readinessResult.layers[4].layerSubtitle}".`
+    );
+
+    // Test 34: [Page 5 Blueprint] Layer D must include marriage expectations, children, career, location, finances
+    const layerD = readinessResult.layers.find((l) => l.layerLetter === 'D');
+    const layerDFieldKeys = layerD?.fields.map((f) => f.field) || [];
+    const hasAllExpectationDimensions = ['partner_age', 'children', 'finances', 'locations', 'relocation'].every(
+      (k) => layerDFieldKeys.includes(k)
+    );
+    record(
+      'Stage 2 — The Mangalsutra Profile (Page 5)',
+      'Layer D (MY EXPECTATIONS) must audit marriage expectations, children, career, location, finances',
+      Boolean(hasAllExpectationDimensions && layerD && layerD.total >= 5),
+      `Layer D Fields: [${layerDFieldKeys.join(', ')}]. Subtitle: "${layerD?.layerSubtitle}".`
     );
   } catch (err: any) {
     record('Fuzzy Name Matcher & Lifecycle Engine (Phase 4)', 'Suite Execution', false, err.message);

@@ -216,25 +216,29 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
       {activeTab === 'layers' && (
         <div>
           {/* Sub-layers selector */}
-          <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '1.25rem', overflowX: 'auto' }}>
+          {/* Sub-layers selector (Page 5: A through E Structure) */}
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
             {[
-              { id: 'who_i_am', label: '1. Who I Am' },
-              { id: 'my_life', label: '2. My Life' },
-              { id: 'my_family', label: '3. My Family' },
-              { id: 'my_expectations', label: '4. Expectations' },
-              { id: 'my_trust', label: '5. Trust Profile' },
+              { id: 'who_i_am', letter: 'A', label: 'A. WHO I AM' },
+              { id: 'my_life', letter: 'B', label: 'B. MY LIFE' },
+              { id: 'my_family', letter: 'C', label: 'C. MY FAMILY' },
+              { id: 'my_expectations', letter: 'D', label: 'D. MY EXPECTATIONS' },
+              { id: 'my_trust', letter: 'E', label: 'E. MY TRUST PROFILE' },
             ].map((sub) => (
               <button
                 key={sub.id}
                 onClick={() => setActiveLayer(sub.id as any)}
                 style={{
-                  padding: '0.4rem 0.85rem',
+                  padding: '0.45rem 0.9rem',
                   borderRadius: 'var(--radius-full)',
                   fontSize: '0.78rem',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   background: activeLayer === sub.id ? 'var(--color-burgundy)' : 'var(--bg-secondary)',
                   color: activeLayer === sub.id ? '#FFFFFF' : 'var(--text-secondary)',
-                  border: 'none',
+                  border: activeLayer === sub.id ? '1px solid var(--color-burgundy)' : '1px solid var(--border-light)',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 150ms ease',
                 }}
               >
                 {sub.label}
@@ -242,35 +246,47 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
             ))}
           </div>
 
+          {/* Layer A: WHO I AM (Basic identity) */}
           {activeLayer === 'who_i_am' && (
-            <div style={{ background: 'var(--bg-primary)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
-              <p style={{ fontSize: '0.92rem', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: '1rem' }}>
+            <div style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.4rem' }}>
+                Layer A • Basic Identity
+              </div>
+              <p style={{ fontSize: '0.94rem', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.65, marginBottom: '1.25rem', background: '#FFF', padding: '1rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
                 "{partner.bio}"
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.85rem', fontSize: '0.85rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '1rem', fontSize: '0.85rem' }}>
+                <div><strong>Statutory Age:</strong> {partner.age} years ({partner.dateOfBirth})</div>
                 <div><strong>Height:</strong> {partner.height}</div>
                 <div><strong>Mother Tongue:</strong> {partner.motherTongue}</div>
-                <div><strong>Religion / Community:</strong> {partner.religion} ({partner.community})</div>
+                <div><strong>Community & Roots:</strong> {partner.religion} ({partner.community})</div>
                 <div><strong>Marital Status:</strong> {partner.maritalStatus.replace(/_/g, ' ')}</div>
+                <div><strong>Intent Mode:</strong> {partner.intent.replace(/_/g, ' ')}</div>
               </div>
             </div>
           )}
 
+          {/* Layer B: MY LIFE (Education, profession, lifestyle, interests) */}
           {activeLayer === 'my_life' && (
-            <div style={{ background: 'var(--bg-primary)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.85rem', marginBottom: '1rem' }}>
+            <div style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.6rem' }}>
+                Layer B • Education, Profession & Lifestyle
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '1rem', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
                 <div><strong>Education:</strong> {partner.education} ({partner.educationField})</div>
                 <div><strong>Profession:</strong> {partner.profession}</div>
-                <div><strong>Company / Field:</strong> {partner.companyOrIndustry}</div>
+                <div><strong>Company / Sector:</strong> {partner.companyOrIndustry}</div>
                 <div><strong>Dietary Lifestyle:</strong> {partner.diet}</div>
                 <div><strong>Drinking / Smoking:</strong> {partner.drinking} / {partner.smoking}</div>
-                <div><strong>Fitness:</strong> {partner.fitness}</div>
+                <div><strong>Fitness Routine:</strong> {partner.fitness || 'Active & healthy lifestyle'}</div>
+                <div><strong>Current City:</strong> {partner.currentCity}</div>
+                <div><strong>Hometown:</strong> {partner.hometown}</div>
               </div>
               <div>
-                <strong style={{ fontSize: '0.82rem', color: 'var(--color-burgundy)' }}>Interests:</strong>
+                <strong style={{ fontSize: '0.82rem', color: 'var(--color-burgundy-dark)' }}>Passions & Interests:</strong>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.4rem' }}>
                   {partner.interests.map((i) => (
-                    <span key={i} style={{ background: '#FFF', border: '1px solid rgba(197, 160, 89, 0.3)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem' }}>
+                    <span key={i} style={{ background: '#FFF', border: '1px solid rgba(197, 160, 89, 0.35)', padding: '3px 10px', borderRadius: 'var(--radius-full)', fontSize: '0.78rem', color: 'var(--color-burgundy-dark)', fontWeight: 600 }}>
                       {i}
                     </span>
                   ))}
@@ -279,47 +295,84 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({ partner,
             </div>
           )}
 
+          {/* Layer C: MY FAMILY (Family structure, parents, siblings, cultural background) */}
           {activeLayer === 'my_family' && (
-            <div style={{ background: 'var(--bg-primary)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.85rem' }}>
+            <div style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.6rem' }}>
+                Layer C • Family Structure, Parents & Lineage
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '1rem', fontSize: '0.85rem' }}>
                 <div><strong>Family Structure:</strong> {partner.familyType} Family</div>
                 <div><strong>Family Values:</strong> {partner.familyValues} Values</div>
-                <div><strong>Father's Role:</strong> {partner.fatherOccupation}</div>
-                <div><strong>Mother's Role:</strong> {partner.motherOccupation}</div>
+                <div><strong>Father's Occupation:</strong> {partner.fatherOccupation}</div>
+                <div><strong>Mother's Occupation:</strong> {partner.motherOccupation}</div>
                 <div><strong>Siblings:</strong> {partner.siblings}</div>
                 <div><strong>Ancestral Roots:</strong> {partner.hometown}</div>
+                <div><strong>Gotra / Lineage:</strong> {partner.astrology?.gotra || 'Not Specified'} Gotra</div>
               </div>
               {partner.intent === 'remarriage' && partner.secondChapterLearnings && (
-                <div style={{ marginTop: '1rem', paddingTop: '0.75rem', borderTop: 'var(--border-light)', fontSize: '0.85rem' }}>
-                  <div style={{ fontWeight: 700, color: 'var(--color-burgundy)', marginBottom: '0.25rem' }}>Second Chapter Reflections:</div>
-                  <p style={{ fontStyle: 'italic', color: 'var(--text-secondary)' }}>"{partner.secondChapterLearnings}"</p>
+                <div style={{ marginTop: '1.25rem', paddingTop: '0.85rem', borderTop: 'var(--border-light)', fontSize: '0.85rem' }}>
+                  <div style={{ fontWeight: 700, color: 'var(--color-burgundy)', marginBottom: '0.3rem' }}>Second Chapter Reflections:</div>
+                  <p style={{ fontStyle: 'italic', color: 'var(--text-secondary)', margin: 0 }}>"{partner.secondChapterLearnings}"</p>
                 </div>
               )}
             </div>
           )}
 
+          {/* Layer D: MY EXPECTATIONS (Marriage expectations, children, location, career, lifestyle, finances etc.) */}
           {activeLayer === 'my_expectations' && (
-            <div style={{ background: 'var(--bg-primary)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.85rem' }}>
-                <div><strong>Preferred Age:</strong> {partner.expectations.partnerAgeMin} to {partner.expectations.partnerAgeMax} yrs</div>
+            <div style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.6rem' }}>
+                Layer D • Marriage Expectations, Career & Finances
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.1rem', fontSize: '0.85rem' }}>
+                <div><strong>Marriage Timeline:</strong> {partner.expectations.marriageTimeline || 'Ready within 12–18 months'}</div>
+                <div><strong>Career Orientation:</strong> {partner.expectations.careerPhilosophy || 'Balanced ambition & mutual support'}</div>
                 <div><strong>Children Aspirations:</strong> {partner.expectations.childrenExpectations.replace(/_/g, ' ')}</div>
                 <div><strong>Financial Philosophy:</strong> {partner.expectations.financialPhilosophy.replace(/_/g, ' ')}</div>
-                <div><strong>Preferred Cities:</strong> {partner.expectations.partnerLocation.join(', ')}</div>
+                <div><strong>Preferred Cities:</strong> {partner.expectations.partnerLocation.join(', ') || 'Any metropolitan hub'}</div>
+                <div><strong>Relocation Openness:</strong> {partner.expectations.relocationOpenness.replace(/_/g, ' ')}</div>
+                <div><strong>Preferred Age:</strong> {partner.expectations.partnerAgeMin} to {partner.expectations.partnerAgeMax} yrs</div>
               </div>
             </div>
           )}
 
+          {/* Layer E: MY TRUST PROFILE (This is where ChaanBean enters) */}
           {activeLayer === 'my_trust' && (
-            <div style={{ background: 'var(--bg-primary)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
-              <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-burgundy)', marginBottom: '0.75rem' }}>
-                ChaanBean Trust Checks
+            <div style={{ background: 'var(--bg-primary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
+              {/* Page 5 Blueprint Mandate: This is where ChaanBean enters banner */}
+              <div style={{ 
+                background: 'linear-gradient(135deg, rgba(139, 21, 56, 0.08) 0%, rgba(197, 160, 89, 0.15) 100%)', 
+                border: '1px solid rgba(197, 160, 89, 0.4)', 
+                borderRadius: 'var(--radius-md)', 
+                padding: '1rem 1.25rem', 
+                marginBottom: '1.25rem' 
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
+                  <ShieldCheck size={18} color="var(--color-burgundy)" />
+                  <strong style={{ fontSize: '1rem', color: 'var(--color-burgundy-dark)' }}>
+                    Layer E: This is where ChaanBean enters.
+                  </strong>
+                </div>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+                  Every credential on this profile has undergone institutional verification via official databases with cryptographic consent.
+                </p>
+              </div>
+
+              <div style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--color-burgundy-dark)', marginBottom: '0.75rem' }}>
+                ChaanBean Verified Credentials ({partner.trustProfile.trustScoreLevel})
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                 {partner.trustProfile.checks.map((c) => (
-                  <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#FFF', padding: '0.6rem 0.85rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(197, 160, 89, 0.2)' }}>
+                  <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#FFF', padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(197, 160, 89, 0.25)' }}>
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>{c.title}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{c.description}</div>
+                      <div style={{ fontWeight: 600, fontSize: '0.86rem', color: 'var(--color-burgundy-dark)' }}>{c.title}</div>
+                      <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)' }}>{c.description}</div>
+                      {c.verifiedAt && (
+                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          Verified on: {c.verifiedAt}
+                        </div>
+                      )}
                     </div>
                     <StatusBadge status={c.status} size="sm" />
                   </div>

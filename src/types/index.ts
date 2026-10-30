@@ -154,6 +154,8 @@ export interface Expectations {
   childrenExpectations: 'open_to_children' | 'wants_children' | 'no_children' | 'has_children_welcome';
   financialPhilosophy: 'shared_planning' | 'independent_accounts' | 'traditional_breadwinner';
   relocationOpenness: 'open' | 'prefer_current' | 'not_open';
+  marriageTimeline?: string;
+  careerPhilosophy?: string;
 }
 
 export interface UserProfile {
